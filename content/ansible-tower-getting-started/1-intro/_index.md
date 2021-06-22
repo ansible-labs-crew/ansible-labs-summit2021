@@ -26,7 +26,7 @@ In this lab you work in a pre-configured lab environment. You will have access t
 
 | Role                         | URL for External Access (if applicable)  | Hostname Internal                   |
 | ---------------------------- | ---------------------------------- | ----------------------------------- |
-| Ansible Automation Controller| {{< param "external_Automation Controller1" >}}    | {{< param "internal_Automation Controller1" >}}     |
+| Ansible Automation Controller| {{Arguments< param "external_automation_controller1" >}}    | {{< param "internal_Automation Controller1" >}}     |
 | Visual Code Web UI           | {{< param "external_code" >}}      |                                     |
 | Managed RHEL8 Host 1         |                                    | {{< param "internal_host1" >}}      |
 | Managed RHEL8 Host 2         |                                    | {{< param "internal_host2" >}}      |
@@ -94,7 +94,7 @@ Congrats, you now have a shell terminal on your Automation Controller node. From
 
 ## Dashboard
 
-Let's have a first look at the Automation Controller: Point your browser to the URL you were given on the lab landing page, similar to `https://{{< param "external_Automation Controller1" >}}` (replace `<N>` with your student number and `<LABID>` with the ID of this lab) and log in as `admin`. You can find the password again on the lab landing page.
+Let's have a first look at the Automation Controller: Point your browser to the URL you were given on the lab landing page, similar to `https://{{Arguments< param "external_automation_controller1" >}}` (replace `<N>` with your student number and `<LABID>` with the ID of this lab) and log in as `admin`. You can find the password again on the lab landing page.
 
 The web UI of the Automation Controller greets you with a dashboard giving an overview of your automation including:
 
