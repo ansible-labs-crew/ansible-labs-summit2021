@@ -96,7 +96,7 @@ Note how the variable "stage" is used in the name of the file to copy.
   become: yes
   tasks:
   - name: copy index.html
-    copy:
+    ansible.builtin.copy:
       src: ~/ansible-files/{{ stage }}_index.html
       dest: /var/www/html/index.html
 ```
@@ -187,7 +187,7 @@ Facts can be used in a Playbook like variables, using the proper naming, of cour
   hosts: all
   tasks:
   - name: Prints Ansible facts
-    debug:
+    ansible.builtin.debug:
       msg: The default IPv4 address of {{ ansible_fqdn }} is {{ ansible_default_ipv4.address }}
 ```
 

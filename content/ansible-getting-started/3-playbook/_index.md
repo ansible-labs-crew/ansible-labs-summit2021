@@ -18,6 +18,34 @@ A Playbook can have multiple Plays and a Play can have one or multiple Tasks. In
 Here is a nice analogy: When Ansible Modules are the tools in your workshop, the Inventory is the list of materials and the Playbooks are the instructions.
 {{% /notice %}}
 
+## What are Collections and why should I care?
+
+Ansible Collections are a new distribution format for Ansible content that can include playbooks, roles, modules, and plugins. Ansible Collection names are a combination of two components. The first part is the name of the author who wrote and maintains the Ansible Collection. The second part is the name of the Ansible Collection. This allows one author to have multiple Collections. It also allows multiple authors to have Ansible Collections with the same name.
+
+    <author>.<collection>
+
+These are examples for Ansible Collection names:
+
+- ansible.posix
+
+- geerlingguy.k8s
+
+- theforeman.foreman
+
+To identify a specific module in an Ansible Collection, we add the name of it as the third part:
+
+    <author>.<collection>.<module>
+
+Valid examples for a fully qualified Ansible Collection Name:
+
+- ansible.posix.selinux
+
+- geerlingguy.k8s.kubernetes
+
+- theforeman.foreman.user
+
+Many modules and plugins are part of the "ansible.builtin" collection and are shipped with Ansible and installed automatically. Although not mandatory, it is highly recommended to also use the FQCN for builtin modules, to avoid name clashes or unpredictable behavior. This is why all following examples, will use "ansible.builtin" as part of the FQCN.
+
 ## Playbook Basics
 
 Playbooks are text files written in YAML format and therefore need:
@@ -101,7 +129,7 @@ Now that we've defined the play, let's add a task to get something done. We will
   become: yes
   tasks:
   - name: latest Apache version installed
-    yum:
+    ansible.builtin.yum:
       name: httpd
       state: latest
 ```
@@ -180,11 +208,11 @@ On the control host, as your student user, edit the file `~/ansible-files/apache
   become: yes
   tasks:
   - name: latest Apache version installed
-    yum:
+    ansible.builtin.yum:
       name: httpd
       state: latest
   - name: Apache enabled and running
-    service:
+    ansible.builtin.service:
       name: httpd
       enabled: true
       state: started
@@ -243,16 +271,16 @@ On the control node as your student user edit the file `~/ansible-files/apache.y
   become: yes
   tasks:
   - name: latest Apache version installed
-    yum:
+    ansible.builtin.yum:
       name: httpd
       state: latest
   - name: Apache enabled and running
-    service:
+    ansible.builtin.service:
       name: httpd
       enabled: true
       state: started
   - name: copy index.html
-    copy:
+    ansible.builtin.copy:
       src: ~/ansible-files/index.html
       dest: /var/www/html/
 ```
@@ -297,16 +325,16 @@ Change the Playbook to point to the group `web`:
   become: yes
   tasks:
   - name: latest Apache version installed
-    yum:
+    ansible.builtin.yum:
       name: httpd
       state: latest
   - name: Apache enabled and running
-    service:
+    ansible.builtin.service:
       name: httpd
       enabled: true
       state: started
   - name: copy index.html
-    copy:
+    ansible.builtin.copy:
       src: ~/ansible-files/index.html
       dest: /var/www/html/
 ```

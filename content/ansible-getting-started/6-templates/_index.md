@@ -31,7 +31,8 @@ Next we need a playbook to use this template. In the `~/ansible-files/` director
   hosts: node1
   become: yes
   tasks:
-    - template:
+    - name: create MOTD file
+      ansible.builtin.template:
         src: motd-facts.j2
         dest: /etc/motd
         owner: root
