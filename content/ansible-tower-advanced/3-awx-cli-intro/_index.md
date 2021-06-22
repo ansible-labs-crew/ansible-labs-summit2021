@@ -3,11 +3,7 @@ title = "There is more to Tower than the Web UI"
 weight = 3
 +++
 
-This is an advanced Tower lab so we don’t really want you to use the web UI for everything. To fully embrace automation and adopt the infrastructure as code methodology, we want to use Ansible to configure our Ansible Tower Cluster.
-
-Since Ansible Tower is exposing all of its functionality
-
-
+This is an advanced Tower lab so we don’t really want you to use the web UI for everything. Tower’s web UI is well done and helps with a lot of tasks, but same as in system administration it’s often handy to be able to use the command line or scripts for certain tasks.
 
 We’ve incorporated different ways to work with Tower in this lab guide and hope you’ll find it helpful. The first step we do is install the **AWX CLI** utility.
 
