@@ -4,7 +4,7 @@ contentdir    = "content"
 layoutdir     = "layouts"
 publishdir    = "public"
 
-title = "Ansible Labs for AnsibleFest"
+title = "Ansible Labs for Red Hat Summit 2021"
 canonifyurls = true
 paginate = 10
 
@@ -16,12 +16,12 @@ theme = "hugo-theme-learn"
 home = [ "HTML", "RSS", "JSON"]
 
 [author]
-  name = "Christian, Eric, Götz, Ismail, Joachim"
+  name = "Christian, Eric, Götz"
 
 [params]
   DateForm = "Mon, Jan 2, 2006"
   Description = "Ansible and Ansible Tower Labs"
-  Author = "Christian, Eric, Götz, Ismail, Joachim"
+  Author = "Christian, Eric, Götz"
   Ganalytics = "XX-00000000-0"
   themeVariant = "red"
   disableInlineCopyToClipBoard = "false"
