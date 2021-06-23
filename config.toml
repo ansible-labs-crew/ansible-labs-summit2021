@@ -64,6 +64,7 @@ home = [ "HTML", "RSS", "JSON"]
   external_tower2 = "-"
   external_tower3 = "-"
   external_code = "student<N>-code.<LABID>.open.redhat.com"
+  internal_automation_controller1 = "student<N>.<LABID>.open.redhat.com"
   internal_tower1 = "ansible-1"
   internal_tower2 = "ansible-2"
   internal_tower3 = "ansible-3"

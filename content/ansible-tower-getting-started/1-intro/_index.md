@@ -26,7 +26,7 @@ In this lab you work in a pre-configured lab environment. You will have access t
 
 | Role                         | URL for External Access (if applicable)  | Hostname Internal                   |
 | ---------------------------- | ---------------------------------- | ----------------------------------- |
-| Ansible Automation Controller| {{Arguments< param "external_automation_controller1" >}}    | {{< param "internal_Automation Controller1" >}}     |
+| Ansible Automation Controller| {{Arguments< param "external_automation_controller1" >}}    | {{< param "internal_automation_controller1" >}}     |
 | Visual Code Web UI           | {{< param "external_code" >}}      |                                     |
 | Managed RHEL8 Host 1         |                                    | {{< param "internal_host1" >}}      |
 | Managed RHEL8 Host 2         |                                    | {{< param "internal_host2" >}}      |
