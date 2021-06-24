@@ -36,7 +36,7 @@ To identify a specific module in an Ansible Collection, we add the name of it as
 
     <author>.<collection>.<module>
 
-Valid examples for a fully qualified Ansible Collection Name:
+Valid examples for a fully qualified Ansible Collection Name (FQCN):
 
 - ansible.posix.selinux
 
