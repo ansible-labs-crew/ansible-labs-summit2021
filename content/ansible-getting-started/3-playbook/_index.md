@@ -44,7 +44,9 @@ Valid examples for a fully qualified Ansible Collection Name (FQCN):
 
 - theforeman.foreman.user
 
+{{% notice info %}}
 Many modules and plugins are part of the "ansible.builtin" collection and are shipped with Ansible and installed automatically. Although not mandatory, it is highly recommended to also use the FQCN for builtin modules, to avoid name clashes or unpredictable behavior. This is why all following examples, will use "ansible.builtin" as part of the FQCN.
+{{% /notice %}}
 
 ## Playbook Basics
 
