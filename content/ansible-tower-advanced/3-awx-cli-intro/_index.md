@@ -3,26 +3,82 @@ title = "There is more to Tower than the Web UI"
 weight = 3
 +++
 
-This is an advanced Tower lab so we don’t really want you to use the web UI for everything. Tower’s web UI is well done and helps with a lot of tasks, but same as in system administration it’s often handy to be able to use the command line or scripts for certain tasks.
+This is an advanced Tower lab so we don’t really want you to use the web UI for everything. To fully embrace automation and adopt the infrastructure as code methodology, we want to use Ansible to configure our Ansible Tower Cluster.
 
-We’ve incorporated different ways to work with Tower in this lab guide and hope you’ll find it helpful. The first step we do is install the **AWX CLI** utility.
+Since Ansible Tower is exposing all of its functionality via REST API, we can automate everything. Instead of using the API directly, it is highly recommended to use the [AWX](https://github.com/ansible/awx/tree/devel/awx_collection) or [Ansible Tower](TODO: Add link) (this link will only work for you, if you have an active Red Hat Ansible Automation Platform Subscription) Collection to setup, configure and maintain your Ansible Tower Cluster.
 
-{{% notice tip %}}
-**AWX CLI** is the official command-line client for AWX and Red Hat Ansible Tower. It uses naming and structure consistent with the AWX HTTP API, provides consistent output formats with optional machine-parsable formats.
+{{% notice info %}}
+For the purpose of this lab, we will use the community AWX collection. Red Hat Customer will prefer the supported Ansible Tower Collection. Since this requires an active subscription and we want to make the lab usable for everyone, we will stick with the AWX collection for the purpose of the lab.
 {{% /notice %}}
 
-We’ll install it on your Tower node1 using the official repository RPM packages. Use the VSCode terminal window you opened before to install **AWX CLI** as `root`:
+First, we want to install the AWX Collection. Installing Ansible Collections is super easy:
 
 ```bash
-[{{< param "control_prompt" >}} ~]$ sudo -i
-[{{< param "internal_control" >}} ~]# yum-config-manager --add-repo https://releases.ansible.com/ansible-tower/cli/ansible-tower-cli-el8.repo
-[{{< param "internal_control" >}} ~]# yum install ansible-tower-cli -y
-[{{< param "internal_control" >}} ~]# exit
+[{{< param "control_prompt" >}} ~]$ ansible-galaxy collection install awx.awx:19.1.0
+```
+
+{{% notice note %}}
+The AWX collection is updated very often. To make sure the following lab instructions will work for you, we install specifically version 19.1.0. Later versions of this lab will probably use newer version of the AWX Collection.
+{{% /notice %}}
+
+## Authentication
+
+Before we can do any changes on our Automation Controller, we have to authenticate our user. There are several methods available to provide authentication details to the modules. In this lab, we want to use environment variables.
+
+```bash
+[{{< param "control_prompt" >}} ~]$ export TOWER_HOST=https://{{< param "external_tower" >}}
+[{{< param "control_prompt" >}} ~]$ export TOWER_USERNAME=admin
+[{{< param "control_prompt" >}} ~]$ export TOWER_PASSWORD='{{< param "secret_password" >}}'
+[{{< param "control_prompt" >}} ~]$ export TOWER_VERIFY_SSL=false
 ```
 
 {{% notice warning %}}
-Please make sure to leave the root shell after installation of the package!
+Make sure you define the environment variables in the same shell you want to later run your Ansible Playbook from, otherwise the Playbook will fail due to authentication errors.
 {{% /notice %}}
+
+## Create an inventory
+
+Let's start with a very simple example to see how things work.
+
+```yaml
+---
+- name: Configure automation controller
+  hosts: localhost
+  become: false
+  gather_facts: false
+  tasks:
+  - name: Create an inventory
+    awx.awx.tower_inventory:
+      name: AWX inventory
+      organization: Default
+```
+
+Since we are calling the REST API of Automation Controller, the Ansible Playbook is running on "localhost", but the module will connect to the URL provided by the "TOWER_HOST" environment variable.
+
+{{% notice info %}}
+You might see a warning message "You are using the awx version of this collection but connecting to Red Hat Ansible Automation Platform". This can be ignored. As said above, we intentionally use the AWX Community Collection for the purpose of the lab. As a Red Hat Customer you would probably prefer the supported Collection instead.
+{{% /notice %}}
+
+## Add hosts to inventory
+
+## Create Machine Credentials
+
+## Create Projects
+
+## Create Job Templates
+
+## verify the cluster
+
+if you log into a different cluster node, you should still see the same changes.
+
+##########################
+#
+# remove everythin after this line
+#
+##########################
+
+
+
 
 After installing the tool, you have to configure authentication. The preferred way is to create a token and export it into an environment variable. After this you can seamlessly use **awx** commands in this shell. First set a number of environment variables to define your connection:
 
