@@ -77,7 +77,7 @@ If you are still logged in as user **wweb**, log out of and log in as user **adm
 
 - Create the project for web operations. In the **Projects** view click the green us button and fill in:
 
-  - **NAME:** Webops Git Repo
+  - **Name:** Webops Git Repo
 
   - **ORGANIZATION:** Default
 
@@ -89,11 +89,11 @@ If you are still logged in as user **wweb**, log out of and log in as user **adm
 
   - **SCM UPDATE OPTIONS:** Tick the first three boxes.
 
-- Click **SAVE**
+- Click **Save**
 
 - Create the project for the application developers. In the **Projects** view click the green plus button and fill in:
 
-  - **NAME:** Webdev Git Repo
+  - **Name:** Webdev Git Repo
 
   - **ORGANIZATION:** Default
 
@@ -105,7 +105,7 @@ If you are still logged in as user **wweb**, log out of and log in as user **adm
 
   - **SCM UPDATE OPTIONS:** Tick the first three boxes.
 
-- Click **SAVE**
+- Click **Save**
 
 </p>
 <hr/>
@@ -121,15 +121,15 @@ We want to install the **NodeJS app on node3 only**. The Inventory **Workshop In
 
 - Go to the **Templates** view, click the green plus button and choose **Job Template**:
 
-  - **NAME:** Web Infra Deploy
+  - **Name:** Web Infra Deploy
 
-  - **JOB TYPE:** Run
+  - **Job Type:** Run
 
-  - **INVENTORY:** Workshop Inventory
+  - **Inventory:** Workshop Inventory
 
-  - **PROJECT:** Webops Git Repo
+  - **Project:** Webops Git Repo
 
-  - **PLAYBOOK:** `rhel/webops/web_infrastructure.yml`
+  - **Playbook:** `rhel/webops/web_infrastructure.yml`
 
   - **CREDENTIAL:** Workshop Credentials
 
@@ -137,19 +137,19 @@ We want to install the **NodeJS app on node3 only**. The Inventory **Workshop In
 
   - **OPTIONS:** Enable privilege escalation
 
-- Click **SAVE**
+- Click **Save**
 
 - Go to the **Templates** view, click the green plus button and choose **Job Template**:
 
-  - **NAME:** Web App Deploy
+  - **Name:** Web App Deploy
 
-  - **JOB TYPE:** Run
+  - **Job Type:** Run
 
-  - **INVENTORY:** Workshop Inventory
+  - **Inventory:** Workshop Inventory
 
-  - **PROJECT:** Webdev Git Repo
+  - **Project:** Webdev Git Repo
 
-  - **PLAYBOOK:** `rhel/webdev/install_node_app.yml`
+  - **Playbook:** `rhel/webdev/install_node_app.yml`
 
   - **CREDENTIALS:** Workshop Credentials
 
@@ -157,7 +157,7 @@ We want to install the **NodeJS app on node3 only**. The Inventory **Workshop In
 
   - **OPTIONS:** Enable privilege escalation
 
-- Click **SAVE**
+- Click **Save**
 
 {{% notice tip %}}
 If you want to know what the Playbooks look like, check out the Github URL and switch to the appropriate branches.
@@ -169,11 +169,11 @@ And now you finally set up the Workflow. Workflows are configured in the **Templ
 
 - Go to the **Templates** view and click the the green plus button. This time choose **Workflow Template**
 
-  - **NAME:** Deploy Webapplication
+  - **Name:** Deploy Webapplication
 
   - **ORGANIZATION:** Default
 
-- Click **SAVE**
+- Click **Save**
 
 - After saving the template the **Workflow Visualizer** opens to allow you to build a workflow. You can later open the **Workflow Visualizer** again by using the button on the template details page.
 
@@ -199,9 +199,9 @@ The type allows for more complex workflows. You could lay out different executio
 
 - Click **SELECT**
 
-- Click **SAVE** in the **WORKFLOW VISUALIZER** view
+- Click **Save** in the **WORKFLOW VISUALIZER** view
 
-- Click **SAVE** in the **Workflow Template** view
+- Click **Save** in the **Workflow Template** view
 
 {{% notice tip %}}
 The **Workflow Visualizer** has options for setting up more advanced workflows, please refer to the [documentation](https://docs.ansible.com/ansible-tower/latest/html/userguide/workflows.html).
@@ -217,7 +217,7 @@ Your **Deploy Webapplication** workflow is ready to go, launch it.
 
 Note how the workflow run is shown in the job view. In contrast to a normal job template job execution this time there is no Playbook output on the right, but a visual representation of the different workflow steps. If you want to look at the actual Jobs behind that, click **DETAILS** in each step. If you want to get back from a details view to the corresponding workflow, just hit your browsers back button.
 
-After the job has finished, check if everything worked fine. In your code-server terminal, run:
+After the job has finished, check if everything worked fine. In your **VS Code** terminal, run:
 
     [{{< param "control_prompt" >}} ~]$ curl http://node3/nodejs
 

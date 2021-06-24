@@ -9,14 +9,14 @@ During the planning of **Red Hat Ansible Automation Platform 2** the decision wa
 
 So the artist formerly known as Ansible Tower is now called Automation Controller but provides basically the same functionality.
 
-Ansible Automation Controller basically is an API to Ansible Automation, most users will get in touch with it through the web-based UI which uses the API underneath. It provides the following features:
+Automation Controller basically is an API to Ansible Automation, most users will get in touch with it through the web-based UI which uses the API underneath. It provides the following features:
 
 - a user-friendly dashboard.
 - role based access control
 - one-click automation templates
 - mangement of dynamic inventory sources
 - automation workflows with approval
-- a solid audit track ("how did what when")
+- a solid audit track ("who did what when")
 
 And much more... as you'll learn in this lab!
 
@@ -26,7 +26,7 @@ In this lab you work in a pre-configured lab environment. You will have access t
 
 | Role                         | URL for External Access (if applicable)  | Hostname Internal                   |
 | ---------------------------- | ---------------------------------- | ----------------------------------- |
-| Ansible Automation Controller| {{< param "external_automation_controller1" >}}    | {{< param "internal_automation_controller1" >}}     |
+| Automation Controller| {{< param "external_automation_controller1" >}}    | {{< param "internal_automation_controller1" >}}     |
 | Visual Code Web UI           | {{< param "external_code" >}}      |                                     |
 | Managed RHEL8 Host 1         |                                    | {{< param "internal_host1" >}}      |
 | Managed RHEL8 Host 2         |                                    | {{< param "internal_host2" >}}      |
@@ -37,7 +37,7 @@ The lab environments in this session have a **{{< param "labid" >}}** and are se
 {{% /notice %}}
 
 {{% notice tip %}}
-Ansible Automation Controller has already been installed and licensed for you, the web UI will be reachable over HTTP/HTTPS.
+Automation Controller has already been installed and licensed for you, the web UI will be reachable over HTTP/HTTPS.
 {{% /notice %}}
 
 {{% notice info %}}
@@ -50,7 +50,7 @@ Some hints to get you started:
 
 - Don’t type everything manually, use copy & paste from the browser when appropriate. But don’t stop to think and understand… ;-)
 
-- To **edit files** or **open a terminal window**, we provide **code-server**, basically the great VSCode Editor running in your browser. It's running on the Automation Controller node and can be accessed through the URL `https://{{< param "external_code" >}}`
+- To **edit files** or **open a terminal window**, we provide **VS Code** delivered by **code-server**, basically the great Visual Studio Code Editor running in your browser. It's running on the Automation Controller node and can be accessed through the URL `https://{{< param "external_code" >}}`
 
 {{% notice tip %}}
 Commands you are supposed to run are shown with or without the expected output, whatever makes more sense in the context.
@@ -70,13 +70,13 @@ You'll get the access information for your lab (URL's, password) from a landing 
 
 Either way you'll get an URL similar to this: `http://{{< param "external_domain" >}}`
 
-Your main points of contact with the lab are the Ansible Automation Controller's web UI and **code-server**, providing a VSCode-experience in your browser. You'll use **code-server** to:
+Your main points of contact with the lab are the Automation Controller's web UI and **VS Code** in your browser. You'll use **VS Code** to:
 
 - open virtual terminals
 
 - edit files
 
-Now open code-server using the link from the lab landing page or this link in your browser by replacing **\<N\>** by your student number and the **\<LABID\>**:
+Now open **VS Code** in a new browser tab using the link from the lab landing page or this link (replace **\<N\>** by your student number and the **\<LABID\>**):
 
 ```bash
      https://{{< param "external_code" >}}
@@ -104,7 +104,7 @@ The web UI of the Automation Controller greets you with a dashboard giving an ov
 
 The dashboard also displays real time data about the execution of tasks completed in playbooks.
 
-![Ansible Automation Controller Dashboard](../../images/dashboard.png)
+![Automation Controller Dashboard](../../images/dashboard.png)
 
 ## Concepts
 

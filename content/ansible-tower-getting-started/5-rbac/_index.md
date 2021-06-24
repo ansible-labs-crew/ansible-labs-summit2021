@@ -37,7 +37,7 @@ Let’s create a user:
 
   - **USER TYPE:** Normal User
 
-- Click **SAVE**
+- Click **Save**
 
 ## Ansible Tower Teams
 
@@ -49,13 +49,13 @@ Create a Team:
 
 - Click the green plus button and create a team named `Web Content`.
 
-- Click **SAVE**
+- Click **Save**
 
 Now you can add a user to the Team:
 
 - Switch to the Users view of the `Web Content` Team by clicking the **USERS** button.
 
-- Click the green plus button, check the box next to the `wweb` user and click **SAVE**.
+- Click the green plus button, check the box next to the `wweb` user and click **Save**.
 
 Now click the **PERMISSIONS** button in the **TEAMS** view, you will be greeted with "No Permissions Have Been Granted".
 
@@ -79,7 +79,7 @@ Add the permission to use the template:
 
   - Choose **EXECUTE**
 
-- Click **SAVE**
+- Click **Save**
 
 ## Test Permissions
 
@@ -92,7 +92,7 @@ Now log out of Tower’s web UI and in again as the **wweb** user.
 
 - In the following **Jobs** view have a good look around, note that there where changes to the host (of course…​).
 
-Check the result: In the code-server terminal execute `curl` to pull the content of the webserver on `node1` (you could of course check `node2`, too):
+Check the result: In the **VS Code** terminal execute `curl` to pull the content of the webserver on `node1` (you could of course check `node2`, too):
 
     [{{< param "control_prompt" >}} ~]$ curl http://node1
 

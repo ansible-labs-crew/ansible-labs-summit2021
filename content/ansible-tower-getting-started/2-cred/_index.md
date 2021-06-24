@@ -37,7 +37,7 @@ You have now created an inventory with three managed hosts.
 
 ## Machine Credentials
 
-One of the great features of Ansible Automation Controller is to make credentials usable to users without making them visible. To allow Automation Controller to execute jobs on remote hosts, you must configure connection credentials.
+One of the great features of Automation Controller is to make credentials usable to users without making them visible. To allow Automation Controller to execute jobs on remote hosts, you must configure connection credentials.
 
 {{% notice tip %}}
 This is one of the most important features of Automation Controller: **Credential Separation**\! Credentials are defined separately and not with the hosts or inventory settings.
@@ -109,12 +109,16 @@ You have now setup credentials for Ansible to access your managed hosts.
 
 Before you run your first Ansible ad hoc commands in Automation Controller it's about time to learn about one of the major new features in Ansible Automation Platform 2: **Execution Environments**!
 
-Before AAP 2 the Automation Platform execution relied on using **bubblewrap** to isolate processes and Python virtual environments (venvs) to sandbox dependencies. This lead to a number of issues like maintaining multiple venvs, migrating Ansible content between execution nodes and much more. The concept of execution environments (EE) solves this by using Linux containers. 
+Before AAP 2 the Automation Platform execution relied on using **bubblewrap** to isolate processes and Python virtual environments (venv) to sandbox dependencies. This lead to a number of issues like maintaining multiple venv, migrating Ansible content between execution nodes and much more. The concept of execution environments (EE) solves this by using Linux containers.
 
-An EE is basically a container run from an image that contains everything your Ansible Playbook needs to run. It's basically a control node in a box that can be executed everywhere a Linux container can run. There are ready-made image that contain everything you would expect on an Ansible control node, but you can (and probably will) start to build your own, custom image for your very own requirements at some point.
+An EE is a container run from an image that contains everything your Ansible Playbook needs to run. It's basically a control node in a box that can be executed everywhere a Linux container can run. There are ready-made image that contain everything you would expect on an Ansible control node, but you can (and probably will) start to build your own, custom image for your very own requirements at some point.
 
 Your Automation Controller has been preconfigured with some standard EE images. So first go through the next section covering ad hoc commands, we'll look into execution environments a bit deeper later.
 
+{{% notice tip %}}
+Linux containers are technologies that allow you to package and isolate applications with their entire runtime environment. This makes it easy to move the contained application between environments and nodes while retaining full functionality. 
+In this lab you'll use the command `podman` later on. Podman is a daemonless container engine for developing, managing, and running Open Container Initiative (OCI) containers and container images on your Linux System. 
+{{% /notice %}}
 ## Run Ad Hoc Commands
 
 As you’ve probably done with Ansible before you can run ad hoc commands from Automation Controller as well.
@@ -183,15 +187,11 @@ Try to click one of the output lines in the window showing the job output. A sma
 
 As promised let's look a bit deeper into execution environments. During the section covering ad hoc commands you have already seen you have to choose an execution environment, the same will hold true for running Playbooks later on. In your Automation Controller web UI, go to **Administration → Execution Environments**. You'll see a list of the configured execution environments and original location of the image, in our case the images are provided in the **quay.io** container registry. Here you could add your own registry with custom EE images, too.
 
-So what happens, when Automation Controller runs an ad hoc command or Playbook? Let's see... first get prepared to run an ad hoc command again:
+So what happens, when Automation Controller runs an ad hoc command or Playbook? Let's see... 
 
-- Go to **Views -> Jobs** and click one of your ad hoc command runs 
-- In the following view switch to the **Details** tab
-- Your are now prepared to restart the ad hoc command by clicking **Relaunch**
+You should already have your **VS Code** terminal open in another browser tab, if not open https://{{< param "external_code" >}} and do **Terminal -> New Terminal**. In this terminal:
 
-You should already have your code-server terminal open in another browser tab, if not open https://{{< param "external_code" >}} and do **Terminal -> New Terminal** in code-server. In this terminal:
-
-- You should be your student user, become the **awx** user by running `sudo -u awx -i`
+- You should be your **student\<N>** user, become the **awx** user by running `sudo -u awx -i`
 - First let's look for the image:
 ```
 [awx@ansible-1 ~]$ podman images
@@ -199,16 +199,32 @@ REPOSITORY              TAG     IMAGE ID      CREATED       SIZE
 quay.io/ansible/awx-ee  0.2.0   68b8d8c4702d  2 months ago  1.25 GB
 ```
 - Yup, it's there as it was pulled from the registry when you first run an ad hoc command.
-- No we want to observe how an EE is run as a container when you execute your automation. `podman ps -w 2` will tell us, the `-w` option updates the output regularly. Run the command, it will show you something like this:
+- Now we want to observe how an EE is run as a container when you execute your automation. `podman ps -w 2` will list running containers, the `-w` option updates the output regularly. Run the command, it will show you something like this:
 ```
 CONTAINER ID  IMAGE   COMMAND  CREATED  STATUS  PORTS   NAMES
 ```
-- Keep podman running, now it's time to execute some automation. Just click the **Relaunch** button in the Automation Controller's web UI you prepared for above and keep an eye on the output in the terminal (you might have to switch the browser tab quickly)!
-- For some seconds you'll see a container is launched to run the ad hoc command and then removed again:
+- Keep podman running, now it's time to execute some automation. 
+- In the web UI run an ad hoc command again. Go to **Resources → Inventories → Workshop Inventory**
+- In the **Hosts** view select the three hosts.
+- Click **Run Command**. Specify the ad hoc command as you did before:
+  - **Module**: command
+  - **Arguments**: sleep 60
+  - **Next**
+  - **Execution Environment**: Controller Default EE
+  - **Next**
+  - **Machine Credential**: Workshop Credentials
+  - Click **Launch**
+
+Now go back to the **VS Code** terminal. You'll see a container is launched to run the ad hoc command and then removed again:
+
 ```
 CONTAINER ID  IMAGE                         COMMAND               CREATED       STATUS            PORTS   NAMES
 c8e9a13ab475  quay.io/ansible/awx-ee:0.2.0  ssh-agent sh -c t...  1 second ago  Up 2 seconds ago          ansible_runner_18
 ```
+{{% notice tip %}}
+The `sleep 60` command was only used to keep the container running for some time. Your output will differ slightly.
+{{% /notice %}}
+
 - Feel free to relaunch the job again!
 - Stop `podman` with `CTRL-C`.
 

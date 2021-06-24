@@ -74,13 +74,13 @@ There is of course more then one way to accomplish this, but here is what you sh
 
 - Define a variable `stage` with the value `dev` for the `Webserver` inventory:
 
-  - Add `stage: dev` to the inventory `Webserver` by putting it into the **VARIABLES** field beneath the three start-yaml dashes. Click **SAVE**
+  - Add `stage: dev` to the inventory `Webserver` by putting it into the **VARIABLES** field beneath the three start-yaml dashes. Click **Save**
 
 {{% notice warning %}}
 Make sure to add the variable to the inventory and **not** to the new node3!
 {{% /notice %}}
 
-- In the same way add a variable `stage: prod` but this time only for `node2` (by clicking the hostname in the **HOSTS** view). Click **SAVE**
+- In the same way add a variable `stage: prod` but this time only for `node2` (by clicking the hostname in the **HOSTS** view). Click **Save**
 
 This way the host variable overrides the variable set at the Inventory level because it's more specific and takes precedence.
 
@@ -104,7 +104,7 @@ Make sure to keep the three dashes that mark the YAML start in place!
 
 ## Check the results
 
-This time we use the power of Ansible to check the results: execute curl to get the web content from each node, orchestrated by an ad hoc command on the command line of your code-server terminal:
+This time we use the power of Ansible to check the results: execute curl to get the web content from each node, orchestrated by an ad hoc command on the command line of your **VS Code** terminal:
 
 {{% notice tip %}}
 We are using the `ansible_host` variable in the URL to access every node in the inventory group.
@@ -143,7 +143,7 @@ Note the warning in the first line about not to use `curl` via the `command` mod
 
 - Run the survey as user `wweb`.
 
-Check the results again from your code-server terminal. Since we got a warning last time using `curl` via the `command` module, this time we will use the dedicated `uri` module. As arguments it needs the actual URL and a flag to output the body in the results.
+Check the results again from your **VS Code** terminal. Since we got a warning last time using `curl` via the `command` module, this time we will use the dedicated `uri` module. As arguments it needs the actual URL and a flag to output the body in the results.
 
 ```bash
 [student{{< param "student" >}}ansible ~]$ ansible web -m uri -a "url=http://{{ ansible_host }} return_content=yes"
