@@ -42,6 +42,8 @@ Valid examples for a fully qualified Ansible Collection Name (FQCN):
 
 - geerlingguy.k8s.kubernetes
 
+- geerlingguy.php_roles.mysql
+
 - theforeman.foreman.user
 
 {{% notice info %}}
