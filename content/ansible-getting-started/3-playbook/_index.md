@@ -50,6 +50,10 @@ Valid examples for a fully qualified Ansible Collection Name (FQCN):
 Many modules and plugins are part of the "ansible.builtin" collection and are shipped with Ansible and installed automatically. Although not mandatory, it is highly recommended to also use the FQCN for builtin modules, to avoid name clashes or unpredictable behavior. This is why all following examples, will use "ansible.builtin" as part of the FQCN.
 {{% /notice %}}
 
+{{% notice tip %}}
+If you want to learn more about Ansible Collection, feel free to have a look at our [Ansible Collections Workshop](../../ansible-collections/)
+{{% /notice %}}
+
 ## Playbook Basics
 
 Playbooks are text files written in YAML format and therefore need:
