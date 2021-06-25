@@ -41,7 +41,7 @@ Now you create a new Template that includes a survey.
 
 ### Create Template
 
-- Go to **Templates**, click the ![plus](../../images/blue_add.png?classes=inline) button and choose **Add job template**
+- Go to **Templates**, click the ![add](../../images/blue_add.png?classes=inline) button and choose **Add job template**
 
 - **Name:** Create index.html
 

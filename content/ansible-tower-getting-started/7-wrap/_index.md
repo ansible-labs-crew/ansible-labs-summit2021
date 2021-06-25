@@ -9,7 +9,7 @@ This is the final challenge where we try to put most of what you have learned to
 
 ## Let’s set the stage
 
-Your operations team and your application development team like what they see in Tower. To really use it in their environment they put together these requirements:
+Your operations team and your application development team like what they see in Automation Controller. To really use it in their environment they put together these requirements:
 
 - All webservers (`node1`, `node2` and `node3`) should go in one group.
 
@@ -27,7 +27,7 @@ Your operations team and your application development team like what they see in
 
 ## The Git Repository
 
-All code is already in place - this is a Tower lab after all and not about configuring Apache. Check out the **Ansible Workshop Examples** git repository at [https://github.com/ansible/workshop-examples](https://github.com/ansible/workshop-examples) (again with the [correct tag or branch](https://github.com/ansible/workshop-examples/tree/summit_2020)). There you will find the playbook `webcontent.yml`, which calls the role `role_webcontent`.
+All code is already in place - this is a Automation Controller lab after all and not about configuring Apache. Check out the **Ansible Workshop Examples** git repository at [https://github.com/ansible/workshop-examples](https://github.com/ansible/workshop-examples) (again with the [correct tag or branch](https://github.com/ansible/workshop-examples/tree/summit_2020)). There you will find the playbook `webcontent.yml`, which calls the role `role_webcontent`.
 
 Compared to the previous Apache installation role there is a major difference: there are now two versions of an `index.html` template, and a task deploying the template file which has a variable as part of the template file name.
 
@@ -188,4 +188,4 @@ You have done all the required configuration steps in the lab already. If unsure
 
 ## The End
 
-Congratulations, you finished your labs\! We hope you enjoyed your first encounter with Ansible Tower as much as we enjoyed creating the labs.
+Congratulations, you finished your labs\! We hope you enjoyed your first encounter with Automation Controller as much as we enjoyed creating the labs.
