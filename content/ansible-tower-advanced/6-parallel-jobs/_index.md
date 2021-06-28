@@ -1,6 +1,6 @@
 +++
 title = "Parallel Jobs"
-weight = 7
+weight = 6
 +++
 
 The real power of instance groups is revealed when multiple jobs are started, and they are assigned to different Tower nodes. To launch parallel jobs we will set up a workflow with multiple concurrent jobs.

@@ -1,6 +1,6 @@
 +++
 title = "Tower Instance Groups"
-weight = 6
+weight = 5
 +++
 
 Ansible Tower clustering allows you to easily add capacity to your Tower infrastructure by adding instances. In a single-group Tower cluster where all instances are within the `tower` group there is no way to influence which node will run a job, the cluster will take care of scheduling Jobs as it sees fit.

@@ -8,20 +8,18 @@ weight = 3
 
 - [Exercise 2 - Introduction to Ansible Tower Clustering](2-clustering)
 
-- [Exercise 3 - There is more to Tower than the Web UI](3-awx-cli-intro)
+- [Exercise 3 - There is more to Tower than the Web UI](3-awx-collection-intro)
 
-- [Exercise 4 - Creating Tower Objects Using `awx`](4-awx-cli-exercises)
+- [Exercise 4 - Run a Job in a Cluster](5-tower-cluster-jobs)
 
-- [Exercise 5 - Run a Job in a Cluster](5-tower-cluster-jobs)
+- [Exercise 5 - Tower Instance Groups](6-instance-groups)
 
-- [Exercise 6 - Tower Instance Groups](6-instance-groups)
+- [Exercise 6 - Start Parallel Jobs across Instances](7-parallel-jobs)
 
-- [Exercise 7 - Start Parallel Jobs across Instances](7-parallel-jobs)
+- [Exercise 7 - Isolated Nodes](8-isolated-nodes)
 
-- [Exercise 8 - Isolated Nodes](8-isolated-nodes)
+- [Exercise 8 - Advanced Inventories](9-advanced-inventories)
 
-- [Exercise 9 - Advanced Inventories](9-advanced-inventories)
+- [Exercise 9 - OPTIONAL: Well Structured Content Repositories](10-structured-content)
 
-- [Exercise 10 - OPTIONAL: Well Structured Content Repositories](10-structured-content)
-
-- [Exercise 11 - OPTIONAL: Discovering the Tower API](11-rest-api)
+- [Exercise 10 - OPTIONAL: Discovering the Tower API](11-rest-api)

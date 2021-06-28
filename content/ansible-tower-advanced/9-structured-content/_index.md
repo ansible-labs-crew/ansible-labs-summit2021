@@ -1,6 +1,6 @@
 +++
 title = "Well Structured Content Repositories"
-weight = 10
+weight = 9
 +++
 
 ## OPTIONAL EXERCISE

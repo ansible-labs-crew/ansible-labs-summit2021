@@ -1,6 +1,6 @@
 +++
 title = "Isolated Nodes"
-weight = 8
+weight = 7
 +++
 
 Ansible is used to manage complex infrastructures with machines and networks living in multiple separate datacenters, servers behind firewalls or in cloud VPCs and remote locations only reachable over unstable links which may not survive the length of a job run. In cases like these it’s often better to run automation local to the nodes.
