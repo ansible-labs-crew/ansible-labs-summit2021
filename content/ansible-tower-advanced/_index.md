@@ -16,10 +16,8 @@ weight = 3
 
 - [Exercise 6 - Start Parallel Jobs across Instances](7-parallel-jobs)
 
-- [Exercise 7 - Isolated Nodes](8-isolated-nodes)
+- [Exercise 7 - Advanced Inventories](7-advanced-inventories)
 
-- [Exercise 8 - Advanced Inventories](9-advanced-inventories)
+- [Exercise 8 - OPTIONAL: Well Structured Content Repositories](8-structured-content)
 
-- [Exercise 9 - OPTIONAL: Well Structured Content Repositories](10-structured-content)
-
-- [Exercise 10 - OPTIONAL: Discovering the Tower API](11-rest-api)
+- [Exercise 9 - OPTIONAL: Discovering the Tower API](9-rest-api)
