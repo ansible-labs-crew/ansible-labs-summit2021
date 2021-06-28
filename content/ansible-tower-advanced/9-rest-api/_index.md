@@ -1,6 +1,6 @@
 +++
 title = "Discovering the Tower API"
-weight = 10
+weight = 9
 +++
 
 ## OPTIONAL EXERCISE
