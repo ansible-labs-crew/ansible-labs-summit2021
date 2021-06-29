@@ -218,3 +218,83 @@ After the job has finished, check if everything worked fine. In your **VS Code**
     [{{< param "control_prompt" >}} ~]$ curl http://node3/nodejs
 
 You should be greeted with a friendly `Hello World`
+
+## Workflow Approvals
+
+To make Workflows in Automation Controller even more useful you can add approval steps in your Workflow. Using this feature it's possible to have another user review and approve all or certain nodes in a Workflow. In addition you could set time limits, so a Workflow waiting for approval would be cancelled or proceed after time runs out automatically.
+
+Let's see how this works by adding an approval step to the **Deploy Webapplication** Workflow Template you configured above. The goal is to:
+
+- Allow user _wweb_ to execute the workflow by allowing the team **Web Content** access.
+- To have a user do the approval.
+- Require an approval before the application is installed.
+
+Start with inserting the approval into the workflow:
+
+- As user _admin_ open the Workflow by going to **Resources -> Templates -> Deploy Webapplication**.
+- Click  **Visualizer** to open the Workflow editor.
+- Hover the mouse over the green connection line between the to nodes and click **+** to add another node.
+- As run condition choose **Always**.
+- Click **Next**
+- Set **Node Type** to **Approval**
+- **Name**: approve app install
+- **Save**
+
+![Workflow Approval](../../images/workflow_approval.png)
+
+Now give members of the team **Web Content** access rights to execute the Workflow. You did this in the RBAC excercise, basically do this:
+
+- Go to the **Access** tab of the Workflow.
+- Click ![Add](../../images/blue_add.png?classes=inline) and add team **Web Content**.
+- Select the role **Execute**
+- **Save**
+
+Log out and log in again as user _wweb_.
+
+- You should be able to execute the Workflow Template **Deploy Webapplication**
+- Launch it
+- The workflow should be stuck in the **approve app install** step, waiting for approval.
+- In the upper right corner you'll see a notification **1** near to the bell icon. Click it.
+
+![Approval Notification](../../images/approval_notification.png)
+
+- You'll get to the **Workflow Approvals** view listing pending approvals.
+- If you check the box to the right of the approval, you'll note you **can't approve** because the **Approve** and **Deny** buttons stay inactive.
+
+No surprise, you don't have the permissions as user _wweb_. Log in as admin again and create the approval user (you did this before in the RBAC exercise):
+
+- **Username:** aapproval
+- **Password:** ansible
+- **First Name:** Anton
+- **Last name:** Approval
+- **User Type:** Normal User
+- **Save**
+
+{{% notice tip %}}
+You could of course approve the workflow as user _admin_, but we'd like to create a dedicated user for this!
+{{% /notice %}}
+
+Now go back to the Workflow **Deploy Webapplication**
+
+- Open the **Access** tab
+- Add a _aapproval_ as new user
+- Give the role **Approve**
+- **Save**
+
+You're set. The Workflow run _wweb_ started is still in pending state, you can check this by going to **Views -> Jobs**, it will still be shown as running. Okay, let's approve it!
+
+- Log out and in as user _aapproval_
+- You'll again see the bell notification in the upper right, click it to get to the **Workflow Approvals** view.
+- Check the box to the left of the **approve app install** job.
+- You should now see the **Approve** and **Deny** buttons getting active!
+- Click the **Approve** button.
+- Go to **Views -> Jobs** and click the **Deploy Webapplicattion** job.
+
+You'll see how the job picks up after you approved it and goes to the **Web App Deploy** node to finish.
+
+This was a basic example to show how you could create a Job, allow one user to execute it and another user to approve it!
+
+
+
+
+
