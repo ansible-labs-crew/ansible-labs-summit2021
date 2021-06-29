@@ -39,14 +39,14 @@ A Team is a subdivision of an organization with associated users, projects, cred
 
 Create a Team:
 
-- Go to **Access → Teams**
+- Go to **Access → Teams**.
 - Click the ![add](../../images/blue_add.png?classes=inline) button and create a team named `Web Content`.
 
 Now you can add a user to the Team:
 
 - Return to **Access -> Users** and click the wweb user.
-- Jump to the **Teams** tab of user wweb
-- Click the **Associate** button and check the **Web Content** Team
+- Jump to the **Teams** tab of user wweb.
+- Click the **Associate** button and check the **Web Content** Team.
 - Click **Save**
 - User `wweb` is now a member of the **Web Content** Team.
 
@@ -58,8 +58,8 @@ To allow users or teams to actually do something, you have to set permissions. T
 
 Add the permission to use the template:
 
-- Open the Team **Web Content**
-- Go to the **Roles** tab and click the ![add](../../images/blue_add.png?classes=inline) button
+- Open the Team **Web Content**.
+- Go to the **Roles** tab and click the ![add](../../images/blue_add.png?classes=inline) button.
 - A new window opens. You can choose to set permissions for a number of resources.
 
   - Select the resource type **Job Templates**
@@ -87,9 +87,9 @@ Check the result: In the **VS Code** terminal execute `curl` to pull the content
 
 Just recall what you have just done: You enabled a restricted user to run an Ansible Playbook
 
-- Without having access to the credentials
+- Without having access to the credentials.
 
-- Without being able to change the Playbook itself
+- Without being able to change the Playbook itself.
 
 - But with the ability to change variables you predefined\!
 

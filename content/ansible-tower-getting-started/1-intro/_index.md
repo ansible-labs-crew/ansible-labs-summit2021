@@ -11,12 +11,12 @@ So the artist formerly known as Ansible Tower is now called Automation Controlle
 
 Automation Controller basically is an API to Ansible Automation, most users will get in touch with it through the web-based UI which uses the API underneath. It provides the following features:
 
-- a user-friendly dashboard.
-- role based access control
-- one-click automation templates
-- mangement of dynamic inventory sources
-- automation workflows with approval
-- a solid audit track ("who did what when")
+- A user-friendly dashboard
+- Role based access control
+- One-click automation templates
+- Mangement of dynamic inventory sources
+- Automation workflows with approval
+- A solid audit track ("who did what when")
 
 And much more... as you'll learn in this lab!
 
@@ -98,9 +98,9 @@ Let's have a first look at the Automation Controller: Point your browser to the 
 
 The web UI of the Automation Controller greets you with a dashboard giving an overview of your automation including:
 
-- recent job activity
-- the number of managed hosts
-- quick pointers to lists of hosts with problems.
+- Recent job activity
+- The number of managed hosts
+- Quick pointers to lists of hosts with problems.
 
 The dashboard also displays real time data about the execution of tasks completed in playbooks.
 

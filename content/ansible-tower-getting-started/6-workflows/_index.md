@@ -5,9 +5,9 @@ weight = 6
 
 The basic idea of an Automation Controller workflow is to link multiple Job Templates together. They may or may not share inventory, Playbooks or even permissions. The links can be conditional:
 
-- if job template A succeeds, job template B is automatically executed afterwards
+- If job template A succeeds, job template B is automatically executed afterwards.
 
-- but in case of failure, job template C will be run.
+- In case of a failure, job template C will be run.
 
 And the workflows are not even limited to Job Templates, but can also include project or inventory updates.
 
@@ -53,23 +53,15 @@ If you are still logged in as user **wweb**, log out of and log in as user **adm
 
 - Create the project for web operations:
 
-  - It should be named **Webops Git Repo**
+  - It should be named **Webops Git Repo**.
 
-  - The URL to access the repo is **https\://github.com/ansible/workshop-examples.git**
-
-  - The **Source Control Branch/Tag/Commit** is **webops_summit_2020**
-
-  - Do not allow branch overrides
+  - The URL to access the repo is **https\://github.com/ansible-labs-crew/playbooks_ops_summit2021.git**.
 
 - Create the project for the application developers:
 
-  - It should be named **Webdev Git Repo**
+  - It should be named **Webdev Git Repo**.
 
-  - The URL to access the repo is **https\://github.com/ansible/workshop-examples.git**
-
-  - The **Source Control Branch/Tag/Commit** is **webdev_summit_2020**
-
-  - Do not allow branch overrides
+  - The URL to access the repo is **https\://github.com/ansible-labs-crew/playbooks_dev_summit2021.git**.
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>
@@ -83,11 +75,9 @@ If you are still logged in as user **wweb**, log out of and log in as user **adm
 
   - **Source Control Credential Type:** Git
 
-  - **Source Control URL:** https\://github.com/ansible/workshop-examples.git
+  - **Source Control URL:** https\://github.com/ansible-labs-crew/playbooks_ops_summit2021.git
 
-  - **Source Control Branch/Tag/Commit:** `webops_summit_2020`
-
-  - **Options:** Clean, Delete, Update Revision on Launch
+   - **Options:** Clean, Delete, Update Revision on Launch
 
 - Click **Save**
 
@@ -99,9 +89,7 @@ If you are still logged in as user **wweb**, log out of and log in as user **adm
 
   - **Source Control Credential Type:** Git
 
-  - **Source Control URL:** https\://github.com/ansible/workshop-examples.git
-
-  - **Source Control Branch/Tag/Commit:** `webdev_summit_2020`
+  - **Source Control URL:** https\://github.com/ansible-labs-crew/playbooks_dev_summit2021.git
 
   - **Options:** Clean, Delete, Update Revision on Launch
 
@@ -131,7 +119,7 @@ We want to install the **NodeJS app on node3 only**. The Inventory **Workshop In
 
   - **Execution Environment:** Controller Default EE
 
-  - **Playbook:** `rhel/webops/web_infrastructure.yml`
+  - **Playbook:** `web_infrastructure.yml`
 
   - **Credentials:** Workshop Credentials
 
@@ -153,7 +141,7 @@ We want to install the **NodeJS app on node3 only**. The Inventory **Workshop In
 
   - **Execution Environment:** Controller Default EE
 
-  - **Playbook:** `rhel/webdev/install_node_app.yml`
+  - **Playbook:** `install_node_app.yml`
 
   - **Credentials:** Workshop Credentials
 
@@ -184,16 +172,16 @@ And now you finally set up the Workflow. Workflows are configured in the **Templ
 - Click on the **Start** button, a dialog to configure a new **workflow node** opens. 
 - First select the node type, you can choose between **Job Template**, **Project Sync**, **Inventory Source Sync**, **Approval** and **Workflow Job Template**.
 - Select **Job Template**
-- Choose the **Web Infra Deploy** Template, you might have to switch pages 
+- Choose the **Web Infra Deploy** Template, you might have to switch pages.
 - Click **Save**.
 
 You get into the **Workflow Visualizer** overview showing the first workflow node.
 
-- The node gets annotated with the name of the job. 
-- Hover the mouse pointer over the node, you’ll see a number of options appearing: 
-  - **+** to add a new workflow node, 
+- The node gets annotated with the name of the job.
+- Hover the mouse pointer over the node, you’ll see a number of options appearing:
+  - **+** to add a new workflow node
   - **i** for Job Template details
-  - a pencil icon to edit this node's settings, 
+  - a pencil icon to edit this node's settings
   - a link icon to link to another node 
   - and a delete icon.
 
@@ -205,7 +193,7 @@ You get into the **Workflow Visualizer** overview showing the first workflow nod
 The type allows for more complex workflows. You could lay out different execution paths for successful and for failed Playbook runs.
 {{% /notice %}}
 
-- Choose **Web App Deploy** as the next Job
+- Choose **Web App Deploy** as the next Job.
 
 - Click **Save**
 

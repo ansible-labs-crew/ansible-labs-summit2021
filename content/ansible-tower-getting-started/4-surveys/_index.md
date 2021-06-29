@@ -11,7 +11,7 @@ You have installed Apache on all hosts in the job you just run. Now we’re goin
 
 - Create a job **Template** with a survey to collect the values for the `index.html` template.
 
-- Launch the job **Template**
+- Launch the job **Template**.
 
 Additionally, the role will also make sure that the Apache configuration is properly set up - in case it got mixed up during the other exercises.
 
@@ -21,7 +21,7 @@ The survey feature only provides a simple query for data - it does not support f
 
 ## The Apache-configuration Role
 
-The Playbook and the role with the Jinja template already exist in the Github repository [https://github.com/ansible-labs-crew/ansible-labs-playbooks](https://github.com/ansible-labs-crew/ansible-labs-playbooks) (always using the [correct tag/branch](https://github.com/ansible-labs-crew/ansible-labs-playbooks.git/tree/summit_2021)) in the directory `rhel/apache`.
+The Playbook and the role with the Jinja template already exist in the directory `rhel/apache` in the Github repository [https://github.com/ansible-labs-crew/playbooks_summit2021](https://github.com/ansible-labs-crew/playbooks_summit2021) you already configured as a Project.
 
  Head over to the Github UI and have a look at the content: the playbook `apache_role_install.yml` merely references the role. The role can be found in the `roles/role_apache` subdirectory.
 
@@ -45,19 +45,19 @@ Now you create a new Template that includes a survey.
 
 - **Name:** Create index.html
 
-- Configure the template to:
+- Configure the template to use:
 
-  - Use the `Webserver` Inventory
+  - `Webserver` as Inventory.
 
-  - Use the `Ansible Workshop Examples` **Project**
+  - `Ansible Workshop Examples` as the **Project**.
 
-  - Use the `Controller Default EE` **Execution Environment**
+  - `Controller Default EE` for the **Execution Environment**.
 
-  - Use the `apache_role_install.yml` **Playbook**
+  - `apache_role_install.yml` as the **Playbook** to execute.
 
-  - Use the `Workshop Credentials`
+  - `Workshop Credentials` as credentials.
 
-  - To run with privilege escalation
+  - privilege escalation.
 
 Try for yourself, the solution is below.
 

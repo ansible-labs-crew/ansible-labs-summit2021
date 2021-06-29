@@ -5,13 +5,13 @@ weight = 3
 
 An Automation Controller **Project** is a logical collection of Ansible Playbooks. You can manage your playbooks by placing them into a source code management (SCM) system supported by Automation Controller, including Git, Subversion, and Mercurial.
 
-You should definitely keep your Playbooks under version control. In this lab we’ll use Playbooks that are provided in a Github repository.
+You should definitely keep your Playbooks under version control. 
 
-## Setup Git Repository
+## Setup a Git Repository as a Project
 
-For this lab we will use playbooks stored in this Git repository, using the [**summit_2021** Branch](https://github.com/ansible-labs-crew/ansible-labs-playbooks/tree/summit_2021):
+In this lab we’ll use existing Playbooks that are provided in this Github repository:
 
-[https://github.com/ansible-labs-crew/ansible-labs-playbooks](https://github.com/ansible-labs-crew/ansible-labs-playbooks)
+[https://github.com/ansible-labs-crew/playbooks_summit2021](https://github.com/ansible-labs-crew/playbooks_summit2021)
 
 A Playbook to install the Apache webserver has already been committed to the directory **rhel/apache**, `apache_install.yml`, here for reference:
 
@@ -55,7 +55,7 @@ A Playbook to install the Apache webserver has already been committed to the dir
 Note the difference to other Playbooks you might have written\! Most importantly there is no `become` and `hosts` is set to `all`.
 {{% /notice %}}
 
-To configure and use this repository as a **Source Control Management (SCM)** system in Automation Controller you have to create a **Project** that uses the repository
+To configure and use this repository as a **Source Code Management (SCM)** system in Automation Controller you have to create a **Project** that uses the repository
 
 ## Create the Project
 
@@ -69,11 +69,9 @@ To configure and use this repository as a **Source Control Management (SCM)** sy
 
 Now you need the URL to access the repo. You could get the URL in Github as **Clone URL**. Enter the URL into the Project configuration:
 
-- **Source Control URL:** `https://github.com/ansible-labs-crew/ansible-labs-playbooks.git`
+- **Source Control URL:** `https://github.com/ansible-labs-crew/playbooks_summit2021.git`
 
-- **Source Control Branch/Tag/Commit :** `summit_2021`
-
-- **Options:** Tick all boxes to always get a fresh copy of the repository and to update the repository when launching a job.
+- **Options:** Tick the boxes **Clean, Delete, Update Revision on Launch** to always get a fresh copy of the repository and to update the repository when launching a job.
 
 - Click **Save**
 
@@ -185,9 +183,9 @@ Please make sure to finish these steps as the next chapter depends on it!
 
 - Create a new inventory called `Webserver` and make only `node1` member of it.
 
-- Copy the `Install Apache` template using the copy icon in the **Templates** view
+- Copy the `Install Apache` template using the copy icon in the **Templates** view.
 
-- Edit the Template and change the name to `Install Apache Ask`
+- Edit the Template and change the name to `Install Apache Ask`.
 
 - Change the **Inventory** setting of the Project so it will prompt for the inventory on launch (tick the appropriate box).
 
@@ -195,9 +193,9 @@ Please make sure to finish these steps as the next chapter depends on it!
 
 - Launch the `Install Apache Ask` template.
 
-- It will now ask for the inventory to use, choose the `Webserver` inventory and click **Next** and **Launch**
+- It will now ask for the inventory to use, choose the `Webserver` inventory and click **Next** and **Launch**.
 
-- Wait until the Job has finished and make sure it ran only on `node1`
+- Wait until the Job has finished and make sure it ran only on `node1`.
 
 {{% notice tip %}}
 The Job didn’t change anything because Apache was already installed in the latest version.
