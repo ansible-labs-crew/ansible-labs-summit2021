@@ -130,9 +130,13 @@ As you’ve probably done with Ansible before you can run ad hoc commands from A
 - Click **Run Command**. In the next screen you have to specify the ad hoc command:
 
   - As **Module** choose **ping**
+  
   - Click **Next**
+  
   - As **Execution Environment** choose **Controller Default EE**
+  
   - Click **Next**
+  
   - For **Machine Credential** choose **Workshop Credentials**.
 
   - Click **Launch**, and watch the output. It should report **SUCCESS** for all nodes, of course.
@@ -168,7 +172,9 @@ Okay, a small challenge: Run an ad hoc to make sure the package "tmux" is instal
 <p>
 
 - **Module:** yum
+
 - **Arguments:** name=tmux
+
 - Tick **Enable Privilege Escalation**
 
 </p>
@@ -192,27 +198,43 @@ So what happens, when Automation Controller runs an ad hoc command or Playbook? 
 You should already have your **VS Code** terminal open in another browser tab, if not open https://{{< param "external_code" >}} and do **Terminal -> New Terminal**. In this terminal:
 
 - You should be your **student\<N>** user, become the **awx** user by running `sudo -u awx -i`
+
 - First let's look for the image:
+
 ```
 [awx@ansible-1 ~]$ podman images
 REPOSITORY              TAG     IMAGE ID      CREATED       SIZE
 quay.io/ansible/awx-ee  0.2.0   68b8d8c4702d  2 months ago  1.25 GB
 ```
+
 - It was pulled from the registry to be available locally.
+
 - Now we want to observe how an EE is run as a container when you execute your automation. `podman ps -w 2` will list running containers, the `-w` option updates the output regularly. Run the command, at first it will show you something like this (no container running):
+
 ```
 CONTAINER ID  IMAGE   COMMAND  CREATED  STATUS  PORTS   NAMES
 ```
+
 - Keep podman running, now it's time to execute some automation. 
+
 - In the web UI run an ad hoc command again. Go to **Resources → Inventories → Workshop Inventory**
+
 - In the **Hosts** view select the three hosts.
+
 - Click **Run Command**. Specify the ad hoc command as you did before:
+
   - **Module**: command
+
   - **Arguments**: sleep 60
+
   - **Next**
+
   - **Execution Environment**: Controller Default EE
+
   - **Next**
+
   - **Machine Credential**: Workshop Credentials
+
   - Click **Launch**
 
 Now go back to the **VS Code** terminal. You'll see a container is launched to run the ad hoc command and then removed again:
@@ -226,6 +248,7 @@ The `sleep 60` command was only used to keep the container running for some time
 {{% /notice %}}
 
 - Feel free to relaunch the job again!
+
 - Stop `podman` with `CTRL-C`.
 
 This is how Automation Controller uses Linux containers to run Ansible automation jobs in their own dedicated environments. 

@@ -170,23 +170,35 @@ And now you finally set up the Workflow. Workflows are configured in the **Templ
 - After saving the template the **Workflow Visualizer** opens to allow you to build a workflow. You can later open the **Workflow Visualizer** again by using the button on the template details page.
 
 - Click on the **Start** button, a dialog to configure a new **workflow node** opens. 
+
 - First select the node type, you can choose between **Job Template**, **Project Sync**, **Inventory Source Sync**, **Approval** and **Workflow Job Template**.
+
 - Select **Job Template**
+
 - Choose the **Web Infra Deploy** Template, you might have to switch pages.
+
 - Click **Save**.
 
 You get into the **Workflow Visualizer** overview showing the first workflow node.
 
 - The node gets annotated with the name of the job.
+
 - Hover the mouse pointer over the node, you’ll see a number of options appearing:
+
   - **+** to add a new workflow node
+
   - **i** for Job Template details
+
   - a pencil icon to edit this node's settings
+
   - a link icon to link to another node 
+
   - and a delete icon.
 
 - We want to add another workflow node, click the **+** sign
+
 - You could now set the condition under which the next node is executed, select **On Success**
+
 - Click **Next**
 
 {{% notice tip %}}
@@ -226,18 +238,27 @@ To make Workflows in Automation Controller even more useful you can add approval
 Let's see how this works by adding an approval step to the **Deploy Webapplication** Workflow Template you configured above. The goal is to:
 
 - Allow user _wweb_ to execute the workflow by allowing the team **Web Content** access.
+
 - To have a user do the approval.
+
 - Require an approval before the application is installed.
 
 Start with inserting the approval into the workflow:
 
 - As user _admin_ open the Workflow by going to **Resources -> Templates -> Deploy Webapplication**.
+
 - Click  **Visualizer** to open the Workflow editor.
+
 - Hover the mouse over the green connection line between the to nodes and click **+** to add another node.
+
 - As run condition choose **Always**.
+
 - Click **Next**
+
 - Set **Node Type** to **Approval**
+
 - **Name**: approve app install
+
 - **Save**
 
 ![Workflow Approval](../../images/workflow_approval.png)
@@ -245,15 +266,21 @@ Start with inserting the approval into the workflow:
 Now give members of the team **Web Content** access rights to execute the Workflow. You did this in the RBAC excercise, basically do this:
 
 - Go to the **Access** tab of the Workflow.
+
 - Click ![Add](../../images/blue_add.png?classes=inline) and add team **Web Content**.
+
 - Select the role **Execute**
+
 - **Save**
 
 Log out and log in again as user _wweb_.
 
 - You should be able to execute the Workflow Template **Deploy Webapplication**
+
 - Launch it
+
 - The workflow should be stuck in the **approve app install** step, waiting for approval.
+
 - In the upper right corner you'll see a notification **1** near to the bell icon. Click it.
 
 ![Approval Notification](../../images/approval_notification.png)
@@ -264,10 +291,15 @@ Log out and log in again as user _wweb_.
 No surprise, you don't have the permissions as user _wweb_. Log in as admin again and create the approval user (you did this before in the RBAC exercise):
 
 - **Username:** aapproval
+
 - **Password:** ansible
+
 - **First Name:** Anton
+
 - **Last name:** Approval
+
 - **User Type:** Normal User
+
 - **Save**
 
 {{% notice tip %}}
@@ -277,17 +309,25 @@ You could of course approve the workflow as user _admin_, but we'd like to creat
 Now go back to the Workflow **Deploy Webapplication**
 
 - Open the **Access** tab
+
 - Add a _aapproval_ as new user
+
 - Give the role **Approve**
+
 - **Save**
 
 You're set. The Workflow run _wweb_ started is still in pending state, you can check this by going to **Views -> Jobs**, it will still be shown as running. Okay, let's approve it!
 
 - Log out and in as user _aapproval_
+
 - You'll again see the bell notification in the upper right, click it to get to the **Workflow Approvals** view.
+
 - Check the box to the left of the **approve app install** job.
+
 - You should now see the **Approve** and **Deny** buttons getting active!
+
 - Click the **Approve** button.
+
 - Go to **Views -> Jobs** and click the **Deploy Webapplicattion** job.
 
 You'll see how the job picks up after you approved it and goes to the **Web App Deploy** node to finish.

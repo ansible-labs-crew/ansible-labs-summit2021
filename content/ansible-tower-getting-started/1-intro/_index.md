@@ -12,10 +12,15 @@ So the artist formerly known as Ansible Tower is now called Automation Controlle
 Automation Controller basically is an API to Ansible Automation, most users will get in touch with it through the web-based UI which uses the API underneath. It provides the following features:
 
 - A user-friendly dashboard
+
 - Role based access control
+
 - One-click automation templates
+
 - Mangement of dynamic inventory sources
+
 - Automation workflows with approval
+
 - A solid audit track ("who did what when")
 
 And much more... as you'll learn in this lab!
@@ -72,9 +77,9 @@ Either way you'll get an URL similar to this: `http://{{< param "external_domain
 
 Your main points of contact with the lab are the Automation Controller's web UI and **VS Code** in your browser. You'll use **VS Code** to:
 
-- open virtual terminals
+- Open virtual terminals
 
-- edit files
+- Edit files
 
 Now open **VS Code** in a new browser tab using the link from the lab landing page or this link (replace **\<N\>** by your student number and the **\<LABID\>**):
 
@@ -99,7 +104,9 @@ Let's have a first look at the Automation Controller: Point your browser to the 
 The web UI of the Automation Controller greets you with a dashboard giving an overview of your automation including:
 
 - Recent job activity
+
 - The number of managed hosts
+
 - Quick pointers to lists of hosts with problems.
 
 The dashboard also displays real time data about the execution of tasks completed in playbooks.
