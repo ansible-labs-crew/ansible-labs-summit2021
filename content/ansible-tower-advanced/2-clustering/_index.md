@@ -45,7 +45,7 @@ You’ll learn more about this later.
 
 ## Access your Tower Cluster via Command line
 
-You can also get information about your cluster on the command line. Log in to your **code-server** again if you closed it by opening this URL in your browser:
+You can also get information about your cluster on the command line. Log in to your **VS Code** again if you closed it by opening this URL in your browser:
 
 **`https://{{< param "external_code" >}}`**
 

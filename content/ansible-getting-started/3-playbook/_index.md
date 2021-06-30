@@ -96,17 +96,17 @@ There is a [best practice](http://docs.ansible.com/ansible/playbooks_best_practi
 
 Instead, we are going to create a very simple directory structure for our playbook, and add just a couple of files to it.
 
-In your browser, bring up your **code-server** terminal (you opened one in the first section) and create a directory called `ansible-files` in your home directory and change into it:
+In your browser, bring up your **VS Code** terminal (you opened one in the first section) and create a directory called `ansible-files` in your home directory and change into it:
 
 ```bash
 [{{< param "control_prompt" >}} ~]$ mkdir ansible-files
 [{{< param "control_prompt" >}} ~]$ cd ansible-files/
 ```
 
-Now use **code-server** to add a file called `apache.yml` with the following content.
+Now use **VS Code** to add a file called `apache.yml` with the following content.
 
 {{% notice tip %}}
-If you are unsure how to use **code-server** (basically like VSCode), have a quick look at the [Visual Studio Code Server introduction](../../vscode-intro/)
+If you are unsure how to use **VS Code** (basically like VSCode), have a quick look at the [Visual Studio Code Server introduction](../../vscode-intro/)
 {{% /notice %}}
 
 ```
@@ -128,7 +128,7 @@ This shows one of Ansible’s strengths: The Playbook syntax is easy to read and
 You obviously need to use privilege escalation to install a package or run any other task that requires root permissions. This is done in the Playbook by `become: yes`.
 {{% /notice %}}
 
-Now that we've defined the play, let's add a task to get something done. We will add a task in which yum will ensure that the Apache package is installed in the latest version. Modify the file so that it looks like the following listing using the **code-server** editor:
+Now that we've defined the play, let's add a task to get something done. We will add a task in which yum will ensure that the Apache package is installed in the latest version. Modify the file so that it looks like the following listing using the **VS Code** editor:
 
 ```
 ---
@@ -166,7 +166,7 @@ Save your playbook.
 
 ## Running the Playbook
 
-Playbooks are executed using the `ansible-playbook` command on the control node. Before you run a new Playbook it’s a good idea to check for syntax errors. Head over to the **code-server** terminal and run:
+Playbooks are executed using the `ansible-playbook` command on the control node. Before you run a new Playbook it’s a good idea to check for syntax errors. Head over to the **VS Code** terminal and run:
 
 ```bash
 [{{< param "control_prompt" >}} ansible-files]$ ansible-playbook --syntax-check apache.yml

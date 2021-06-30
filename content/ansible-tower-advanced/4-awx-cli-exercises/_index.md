@@ -53,7 +53,7 @@ Now that we have the empty inventory created, add your two managed hosts using t
 
 As mentioned one of the purposes of **awx** is to use it to automatically configure more complex Tower setups. In such cases, multiple **awx** commands are put together in a script. We follow that practice in our example here, and create a shell script on the control host with all commands you have to run to bootstrap Tower. So in the next few paragraphs we describe the steps to do and describe the corresponding **awx** commands. But we will not execute them, but instead write them into a script.
 
-In **code-server** create a new file **File->New File** and save it (**File->Save As**) as **`setup-tower.sh`**. Add the commands executed above:
+In **VS Code** create a new file **File->New File** and save it (**File->Save As**) as **`setup-tower.sh`**. Add the commands executed above:
 
 ```bash
 #!/bin/bash

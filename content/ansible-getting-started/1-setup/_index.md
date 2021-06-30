@@ -24,7 +24,7 @@ On the lab landing page you'll find the URLs you need to access complete with st
 
 ## Accessing your Lab Environment
 
-Your main points of contact with the lab is **code-server**, providing a VSCode-experience in your browser.
+Your main points of contact with the lab is **VS Code**, providing a VSCode-experience in your browser.
 
 Now open code-server using the **VS Code access** link from the lab landing page or use this link in your browser by replacing **\<N\>** by your student number and the **\<LABID\>**:
 
