@@ -30,7 +30,8 @@ jobs:
         EXTERNAL_REPOSITORY: ansible-labs-crew/ansible-labs-crew.github.io
         PUBLISH_BRANCH: master
         PUBLISH_DIR: ./public
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        #github_token: ${{ secrets.GITHUB_TOKEN }}
         emptyCommits: false
         commitMessage: ${{ github.event.head_commit.message }}
