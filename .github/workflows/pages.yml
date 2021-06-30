@@ -25,13 +25,12 @@ jobs:
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
-      env:
-        ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-        EXTERNAL_REPOSITORY: ansible-labs-crew/ansible-labs-crew.github.io
-        PUBLISH_BRANCH: master
-        PUBLISH_DIR: ./public
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #env:
+      #  ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
       with:
-        #github_token: ${{ secrets.GITHUB_TOKEN }}
         emptyCommits: false
         commitMessage: ${{ github.event.head_commit.message }}
+        deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        external_repository: ansible-labs-crew/ansible-labs-crew.github.io
+        publish_branch: master
+        publish_dir: ./public
