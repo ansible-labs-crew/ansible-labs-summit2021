@@ -83,15 +83,13 @@ Your main points of contact with the lab are the Automation Controller's web UI 
 
 Now open **VS Code** in a new browser tab using the link from the lab landing page or this link (replace **\<N\>** by your student number and the **\<LABID\>**):
 
-```bash
-     https://{{< param "external_code" >}}
-```
+`https://{{< param "external_code" >}}`
 
-![code-server login](../../images/vscode-pwd.png)
+![VS Code login](../../images/vscode-pwd.png)
 
 Use the password provided on the landing page to login into the code-server web UI, you can close the **Welcome** tab. Now open a new terminal by heading to the menu item **Terminal** at the top of the page and select **New Terminal**. A new section will appear in the lower half of the screen and you will be greeted with a prompt:
 
-![code-server terminal](../../images/vscode-terminal.png)
+![VS Code terminal](../../images/vscode-terminal.png)
 
 If unsure about the usage, read the [Visual Studio Code Server introduction](../../vscode-intro/), to learn more about how to create and edit files, and to work with the Terminal.
 

@@ -237,7 +237,7 @@ To make Workflows in Automation Controller even more useful you can add approval
 
 Let's see how this works by adding an approval step to the **Deploy Webapplication** Workflow Template you configured above. The goal is to:
 
-- Allow user _wweb_ to execute the workflow by allowing the team **Web Content** access.
+- Allow user **wweb** to execute the workflow by allowing the team **Web Content** access.
 
 - To have a user do the approval.
 
@@ -245,7 +245,7 @@ Let's see how this works by adding an approval step to the **Deploy Webapplicati
 
 Start with inserting the approval into the workflow:
 
-- As user _admin_ open the Workflow by going to **Resources -> Templates -> Deploy Webapplication**.
+- As user **admin** open the Workflow by going to **Resources -> Templates -> Deploy Webapplication**.
 
 - Click  **Visualizer** to open the Workflow editor.
 
@@ -273,7 +273,7 @@ Now give members of the team **Web Content** access rights to execute the Workfl
 
 - **Save**
 
-Log out and log in again as user _wweb_.
+Log out and log in again as user **wweb**.
 
 - You should be able to execute the Workflow Template **Deploy Webapplication**
 
@@ -288,7 +288,7 @@ Log out and log in again as user _wweb_.
 - You'll get to the **Workflow Approvals** view listing pending approvals.
 - If you check the box to the right of the approval, you'll note you **can't approve** because the **Approve** and **Deny** buttons stay inactive.
 
-No surprise, you don't have the permissions as user _wweb_. Log in as admin again and create the approval user (you did this before in the RBAC exercise):
+No surprise, you don't have the permissions as user **wweb**. Log in as admin again and create the approval user (you did this before in the RBAC exercise):
 
 - **Username:** aapproval
 
@@ -303,22 +303,22 @@ No surprise, you don't have the permissions as user _wweb_. Log in as admin agai
 - **Save**
 
 {{% notice tip %}}
-You could of course approve the workflow as user _admin_, but we'd like to create a dedicated user for this!
+You could of course approve the workflow as user **admin**, but we'd like to create a dedicated user for this!
 {{% /notice %}}
 
 Now go back to the Workflow **Deploy Webapplication**
 
 - Open the **Access** tab
 
-- Add a _aapproval_ as new user
+- Add a **aapproval** as new user
 
 - Give the role **Approve**
 
 - **Save**
 
-You're set. The Workflow run _wweb_ started is still in pending state, you can check this by going to **Views -> Jobs**, it will still be shown as running. Okay, let's approve it!
+You're set. The Workflow run **wweb** started is still in pending state, you can check this by going to **Views -> Jobs**, it will still be shown as running. Okay, let's approve it!
 
-- Log out and in as user _aapproval_
+- Log out and in as user **aapproval**
 
 - You'll again see the bell notification in the upper right, click it to get to the **Workflow Approvals** view.
 

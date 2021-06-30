@@ -3,7 +3,7 @@ title = "Projects & job templates"
 weight = 3
 +++
 
-An Automation Controller **Project** is a logical collection of Ansible Playbooks. You can manage your playbooks by placing them into a source code management (SCM) system supported by Automation Controller, including Git, Subversion, and Mercurial.
+An Automation Controller **Project** is a logical collection of Ansible Playbooks. You manage your playbooks by placing them into a source code management (SCM) system supported by Automation Controller, including Git, Subversion, and others.
 
 You should definitely keep your Playbooks under version control. 
 

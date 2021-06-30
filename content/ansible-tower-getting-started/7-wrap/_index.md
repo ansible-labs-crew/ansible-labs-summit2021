@@ -75,7 +75,7 @@ There is of course more then one way to accomplish this, but here is what you sh
   - Add `stage: dev` to the inventory `Webserver` by putting it into the **Variables** field beneath the three start-yaml dashes.
 
 {{% notice warning %}}
-Make sure to add the variable to the inventory and **not** to a node! And take care to keep the three dashes that mark the YAML start in place when adding variables in Automation Controller!
+Make sure to add the variable to the inventory and **not** to a node! 
 {{% /notice %}}
 
 - In the same way add a variable `stage: prod` but this time only for `node2` (go to the **Hosts** view of the inventory).
