@@ -69,6 +69,10 @@ Run and test your playbook and verify everything works as expected, by logging i
 
 Now that we have the empty inventory created, add your two managed hosts using their internal hostnames **`{{< param "internal_host1" >}}`** and **`{{< param "internal_host2" >}}`**, again using the AWX Ansible Collection. The module to add hosts to an inventory is called **awx.awx.tower_host**. Read the documentation and try to figure out how to add the necessary tasks to the Ansible Playbook.
 
+{{% notice info %}}
+Use **ansible-doc awx.awx.tower_host** to open the documentation for the specified module.
+{{% /notice %}}
+
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>
 <p>
@@ -106,7 +110,7 @@ Run and test your playbook and verify everything works as expected, by logging i
 SSH keys have already been created and distributed in your lab environment and `sudo` has been setup on the managed hosts to allow password-less login. When you SSH into a host as user **student{{< param "student" >}}** from **{{< param "internal_control" >}}** you will become user **ec2-user** on the host you logged in.
 {{% /notice %}}
 
-Now we want to configure these credentials to access our managed hosts from Automation Controller. Try to find the necessary attributes in the **awx.awx.tower_credential** module documentation.
+Now we want to configure these credentials to access our managed hosts from Automation Controller. Your private key is stored in `~/.ssh/aws-private.pem` and already configured on the remote machine. Try to find the necessary attributes in the **awx.awx.tower_credential** module documentation.
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>
@@ -146,14 +150,14 @@ Now we want to configure these credentials to access our managed hosts from Auto
 </details>
 
 {{% notice info %}}
-If you run this Ansible Playbook multiple times, you will notice the **awx.awx.tower_credential** module is not idempotent! Since we store the SSH key encrypted, the Ansible Module is unable to verify it has already been set and didn't change. This is what we want and expect from a secure system, but it also means Ansible has no means to verify it and hence overrides the password every time the Ansible Playbook is executed.
+If you run this Ansible Playbook multiple times, you will notice the **awx.awx.tower_credential** module is not idempotent! Since we store the SSH key encrypted, the Ansible Module is unable to verify it has already been set and didn't change. This is what we want and expect from a secure system, but it also means Ansible has no means to verify it and hence overrides the SSH key or password every time the Ansible Playbook is executed.
 {{% /notice %}}
 
 Run and test your playbook and verify everything works as expected, by logging ino the Automation Controller Web UI.
 
 ## Create Projects
 
-The Ansible content used in this lab is hosted on Github. The next step is to add a project to import the Ansible Playbooks. As before, try to figure out the necessary parameters by reading the documentation of the **awx.awx.tower_project** module documentation.
+The Ansible content used in this lab is hosted on Github in the project [https://github.com/goetzrieger/ansible-labs-playbooks.git](https://github.com/goetzrieger/ansible-labs-playbooks.git). The next step is to add a project to import the Ansible Playbooks. As before, try to figure out the necessary parameters by reading the documentation of the **awx.awx.tower_project** module documentation.
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>
@@ -207,7 +211,7 @@ If you wonder why **awx.awx.tower_credential** is not idempotent, read the info 
 
 ## Create Job Templates
 
-Before running an Ansible **Job** from your Automation Controller cluster you must create a **Job Template**, again business as usual for Automation Controller users. For this part of the Ansible Playbook, we will use the **awx.awx.tower_job_template** module.
+Before running an Ansible **Job** from your Automation Controller cluster you must create a **Job Template**, again business as usual for Automation Controller users. For this part of the Ansible Playbook, we will use the **awx.awx.tower_job_template** module. The name of the Ansible Playbook you want run is `apache_install.yml`.
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>
