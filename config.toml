@@ -1,10 +1,10 @@
 #baseurl = "https://people.redhat.com/grieger/summit2020_labs/"
-baseurl = "https://goetzrieger.github.io/"
+baseurl = "https://ansible-labs-crew.github.io/"
 contentdir    = "content"
 layoutdir     = "layouts"
 publishdir    = "public"
 
-title = "Ansible Labs for AnsibleFest"
+title = "Ansible Labs for Red Hat Summit 2021"
 canonifyurls = true
 paginate = 10
 
@@ -16,12 +16,12 @@ theme = "hugo-theme-learn"
 home = [ "HTML", "RSS", "JSON"]
 
 [author]
-  name = "Christian, Eric, Götz, Ismail, Joachim"
+  name = "Christian, Eric, Götz"
 
 [params]
   DateForm = "Mon, Jan 2, 2006"
   Description = "Ansible and Ansible Tower Labs"
-  Author = "Christian, Eric, Götz, Ismail, Joachim"
+  Author = "Christian, Eric, Götz"
   Ganalytics = "XX-00000000-0"
   themeVariant = "red"
   disableInlineCopyToClipBoard = "false"
@@ -58,11 +58,13 @@ home = [ "HTML", "RSS", "JSON"]
   # control or bastion host
   internal_control = "ansible-1"
   # we don't have a load balancer, hence tower1 is same as tower
+  external_automation_controller1 = "student<N>.<LABID>.open.redhat.com"
   external_tower = "student<N>.<LABID>.open.redhat.com"
   external_tower1 = "student<N>.<LABID>.open.redhat.com"
   external_tower2 = "-"
   external_tower3 = "-"
   external_code = "student<N>-code.<LABID>.open.redhat.com"
+  internal_automation_controller1 = "student<N>.<LABID>.open.redhat.com"
   internal_tower1 = "ansible-1"
   internal_tower2 = "ansible-2"
   internal_tower3 = "ansible-3"

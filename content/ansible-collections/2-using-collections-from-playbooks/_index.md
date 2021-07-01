@@ -15,7 +15,7 @@ You can find more details about [using collections](https://docs.ansible.com/ans
 
 The `ansible.posix.selinux` module which we want to use for this exercise, is part of the `ansible.posix` collection. We have to install this collection first, before we can use its modules. The `ansible-galaxy` command line tool can be used to automate the installation. It is preconfigured to search for roles and collections on [Ansible Galaxy](https://galaxy.ansible.com/) so we can just specify the collection name and it will take care of the rest.
 
-Bring up a browser window with **code-server** and open a terminal. In the terminal run:
+Bring up a browser window with **VS Code** and open a terminal. In the terminal run:
 
     [{{< param "control_prompt" >}} ~]$ ansible-galaxy collection install ansible.posix
 
@@ -56,7 +56,7 @@ Depending on your screen resolution you might have to press `q` to leave the doc
 
 We want to use the SELinux module to make sure it is configured in enforcing mode. SELinux is a kernel feature which brings extra security to our Linux system and it is highly recommended to always keep it enabled and in enforcing mode. If you're new to SELinux, there is a nice article on [What is SELinux](https://www.redhat.com/en/topics/linux/what-is-selinux) to get you started.
 
-Let's write a simple playbook which enables SELinux and sets it to enforcing mode on the local machine. In this lab you can use the visual **code-server** editor or run an editor of your choice from the terminal. Create the Playbook `enforce-selinux.yml` with the following content:
+Let's write a simple playbook which enables SELinux and sets it to enforcing mode on the local machine. In this lab you can use the visual **VS Code** editor or run an editor of your choice from the terminal. Create the Playbook `enforce-selinux.yml` with the following content:
 
 ```
 ---

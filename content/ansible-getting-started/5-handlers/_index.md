@@ -9,14 +9,14 @@ Ansible can use conditionals to execute tasks or plays when certain conditions a
 
 To implement a conditional, the `when` statement must be used, followed by the condition to test. The condition is expressed using one of the available operators like e.g. for comparison:
 
-|      |                                                                        |
-| ---- | ---------------------------------------------------------------------- |
-| ==  | Compares two objects for equality.                                     |
-| !=  | Compares two objects for inequality.                                   |
-| >   | true if the left hand side is greater than the right hand side.        |
-| >=  | true if the left hand side is greater or equal to the right hand side. |
-| <   | true if the left hand side is lower than the right hand side.          |
-| <= | true if the left hand side is lower or equal to the right hand side.   |
+|     |     |
+| --- | --- |
+| == | Compares two objects for equality. |
+| != | Compares two objects for inequality. |
+| > | true if the left hand side is greater than the right hand side. |
+| >= | true if the left hand side is greater or equal to the right hand side. |
+| < | true if the left hand side is lower than the right hand side. |
+| <= | true if the left hand side is lower or equal to the right hand side. |
 
 There are many options to control execution flow in Ansible. More examples of supported conditionals can be located here: [http://jinja.pocoo.org/docs/dev/templates/#comparisons](http://jinja.pocoo.org/docs/dev/templates/#comparisons)
 
@@ -51,7 +51,7 @@ Next create the file `ftpserver.yml` on your control host in the `~/ansible-file
   become: yes
   tasks:
     - name: Install FTP server when host in ftpserver group
-      yum:
+      ansible.builtin.yum:
         name: vsftpd
         state: latest
       when: inventory_hostname in groups["ftpserver"]
@@ -99,14 +99,14 @@ Next, create the Playbook `httpd_conf.yml`. Make sure that you are in the direct
   become: yes
   tasks:
   - name: Copy Apache configuration file
-    copy:
+    ansible.builtin.copy:
       src: httpd.conf
       dest: /etc/httpd/conf/
     notify:
         - restart_apache
   handlers:
     - name: restart_apache
-      service:
+      ansible.builtin.service:
         name: httpd
         state: restarted
 ```
@@ -158,7 +158,7 @@ To show the loops feature we will generate three new users on `node1`. For that,
 
   tasks:
     - name: Ensure three users are present
-      user:
+      ansible.builtin.user:
         name: "{{ item }}"
         state: present
       loop:
@@ -205,7 +205,7 @@ Let's rewrite the playbook to create the users with additional user rights:
 
   tasks:
     - name: Ensure three users are present
-      user:
+      ansible.builtin.user:
         name: "{{ item.username }}"
         state: present
         groups: "{{ item.groups }}"

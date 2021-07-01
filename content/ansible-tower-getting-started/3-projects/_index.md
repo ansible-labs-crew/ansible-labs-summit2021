@@ -3,15 +3,15 @@ title = "Projects & job templates"
 weight = 3
 +++
 
-A Tower **Project** is a logical collection of Ansible Playbooks. You can manage your playbooks by placing them into a source code management (SCM) system supported by Tower, including Git, Subversion, and Mercurial.
+An Automation Controller **Project** is a logical collection of Ansible Playbooks. You manage your playbooks by placing them into a source code management (SCM) system supported by Automation Controller, including Git, Subversion, and others.
 
-You should definitely keep your Playbooks under version control. In this lab we’ll use Playbooks that are provided in a Github repository.
+You should definitely keep your Playbooks under version control. 
 
-## Setup Git Repository
+## Setup a Git Repository as a Project
 
-For this lab we will use playbooks stored in this Git repository, using the [summit_2020 tag](https://github.com/ansible/workshop-examples/tree/summit_2020):
+In this lab we’ll use existing Playbooks that are provided in this Github repository:
 
-[https://github.com/ansible/workshop-examples](https://github.com/ansible/workshop-examples)
+[https://github.com/ansible-labs-crew/playbooks_summit2021](https://github.com/ansible-labs-crew/playbooks_summit2021)
 
 A Playbook to install the Apache webserver has already been committed to the directory **rhel/apache**, `apache_install.yml`, here for reference:
 
@@ -55,35 +55,33 @@ A Playbook to install the Apache webserver has already been committed to the dir
 Note the difference to other Playbooks you might have written\! Most importantly there is no `become` and `hosts` is set to `all`.
 {{% /notice %}}
 
-To configure and use this repository as a **Source Control Management (SCM)** system in Tower you have to create a **Project** that uses the repository
+To configure and use this repository as a **Source Code Management (SCM)** system in Automation Controller you have to create a **Project** that uses the repository
 
 ## Create the Project
 
-- Go to **RESOURCES → Projects** in the side menu view click the ![plus](../../images/green_plus.png?classes=inline) button. Fill in the form:
+- Go to **Resources → Projects** in the side menu view click the ![Add](../../images/blue_add.png?classes=inline) button. Fill in the form:
 
-- **NAME:** Ansible Workshop Examples
+- **Name:** Ansible Workshop Examples
 
-- **ORGANIZATION:** Default
+- **Organization:** Default
 
-- **SCM TYPE:** Git
+- **Source Control Credential Type:** Git
 
 Now you need the URL to access the repo. You could get the URL in Github as **Clone URL**. Enter the URL into the Project configuration:
 
-- **SCM URL:** `https://github.com/ansible/workshop-examples.git`
+- **Source Control URL:** `https://github.com/ansible-labs-crew/playbooks_summit2021.git`
 
-- **SCM BRANCH/TAG/COMMIT:** `summit_2020`
+- **Options:** Tick the boxes **Clean, Delete, Update Revision on Launch** to always get a fresh copy of the repository and to update the repository when launching a job.
 
-- **SCM UPDATE OPTIONS:** Tick all four boxes to always get a fresh copy of the repository and to update the repository when launching a job.
+- Click **Save**
 
-- Click **SAVE**
+The new Project will be synced automatically after creation. But you can also do this manually: Sync the Project again with the Git repository by going to the **Projects** view and clicking the circular arrow **Sync Project** icon to the right of the Project.
 
-The new Project will be synced automatically after creation. But you can also do this manually: Sync the Project again with the Git repository by going to the **Projects** view and clicking the circular arrow **Get latest SCM revision** icon to the right of the Project.
-
-After starting the sync job, go to the **Jobs** view: there is a new job for the update of the Git repository.
+After starting the sync job, go to the **Jobs** view: there are new jobs for the update of the Git repository.
 
 ## Create a Job Template and Run a Job
 
-A job template is a definition and set of parameters for running an Ansible job. Job templates are useful to execute the same job many times. So before running an Ansible **Job** from Tower you must create a **Job Template** that pulls together:
+A job template is a definition and set of parameters for running an Ansible job. Job templates are useful to execute the same job many times. So before running an Ansible **Job** from Automation Controller you must create a **Job Template** that pulls together:
 
 - **Inventory**: On what hosts should the job run?
 
@@ -93,41 +91,45 @@ A job template is a definition and set of parameters for running an Ansible job.
 
 - **What** Playbook to use?
 
-Okay, let’s just do that: Go to the **Templates** view, click the ![plus](../../images/green_plus.png?classes=inline) button and choose **Job Template**.
+Okay, let’s just do that: Go to the **Templates** view, click the ![Add](../../images/blue_add.png?classes=inline) button and choose **Add job template**.
 
 {{% notice tip %}}
 Remember that you can often click on magnifying glasses to get an overview of options to pick to fill in fields.
 {{% /notice %}}
 
-- **NAME:** Install Apache
+- **Name:** Install Apache
 
-- **JOB TYPE:** Run
+- **Job Type:** Run
 
-- **INVENTORY:** Workshop Inventory
+- **Inventory:** Workshop Inventory
 
-- **PROJECT:** Ansible Workshop Examples
+- **Project:** Ansible Workshop Examples
 
-- **PLAYBOOK:** `rhel/apache/apache_install.yml`
+- **Execution Environment:** Controller Default EE
 
-- **CREDENTIAL:** Workshop Credentials
+- **Playbook:** `rhel/apache/apache_install.yml`
 
-- We need to run the tasks as root so check **Enable privilege escalation**
+- **Credentials:** Workshop Credentials
 
-- Click **SAVE**
+- We need to run the tasks as root so check **Enable privilege escalation** under **Options**
 
-You can start the job by directly clicking the blue **LAUNCH** button, or by clicking on the rocket in the Job Templates overview. After launching the Job Template, you are automatically brought to the job overview where you can follow the playbook execution in real time:
+- Click **Save**
+
+You can start the job by directly clicking the blue **Launch** button, or by clicking on the rocket in the Job Templates overview. After launching the Job Template, you are automatically brought to the job overview where you can follow the playbook execution in real time:
 
 ![job execution](../../images/job_overview.png)
 
 Since this might take some time, have a closer look at all the details provided:
+
+- The default is the **Output** view of the playbook run. Click on a node underneath a task to get detailed information for the task.
+
+Now switch to the **Details** view:
 
 - All details of the job template like inventory, project, credentials and playbook are shown.
 
 - Additionally, the actual revision of the playbook is recorded here - this makes it easier to analyse job runs later on.
 
 - Also the time of execution with start and end time is recorded, giving you an idea of how long a job execution actually was.
-
-- On the right side, the output of the playbook run is shown. Click on a node underneath a task to get detailed information for the task.
 
 After the Job has finished go to the main **Jobs** view: All jobs are listed here, you should see directly before the Playbook run an SCM update was started. This is the Git update we configured for the **Project** on Job Template launch\!
 
@@ -149,21 +151,27 @@ What about `systemctl status httpd`?
 
 - Go to **Inventories** → **Workshop Inventory**
 
-- In the **HOSTS** view select all hosts and click **RUN COMMANDS**
+- On the **Hosts** tab view select all hosts and click **Run Command**
 
-- **MODULE:** command
+- **Module:** command
 
-- **ARGUMENTS:** systemctl status httpd
+- **Arguments:** systemctl status httpd
 
-- **MACHINE CREDENTIALS:** Workshop Credentials
+- **Next**
 
-- Click **LAUNCH**
+- **Execution Environment**: Controller Default EE
+
+- **Next**
+
+- **Machine Credentials:** Workshop Credentials
+
+- Click **Launch**
 
 </p>
 <hr/>
 </details>
 
-It should all look good!
+It should show Apache running on all nodes!
 
 ## What About Some Practice?
 
@@ -175,19 +183,19 @@ Please make sure to finish these steps as the next chapter depends on it!
 
 - Create a new inventory called `Webserver` and make only `node1` member of it.
 
-- Copy the `Install Apache` template using the copy icon in the **Templates** view
+- Copy the `Install Apache` template using the copy icon in the **Templates** view.
 
-- Change the name to `Install Apache Ask`
+- Edit the Template and change the name to `Install Apache Ask`.
 
-- Change the **INVENTORY** setting of the Project so it will prompt for the inventory on launch (tick the appropriate box).
+- Change the **Inventory** setting of the Project so it will prompt for the inventory on launch (tick the appropriate box).
 
-- **SAVE**
+- **Save**
 
 - Launch the `Install Apache Ask` template.
 
-- It will now ask for the inventory to use, choose the `Webserver` inventory and click **NEXT** and **LAUNCH**
+- It will now ask for the inventory to use, choose the `Webserver` inventory and click **Next** and **Launch**.
 
-- Wait until the Job has finished and make sure it ran only on `node1`
+- Wait until the Job has finished and make sure it ran only on `node1`.
 
 {{% notice tip %}}
 The Job didn’t change anything because Apache was already installed in the latest version.

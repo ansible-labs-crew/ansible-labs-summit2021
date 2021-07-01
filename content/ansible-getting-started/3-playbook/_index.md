@@ -18,6 +18,42 @@ A Playbook can have multiple Plays and a Play can have one or multiple Tasks. In
 Here is a nice analogy: When Ansible Modules are the tools in your workshop, the Inventory is the list of materials and the Playbooks are the instructions.
 {{% /notice %}}
 
+## What are Collections and why should I care?
+
+Ansible Collections are a new distribution format for Ansible content that can include playbooks, roles, modules, and plugins. Ansible Collection names are a combination of two components. The first part is the name of the author who wrote and maintains the Ansible Collection. The second part is the name of the Ansible Collection. This allows one author to have multiple Collections. It also allows multiple authors to have Ansible Collections with the same name.
+
+    <author>.<collection>
+
+These are examples for Ansible Collection names:
+
+- ansible.posix
+
+- geerlingguy.k8s
+
+- theforeman.foreman
+
+To identify a specific module in an Ansible Collection, we add the name of it as the third part:
+
+    <author>.<collection>.<module>
+
+Valid examples for a fully qualified Ansible Collection Name (FQCN):
+
+- ansible.posix.selinux
+
+- geerlingguy.k8s.kubernetes
+
+- geerlingguy.php_roles.mysql
+
+- theforeman.foreman.user
+
+{{% notice info %}}
+Many modules and plugins are part of the "ansible.builtin" collection and are shipped with Ansible and installed automatically. Although not mandatory, it is highly recommended to also use the FQCN for builtin modules, to avoid name clashes or unpredictable behavior. This is why all following examples, will use "ansible.builtin" as part of the FQCN.
+{{% /notice %}}
+
+{{% notice tip %}}
+If you want to learn more about Ansible Collection, feel free to have a look at our [Ansible Collections Workshop](../../ansible-collections/)
+{{% /notice %}}
+
 ## Playbook Basics
 
 Playbooks are text files written in YAML format and therefore need:
@@ -60,17 +96,17 @@ There is a [best practice](http://docs.ansible.com/ansible/playbooks_best_practi
 
 Instead, we are going to create a very simple directory structure for our playbook, and add just a couple of files to it.
 
-In your browser, bring up your **code-server** terminal (you opened one in the first section) and create a directory called `ansible-files` in your home directory and change into it:
+In your browser, bring up your **VS Code** terminal (you opened one in the first section) and create a directory called `ansible-files` in your home directory and change into it:
 
 ```bash
 [{{< param "control_prompt" >}} ~]$ mkdir ansible-files
 [{{< param "control_prompt" >}} ~]$ cd ansible-files/
 ```
 
-Now use **code-server** to add a file called `apache.yml` with the following content.
+Now use **VS Code** to add a file called `apache.yml` with the following content.
 
 {{% notice tip %}}
-If you are unsure how to use **code-server** (basically like VSCode), have a quick look at the [Visual Studio Code Server introduction](../../vscode-intro/)
+If you are unsure how to use **VS Code** (basically like VSCode), have a quick look at the [Visual Studio Code Server introduction](../../vscode-intro/)
 {{% /notice %}}
 
 ```
@@ -92,7 +128,7 @@ This shows one of Ansible’s strengths: The Playbook syntax is easy to read and
 You obviously need to use privilege escalation to install a package or run any other task that requires root permissions. This is done in the Playbook by `become: yes`.
 {{% /notice %}}
 
-Now that we've defined the play, let's add a task to get something done. We will add a task in which yum will ensure that the Apache package is installed in the latest version. Modify the file so that it looks like the following listing using the **code-server** editor:
+Now that we've defined the play, let's add a task to get something done. We will add a task in which yum will ensure that the Apache package is installed in the latest version. Modify the file so that it looks like the following listing using the **VS Code** editor:
 
 ```
 ---
@@ -101,7 +137,7 @@ Now that we've defined the play, let's add a task to get something done. We will
   become: yes
   tasks:
   - name: latest Apache version installed
-    yum:
+    ansible.builtin.yum:
       name: httpd
       state: latest
 ```
@@ -130,7 +166,7 @@ Save your playbook.
 
 ## Running the Playbook
 
-Playbooks are executed using the `ansible-playbook` command on the control node. Before you run a new Playbook it’s a good idea to check for syntax errors. Head over to the **code-server** terminal and run:
+Playbooks are executed using the `ansible-playbook` command on the control node. Before you run a new Playbook it’s a good idea to check for syntax errors. Head over to the **VS Code** terminal and run:
 
 ```bash
 [{{< param "control_prompt" >}} ansible-files]$ ansible-playbook --syntax-check apache.yml
@@ -180,11 +216,11 @@ On the control host, as your student user, edit the file `~/ansible-files/apache
   become: yes
   tasks:
   - name: latest Apache version installed
-    yum:
+    ansible.builtin.yum:
       name: httpd
       state: latest
   - name: Apache enabled and running
-    service:
+    ansible.builtin.service:
       name: httpd
       enabled: true
       state: started
@@ -243,16 +279,16 @@ On the control node as your student user edit the file `~/ansible-files/apache.y
   become: yes
   tasks:
   - name: latest Apache version installed
-    yum:
+    ansible.builtin.yum:
       name: httpd
       state: latest
   - name: Apache enabled and running
-    service:
+    ansible.builtin.service:
       name: httpd
       enabled: true
       state: started
   - name: copy index.html
-    copy:
+    ansible.builtin.copy:
       src: ~/ansible-files/index.html
       dest: /var/www/html/
 ```
@@ -297,16 +333,16 @@ Change the Playbook to point to the group `web`:
   become: yes
   tasks:
   - name: latest Apache version installed
-    yum:
+    ansible.builtin.yum:
       name: httpd
       state: latest
   - name: Apache enabled and running
-    service:
+    ansible.builtin.service:
       name: httpd
       enabled: true
       state: started
   - name: copy index.html
-    copy:
+    ansible.builtin.copy:
       src: ~/ansible-files/index.html
       dest: /var/www/html/
 ```

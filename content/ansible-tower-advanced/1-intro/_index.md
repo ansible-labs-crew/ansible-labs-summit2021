@@ -94,7 +94,7 @@ Some hints to get you started:
 
 - Don’t type everything manually, use copy & paste from the browser when appropriate. But don’t stop to think and understand… ;-)
 
-- To **edit files** or **open a terminal window**, we provide **code-server**, basically the great VSCode Editor running in your browser. It's running on the first Tower node and can be accessed through the URL **https://{{< param "external_code" >}}**
+- To **edit files** or **open a terminal window**, we provide **VS Code**, basically the great VSCode Editor running in your browser. It's running on the first Tower node and can be accessed through the URL **https://{{< param "external_code" >}}**
 
 {{% notice tip %}}
 Commands you are supposed to run are shown with or without the expected output, whatever makes more sense in the context.
@@ -114,7 +114,7 @@ You'll get the access information for your lab (URL's, password) from a landing 
 
 Either way you'll get an URL similar to this: `http://{{< param "external_domain" >}}`
 
-Your main points of contact with the lab are the Ansible Tower web UI's and **code-server**, providing a VSCode-experience in your browser. You'll use **code-server** to:
+Your main points of contact with the lab are the Ansible Tower web UI's and **VS Code**, providing a VSCode-experience in your browser. You'll use **VS Code** to:
 
 - open virtual terminals
 
