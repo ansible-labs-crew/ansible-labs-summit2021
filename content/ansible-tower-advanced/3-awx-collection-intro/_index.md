@@ -1,24 +1,24 @@
 +++
-title = "There is more to Tower than the Web UI"
+title = "There is more to Automation Controller than the Web UI"
 weight = 3
 +++
 
-This is an advanced Tower lab so we don’t really want you to use the web UI for everything. To fully embrace automation and adopt the [infrastructure as code](https://en.wikipedia.org/wiki/Infrastructure_as_code) methodology, we want to use Ansible to configure our Ansible Tower Cluster.
+This is an advanced Automation Controller lab so we don’t really want you to use the web UI for everything. To fully embrace automation and adopt the [infrastructure as code](https://en.wikipedia.org/wiki/Infrastructure_as_code) methodology, we want to use Ansible to configure our Ansible Automation Controller Cluster.
 
-Since Ansible Tower is exposing all of its functionality via REST API, we can automate everything. Instead of using the API directly, it is highly recommended to use the [AWX](https://github.com/ansible/awx/tree/devel/awx_collection) or [Ansible Tower](https://cloud.redhat.com/ansible/automation-hub/repo/published/ansible/tower) Ansible Collection (the second link will only work for you, if you have an active Red Hat Ansible Automation Platform Subscription) to setup, configure and maintain your Red Hat Automation Platform Cluster.
+Since Automation Controller is exposing all of its functionality via REST API, we can automate everything. Instead of using the API directly, it is highly recommended to use the [AWX](https://github.com/ansible/awx/tree/devel/awx_collection) or [Ansible Tower](https://cloud.redhat.com/ansible/automation-hub/repo/published/ansible/tower) Ansible Collection (the second link will only work for you, if you have an active Red Hat Ansible Automation Platform Subscription) to setup, configure and maintain your Red Hat Automation Platform Cluster.
 
 {{% notice info %}}
-For the purpose of this lab, we will use the community AWX collection. Red Hat Customer will prefer the supported Ansible Tower Collection. Since this requires an active subscription and we want to make the lab usable for everyone, we will stick with the AWX collection for the purpose of the lab.
+For the purpose of this lab, we will use the community AWX collection. Red Hat Customers will prefer the supported Ansible Automation Controller Collection. Since this requires an active subscription and we want to make the lab usable for everyone, we will stick with the AWX collection for the purpose of the lab.
 {{% /notice %}}
 
-First, we want to install the AWX Collection. Installing Ansible Collections is super easy:
+First, we need to install the AWX Collection. Installing Ansible Collections is super easy:
 
 ```bash
 [{{< param "control_prompt" >}} ~]$ ansible-galaxy collection install awx.awx:19.1.0
 ```
 
 {{% notice note %}}
-The AWX collection is updated very often. To make sure the following lab instructions will work for you, we install specifically version 19.1.0. We regularly update these instruction. to keep up to date and don't fall behind too much. However, to make sure the following instructions work for you, we suggest you to use the specified version.
+The AWX collection is updated very often. To make sure the following lab instructions will work for you, we install specifically version 19.1.0. We regularly update these instruction to keep up to date and don't fall behind too much. However, to make sure the lab work for you, we suggest you to use the specified version.
 {{% /notice %}}
 
 ## Authentication
@@ -26,7 +26,7 @@ The AWX collection is updated very often. To make sure the following lab instruc
 Before we can do any changes on our Automation Controller, we have to authenticate our user. There are several methods available to provide authentication details to the modules. In this lab, we want to use environment variables.
 
 ```bash
-# the Base URI of our Tower Cluster Node
+# the Base URI of our Automation Controller Cluster Node
 [{{< param "control_prompt" >}} ~]$ export TOWER_HOST=https://{{< param "external_tower" >}}
 # the user name
 [{{< param "control_prompt" >}} ~]$ export TOWER_USERNAME=admin
@@ -63,6 +63,8 @@ Since we are calling the REST API of Automation Controller, the Ansible Playbook
 You might see a warning message "You are using the awx version of this collection but connecting to Red Hat Ansible Automation Platform". This can be ignored. As said above, we intentionally use the AWX Community Collection for the purpose of the lab. As a Red Hat Customer you would probably prefer the supported Ansible Collection instead.
 {{% /notice %}}
 
+Run and test your playbook and verify everything works as expected, by logging ino the Automation Controller Web UI.
+
 ## Add hosts to inventory
 
 Now that we have the empty inventory created, add your two managed hosts using their internal hostnames **`{{< param "internal_host1" >}}`** and **`{{< param "internal_host2" >}}`**, again using the AWX Ansible Collection. The module to add hosts to an inventory is called **awx.awx.tower_host**. Read the documentation and try to figure out how to add the necessary tasks to the Ansible Playbook.
@@ -95,6 +97,8 @@ Now that we have the empty inventory created, add your two managed hosts using t
 </p>
 <hr/>
 </details>
+
+Run and test your playbook and verify everything works as expected, by logging ino the Automation Controller Web UI.
 
 ## Create Machine Credentials
 
@@ -145,6 +149,8 @@ Now we want to configure these credentials to access our managed hosts from Auto
 If you run this Ansible Playbook multiple times, you will notice the **awx.awx.tower_credential** module is not idempotent! Since we store the SSH key encrypted, the Ansible Module is unable to verify it has already been set and didn't change. This is what we want and expect from a secure system, but it also means Ansible has no means to verify it and hence overrides the password every time the Ansible Playbook is executed.
 {{% /notice %}}
 
+Run and test your playbook and verify everything works as expected, by logging ino the Automation Controller Web UI.
+
 ## Create Projects
 
 The Ansible content used in this lab is hosted on Github. The next step is to add a project to import the Ansible Playbooks. As before, try to figure out the necessary parameters by reading the documentation of the **awx.awx.tower_project** module documentation.
@@ -194,6 +200,8 @@ The Ansible content used in this lab is hosted on Github. The next step is to ad
 </p>
 <hr/>
 </details>
+
+Run and test your playbook and verify everything works as expected, by logging ino the Automation Controller Web UI.
 
 If you wonder why **awx.awx.tower_credential** is not idempotent, read the info box in the [previous chapter](#create-machine-credentials).
 
@@ -258,7 +266,7 @@ Before running an Ansible **Job** from your Automation Controller cluster you mu
 <hr/>
 </details>
 
-Now try to launch your new Job Template from the Automation Controller UI.
+Run and test your playbook and verify everything works as expected, by logging ino the Automation Controller Web UI.
 
 ## Verify the cluster
 
@@ -268,7 +276,7 @@ Have a look around, everything we automatically configured on one Tower instance
 
 ## Challenge Labs
 
-Try to add the necessary tasks to your Ansible Playbooks to run the **Job Template** you created.
+Try to add the necessary tasks to your Ansible Playbook to run the **Job Template** you created.
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>

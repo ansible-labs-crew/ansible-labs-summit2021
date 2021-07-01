@@ -25,7 +25,13 @@ The Playbooks can be found in the Github repository you already setup as a **Pro
 
 ### Create three Templates
 
-As mentioned the Github repository contains three Playbooks to enforce different compliance requirements. Since you learned in the previous chapter how to do things with the AWX Collection, we want to put that knowledge to the test.
+As mentioned the Github repository contains three Playbooks to enforce different compliance requirements. Since you learned in the previous chapter how to do things with the AWX Collection, we want to put that knowledge to the test. Extend your existing Playbook to create **Job Templates** for the provided Ansible Playbooks. Create one new task for each of the three Ansible Playbooks:
+
+- stig-packages.yml
+
+- stig-config.yml
+
+- cis.yml
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>
