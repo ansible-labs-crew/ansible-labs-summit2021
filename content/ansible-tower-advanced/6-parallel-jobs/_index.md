@@ -1,6 +1,6 @@
 +++
 title = "Parallel Jobs"
-weight = 7
+weight = 6
 +++
 
 The real power of instance groups is revealed when multiple jobs are started, and they are assigned to different Tower nodes. To launch parallel jobs we will set up a workflow with multiple concurrent jobs.
@@ -25,38 +25,100 @@ The Playbooks can be found in the Github repository you already setup as a **Pro
 
 ### Create three Templates
 
-As mentioned the Github repository contains three Playbooks to enforce different compliance requirements. First create these three templates and attach credentials using the `awx` CLI in the VSCode terminal:
+As mentioned the Github repository contains three Playbooks to enforce different compliance requirements. Since you learned in the previous chapter how to do things with the AWX Collection, we want to put that knowledge to the test. Extend your existing Playbook to create **Job Templates** for the provided Ansible Playbooks. Create one new task for each of the three Ansible Playbooks:
 
-    [{{< param "control_prompt" >}} ~]$ awx -f human job_template create --name "Compliance STIG packages" \
-                          --job-type run \
-                          --inventory "Example Inventory" \
-                          --project "Apache"  \
-                          --playbook "stig-packages.yml" \
-                          --become_enabled 1
+- stig-packages.yml
 
-    [{{< param "control_prompt" >}} ~]$ awx -f human job_template associate --name "Compliance STIG packages" \
-                          --credential "Example Credentials"
+- stig-config.yml
 
-    [{{< param "control_prompt" >}} ~]$ awx -f human job_template create --name "Compliance STIG config" \
-                          --credential "Example Credentials" \
-                          --job_type run \
-                          --inventory "Example Inventory" \
-                          --project "Apache" \
-                          --playbook "stig-config.yml" \
-                          --become_enabled 1
+- cis.yml
 
-    [{{< param "control_prompt" >}} ~]$ awx -f human job_template associate --name "Compliance STIG config" \
-                          --credential "Example Credentials"
+<details><summary><b>Click here for Solution</b></summary>
+<hr/>
+<p>
 
-    [{{< param "control_prompt" >}} ~]$ awx -f human job_template create --name "Compliance CIS" \
-                          --job-type run  \
-                          --inventory "Example Inventory" \
-                          --project "Apache" \
-                          --playbook "cis.yml" \
-                          --become_enabled 1
+```yaml
+---
+- name: Configure automation controller
+  hosts: localhost
+  become: false
+  gather_facts: false
+  tasks:
+  - name: Create an inventory
+    awx.awx.tower_inventory:
+      name: AWX inventory
+      organization: Default
+  - name: Add hosts to inventory
+    awx.awx.tower_host:
+      name: "{{  item }}"
+      inventory: AWX inventory
+      state: present
+    loop:
+      - {{< param "internal_host1" >}}
+      - {{< param "internal_host2" >}}
+  - name: Machine Credentials
+    awx.awx.tower_credential:
+      name: AWX Credentials
+      kind: ssh
+      organization: Default
+      inputs:
+        username: ec2-user
+        ssh_key_data: "{{ lookup('file', '~/.ssh/aws-private.pem' ) }}"
+  - name: AWX Project
+    awx.awx.tower_project:
+      name: AWX Project
+      organization: Default
+      state: present
+      scm_update_on_launch: True
+      scm_delete_on_update: True
+      scm_type: git
+      scm_url: https://github.com/goetzrieger/ansible-labs-playbooks.git
+  - name: AWX Job Template
+    awx.awx.tower_job_template:
+      name: Install Apache
+      organization: Default
+      state: present
+      inventory: AWX inventory
+      become_enabled: True
+      playbook: apache_install.yml
+      project: AWX Project
+      credential: AWX Credentials
+  - name: Compliance STIG packages Job Template
+    awx.awx.tower_job_template:
+      name: Compliance STIG packages
+      organization: Default
+      state: present
+      inventory: AWX inventory
+      become_enabled: True
+      playbook: stig-packages.yml
+      project: AWX Project
+      credential: AWX Credentials
+  - name: Compliance STIG config Job Template
+    awx.awx.tower_job_template:
+      name: Compliance STIG config
+      organization: Default
+      state: present
+      inventory: AWX inventory
+      become_enabled: True
+      playbook: stig-config.yml
+      project: AWX Project
+      credential: AWX Credentials
+  - name: Compliance CIS Job Template
+    awx.awx.tower_job_template:
+      name: Compliance CIS
+      organization: Default
+      state: present
+      inventory: AWX inventory
+      become_enabled: True
+      playbook: cis.yml
+      project: AWX Project
+      credential: AWX Credentials
 
-    [{{< param "control_prompt" >}} ~]$ awx -f human job_template associate --name "Compliance CIS" \
-                          --credential "Example Credentials"
+```
+
+</p>
+<hr/>
+</details>
 
 ## Create Parallel Workflow
 
@@ -118,9 +180,9 @@ Activate **{{< param "internal_tower1" >}}** again by sliding the button to "che
 
 ## Using Instance Groups
 
-So we have seen how a Tower cluster is distributing jobs over Tower instances by default. We have already created instance groups which allow us to take control over which job is executed on which node, so let’s use them.
+So we have seen how a Automation Controller cluster is distributing jobs over instances by default. We have already created instance groups which allow us to take control over which job is executed on which node, so let’s use them.
 
-To make it easier to spot where the jobs were run, let’s first empty the jobs history. This can be done using **awx-manage** on one of the Tower instances. From your VSCode terminal **and as `root`** run the command:
+To make it easier to spot where the jobs were run, let’s first empty the jobs history. This can be done using **awx-manage** on one of the Automation Controller instances. From your VSCode terminal **and as `root`** run the command:
 
 ```bash
 [{{< param "control_prompt" >}} ~]$ sudo -i

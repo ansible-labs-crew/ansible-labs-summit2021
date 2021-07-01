@@ -1,6 +1,6 @@
 +++
 title = "Advanced Inventories"
-weight = 9
+weight = 7
 +++
 
 In Ansible and Ansible Tower, as you know, everything starts with an inventory. There are a several methods how inventories can be created, starting from simple static definitions over importing inventory files to dynamic and smart inventories.

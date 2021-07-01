@@ -1,6 +1,6 @@
 +++
 title = "Run a Job in a Cluster"
-weight = 5
+weight = 4
 +++
 
 After boot-strapping the Tower configuration from bottom up you are ready to start a job in your Tower cluster. In one of your Tower nodes web UI’s:

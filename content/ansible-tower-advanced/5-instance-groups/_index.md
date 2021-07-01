@@ -1,6 +1,6 @@
 +++
 title = "Tower Instance Groups"
-weight = 6
+weight = 5
 +++
 
 Ansible Tower clustering allows you to easily add capacity to your Tower infrastructure by adding instances. In a single-group Tower cluster where all instances are within the `tower` group there is no way to influence which node will run a job, the cluster will take care of scheduling Jobs as it sees fit.
@@ -83,17 +83,6 @@ in your browser.
 
 In the **INSTANCE GROUPS** overview all instance groups are listed with details of the group itself like number of instances in the group, running jobs and finished jobs. Like you’ve seen before the current capacity of the instance groups is shown in a live view, thus providing a quick insight if there are capacity problems.
 
-### Via the `awx` CLI
-
-In your VSCode terminal, run:
-
-    [{{< param "control_prompt" >}} ~]$ awx -k instance_group list -f human
-    id name
-    == =====
-    1  tower
-    2  dev
-    3  prod
-
 ### Via the API
 
 You can again query the API to get this information. Either use the browser to access the URL (you might have to login to the API again):
@@ -108,7 +97,7 @@ or use curl to access the API from the command line in your VSCode terminal:
 The curl command has to be on one line. Do _not_ forget or oversee the final slash at the end of the URL, it is relevant!
 {{% /notice %}}
 
-## Deactivating Tower Instances
+## Deactivating Automation Controller Instances
 
 While in the **INSTANCES GROUPS** overview in the web UI click the **INSTANCES** link for, say, the **dev** group. In the next view you’ll see a slide button next to each Tower instance (only one in this case).
 
