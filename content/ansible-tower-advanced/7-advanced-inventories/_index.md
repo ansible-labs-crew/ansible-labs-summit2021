@@ -3,17 +3,17 @@ title = "Advanced Inventories"
 weight = 7
 +++
 
-In Ansible and Ansible Tower, as you know, everything starts with an inventory. There are a several methods how inventories can be created, starting from simple static definitions over importing inventory files to dynamic and smart inventories.
+In Ansible and automation controller, as you know, everything starts with an inventory. There are a several methods how inventories can be created, starting from simple static definitions over importing inventory files to dynamic and smart inventories.
 
-In real life it’s very common to deal with external dynamic inventory sources (think cloud…). In this chapter we’ll introduce you to building dynamic inventories using custom scripts. Another great feature of Tower to deal with inventories is the Smart Inventory feature which you’ll do a lab on as well.
+In real life it’s very common to deal with external dynamic inventory sources (think cloud…). In this chapter we’ll introduce you to building dynamic inventories using custom scripts. Another great feature of the automation controller to deal with inventories is the Smart Inventory feature which you’ll do a lab on as well.
 
 ## Dynamic Inventories
 
 Quite often just using static inventories will not be enough. You might be dealing with ever-changing cloud environments or you have to get your managed systems from a CMDB or other sources of truth.
 
-Tower includes built-in support for syncing dynamic inventory from cloud sources such as Amazon AWS, Google Compute Engine, among others. Tower also offers the ability to use custom scripts to pull from your own inventory source.
+Controller includes built-in support for syncing dynamic inventory from cloud sources such as Amazon AWS, Google Compute Engine, among others. Controller also offers the ability to use custom scripts to pull from your own inventory source.
 
-In this chapter you’ll get started with dynamic inventories in Tower. Aside from the build-in sources you can write inventory scripts in any programming/scripting language that you have installed on the Tower machine. To keep it easy we’ll use a most simple custom inventory script using… Bash! Yes!
+In this chapter you’ll get started with dynamic inventories in the automation controller. Aside from the build-in sources you can write inventory scripts in any programming/scripting language that you have installed on the Controller machine. To keep it easy we’ll use a most simple custom inventory script using… Bash! Yes!
 
 {{% notice tip %}}
 Don’t get this wrong… we’ve chosen to use Bash to make it as simple as possible to show the concepts behind dynamic and custom inventories. Usually you’d use Python or some other scripting/programming language.
@@ -53,7 +53,7 @@ Use curl to query your external inventory source:
 Well, this is handy, the output is already configured as JSON like Ansible would expect… ;-)
 
 {{% notice warning %}}
-Okay, seriously, in real life your script would likely get some information from your source system, format it as JSON and return the data to Tower.
+Okay, seriously, in real life your script would likely get some information from your source system, format it as JSON and return the data to the automation controller.
 {{% /notice %}}
 
 ### The Custom Inventory Script
@@ -76,7 +76,7 @@ fi
 
 What it basically does is to return the data collected by curl when called with **--list** and as the data includes **\_meta** information about the host variables Ansible will not call it with **--host**. The curl command is of course the place where your script would get data by whatever means, format it as proper JSON and return it.
 
-But before we integrate the custom inventory script into our Tower cluster, it’s a good idea to test it on the command line first:
+But before we integrate the custom inventory script into our controller cluster, it’s a good idea to test it on the command line first:
 
 - Bring up your VSCode terminal
 - Create the file `dyninv.sh` with the content shown above (use VI or the VSCode editor)
@@ -117,11 +117,11 @@ The script should output the JSON-formatted output shown above.
 
 As simple as it gets, right? More information can be found [how to develop dynamic inventories](https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html).
 
-So now you have a source of (slightly static) dynamic inventory data (talk about oxymoron…) and a script to fetch and pass it to Tower. Now you need to get this into Tower.
+So now you have a source of (slightly static) dynamic inventory data (talk about oxymoron…) and a script to fetch and pass it to controller. Now you need to get this into controller.
 
-### Integrate into Tower
+### Integrate into controller
 
-The first step is to add the inventory script to Tower:
+The first step is to add the inventory script to controller:
 
 - In the web UI, open **RESOURCES→Inventory Scripts**.
 
@@ -180,13 +180,13 @@ Using this simple example you have:
 
 - Created a script to query an inventory source
 
-- Integrated the script into Tower
+- Integrated the script into controller
 
 - Populated an inventory using the custom script
 
 ## Smart Inventories
 
-You will most likely have inventories from different sources in your Tower installation. Maybe you have a local CMDB, your virtualization management and your public cloud provider to query for managed systems. Imagine you now want to run automation jobs across these inventories on hosts matching certain search criteria.
+You will most likely have inventories from different sources in your controller installation. Maybe you have a local CMDB, your virtualization management and your public cloud provider to query for managed systems. Imagine you now want to run automation jobs across these inventories on hosts matching certain search criteria.
 
 This is where Smart Inventory comes in. A Smart Inventory is a collection of hosts defined by a stored search. Search criteria can be host attributes (like groups) or facts (such as installed software, services, hardware or whatever information Ansible pulls). A Smart Inventory can be viewed like a standard inventory and used for job runs.
 
@@ -200,7 +200,7 @@ The base rules of a search are:
 
 ### A Simple Smart Inventory
 
-Let’s start with a simple string example. In your Tower web UI, open the **RESOURCES→Inventories** view. Then click the ![plus](../../images/green_plus.png?classes=inline) button and choose to create a new **Smart Inventory**. In the next view:
+Let’s start with a simple string example. In your controller web UI, open the **RESOURCES→Inventories** view. Then click the ![plus](../../images/green_plus.png?classes=inline) button and choose to create a new **Smart Inventory**. In the next view:
 
 - **NAME:** Smart Inventory Simple
 
@@ -255,8 +255,6 @@ Now enable fact caching for the **Remote CIS Compliance** template and run it, t
 After you run the templates go back to the host details like you did above and check the **FACTS** fields for
 
 - **{{< param "internal_host1" >}}** and **{{< param "internal_host2" >}}** (from the **Example Inventory**)
-
-- **{{< param "internal_hostremote" >}}** (from the **Remote Inventory**).
 
 The hosts facts should now be populated with a lot of information.
 

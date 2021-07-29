@@ -1,20 +1,20 @@
 +++
-title = "Discovering the Tower API"
+title = "Discovering the automation controller API"
 weight = 9
 +++
 
 ## OPTIONAL EXERCISE
 
-You have used the Tower API a couple of times in this lab already. In this chapter we’ll describe two ways to discover the Tower API if you need to dive in deeper. While the [principles of the Tower API](https://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html) are documented and there is an [API reference guide](https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/), it’s often more efficient to just browse and discover the API.
+You have used the controller API a couple of times in this lab already. In this chapter we’ll describe two ways to discover the controller API if you need to dive in deeper. While the [principles of the Tower API](https://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html) are documented and there is an [API reference guide](https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/), it’s often more efficient to just browse and discover the API.
 
-## Browsing and Using the Tower API interactively
+## Browsing and Using the controller API interactively
 
-The Tower API is browsable, which means you can just click your way
+The controller API is browsable, which means you can just click your way
 through it:
 
-1. Go to the Tower UI in your browser and make sure you’re logged in as admin.
+1. Go to the controller UI in your browser and make sure you’re logged in as admin.
 
-1. Replace the end of the URL with `/api` e.g. `https://{{< param "external_tower" >}}/api`
+1. Replace the end of the URL with `/api` e.g. `https://{{< param "external_controller" >}}/api`
 
 1. There is currently only one API valid, so while in `/api/v2`:
 
@@ -59,7 +59,7 @@ and the result should be a 201 telling you about your success. You can login wit
 </details>
 
 Now log in again as admin and go back to the list of users:
-`https://{{< param "external_tower" >}}/api/v2/users/`
+`https://{{< param "external_controller" >}}/api/v2/users/`
 
 - Click on the **url** field of your new friend John Smith and notice a few more things:
 

@@ -5,7 +5,7 @@ weight = 3
 
 This is an advanced Automation Controller lab so we don’t really want you to use the web UI for everything. To fully embrace automation and adopt the [infrastructure as code](https://en.wikipedia.org/wiki/Infrastructure_as_code) methodology, we want to use Ansible to configure our Ansible Automation Controller Cluster.
 
-Since Automation Controller is exposing all of its functionality via REST API, we can automate everything. Instead of using the API directly, it is highly recommended to use the [AWX](https://github.com/ansible/awx/tree/devel/awx_collection) or [Ansible Tower](https://cloud.redhat.com/ansible/automation-hub/repo/published/ansible/tower) Ansible Collection (the second link will only work for you, if you have an active Red Hat Ansible Automation Platform Subscription) to setup, configure and maintain your Red Hat Automation Platform Cluster.
+Since Automation Controller is exposing all of its functionality via REST API, we can automate everything. Instead of using the API directly, it is highly recommended to use the [AWX](https://github.com/ansible/awx/tree/devel/awx_collection) or [automation controller](https://cloud.redhat.com/ansible/automation-hub/repo/published/ansible/controller) Ansible Collection (the second link will only work for you, if you have an active Red Hat Ansible Automation Platform Subscription) to setup, configure and maintain your Red Hat Automation Platform Cluster.
 
 {{% notice info %}}
 For the purpose of this lab, we will use the community AWX collection. Red Hat Customers will prefer the supported Ansible Automation Controller Collection. Since this requires an active subscription and we want to make the lab usable for everyone, we will stick with the AWX collection for the purpose of the lab.
@@ -27,7 +27,7 @@ Before we can do any changes on our Automation Controller, we have to authentica
 
 ```bash
 # the Base URI of our Automation Controller Cluster Node
-[{{< param "control_prompt" >}} ~]$ export TOWER_HOST=https://{{< param "external_tower" >}}
+[{{< param "control_prompt" >}} ~]$ export TOWER_HOST=https://{{< param "external_controller" >}}
 # the user name
 [{{< param "control_prompt" >}} ~]$ export TOWER_USERNAME=admin
 # and the password
@@ -52,7 +52,7 @@ Let's start with a very simple example to see how things work.
   gather_facts: false
   tasks:
   - name: Create an inventory
-    awx.awx.tower_inventory:
+    awx.awx.inventory:
       name: AWX inventory
       organization: Default
 ```
@@ -67,10 +67,10 @@ Run and test your playbook and verify everything works as expected, by logging i
 
 ## Add hosts to inventory
 
-Now that we have the empty inventory created, add your two managed hosts using their internal hostnames **`{{< param "internal_host1" >}}`** and **`{{< param "internal_host2" >}}`**, again using the AWX Ansible Collection. The module to add hosts to an inventory is called **awx.awx.tower_host**. Read the documentation and try to figure out how to add the necessary tasks to the Ansible Playbook.
+Now that we have the empty inventory created, add your two managed hosts using their internal hostnames **`{{< param "internal_host1" >}}`** and **`{{< param "internal_host2" >}}`**, again using the AWX Ansible Collection. The module to add hosts to an inventory is called **awx.awx.host**. Read the documentation and try to figure out how to add the necessary tasks to the Ansible Playbook.
 
 {{% notice info %}}
-Use **ansible-doc awx.awx.tower_host** to open the documentation for the specified module.
+Use **ansible-doc awx.awx.host** to open the documentation for the specified module.
 {{% /notice %}}
 
 <details><summary><b>Click here for Solution</b></summary>
@@ -85,11 +85,11 @@ Use **ansible-doc awx.awx.tower_host** to open the documentation for the specifi
   gather_facts: false
   tasks:
   - name: Create an inventory
-    awx.awx.tower_inventory:
+    awx.awx.inventory:
       name: AWX inventory
       organization: Default
   - name: Add hosts to inventory
-    awx.awx.tower_host:
+    awx.awx.host:
       name: "{{  item }}"
       inventory: AWX inventory
       state: present
@@ -110,7 +110,7 @@ Run and test your playbook and verify everything works as expected, by logging i
 SSH keys have already been created and distributed in your lab environment and `sudo` has been setup on the managed hosts to allow password-less login. When you SSH into a host as user **student{{< param "student" >}}** from **{{< param "internal_control" >}}** you will become user **ec2-user** on the host you logged in.
 {{% /notice %}}
 
-Now we want to configure these credentials to access our managed hosts from Automation Controller. Your private key is stored in `~/.ssh/aws-private.pem` and already configured on the remote machine. Try to find the necessary attributes in the **awx.awx.tower_credential** module documentation.
+Now we want to configure these credentials to access our managed hosts from Automation Controller. Your private key is stored in `~/.ssh/aws-private.pem` and already configured on the remote machine. Try to find the necessary attributes in the **awx.awx.credential** module documentation.
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>
@@ -124,11 +124,11 @@ Now we want to configure these credentials to access our managed hosts from Auto
   gather_facts: false
   tasks:
   - name: Create an inventory
-    awx.awx.tower_inventory:
+    awx.awx.inventory:
       name: AWX inventory
       organization: Default
   - name: Add hosts to inventory
-    awx.awx.tower_host:
+    awx.awx.host:
       name: "{{  item }}"
       inventory: AWX inventory
       state: present
@@ -136,7 +136,7 @@ Now we want to configure these credentials to access our managed hosts from Auto
       - {{< param "internal_host1" >}}
       - {{< param "internal_host2" >}}
   - name: Machine Credentials
-    awx.awx.tower_credential:
+    awx.awx.credential:
       name: AWX Credentials
       kind: ssh
       organization: Default
@@ -150,14 +150,14 @@ Now we want to configure these credentials to access our managed hosts from Auto
 </details>
 
 {{% notice info %}}
-If you run this Ansible Playbook multiple times, you will notice the **awx.awx.tower_credential** module is not idempotent! Since we store the SSH key encrypted, the Ansible Module is unable to verify it has already been set and didn't change. This is what we want and expect from a secure system, but it also means Ansible has no means to verify it and hence overrides the SSH key or password every time the Ansible Playbook is executed.
+If you run this Ansible Playbook multiple times, you will notice the **awx.awx.credential** module is not idempotent! Since we store the SSH key encrypted, the Ansible Module is unable to verify it has already been set and didn't change. This is what we want and expect from a secure system, but it also means Ansible has no means to verify it and hence overrides the SSH key or password every time the Ansible Playbook is executed.
 {{% /notice %}}
 
 Run and test your playbook and verify everything works as expected, by logging ino the Automation Controller Web UI.
 
 ## Create Projects
 
-The Ansible content used in this lab is hosted on Github in the project [https://github.com/goetzrieger/ansible-labs-playbooks.git](https://github.com/goetzrieger/ansible-labs-playbooks.git). The next step is to add a project to import the Ansible Playbooks. As before, try to figure out the necessary parameters by reading the documentation of the **awx.awx.tower_project** module documentation.
+The Ansible content used in this lab is hosted on Github in the project [https://github.com/goetzrieger/ansible-labs-playbooks.git](https://github.com/goetzrieger/ansible-labs-playbooks.git). The next step is to add a project to import the Ansible Playbooks. As before, try to figure out the necessary parameters by reading the documentation of the **awx.awx.project** module documentation.
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>
@@ -171,11 +171,11 @@ The Ansible content used in this lab is hosted on Github in the project [https:/
   gather_facts: false
   tasks:
   - name: Create an inventory
-    awx.awx.tower_inventory:
+    awx.awx.inventory:
       name: AWX inventory
       organization: Default
   - name: Add hosts to inventory
-    awx.awx.tower_host:
+    awx.awx.host:
       name: "{{  item }}"
       inventory: AWX inventory
       state: present
@@ -183,7 +183,7 @@ The Ansible content used in this lab is hosted on Github in the project [https:/
       - {{< param "internal_host1" >}}
       - {{< param "internal_host2" >}}
   - name: Machine Credentials
-    awx.awx.tower_credential:
+    awx.awx.credential:
       name: AWX Credentials
       kind: ssh
       organization: Default
@@ -191,7 +191,7 @@ The Ansible content used in this lab is hosted on Github in the project [https:/
         username: ec2-user
         ssh_key_data: "{{ lookup('file', '~/.ssh/aws-private.pem' ) }}"
   - name: AWX Project
-    awx.awx.tower_project:
+    awx.awx.project:
       name: AWX Project
       organization: Default
       state: present
@@ -207,11 +207,11 @@ The Ansible content used in this lab is hosted on Github in the project [https:/
 
 Run and test your playbook and verify everything works as expected, by logging ino the Automation Controller Web UI.
 
-If you wonder why **awx.awx.tower_credential** is not idempotent, read the info box in the [previous chapter](#create-machine-credentials).
+If you wonder why **awx.awx.credential** is not idempotent, read the info box in the [previous chapter](#create-machine-credentials).
 
 ## Create Job Templates
 
-Before running an Ansible **Job** from your Automation Controller cluster you must create a **Job Template**, again business as usual for Automation Controller users. For this part of the Ansible Playbook, we will use the **awx.awx.tower_job_template** module. The name of the Ansible Playbook you want run is `apache_install.yml`.
+Before running an Ansible **Job** from your Automation Controller cluster you must create a **Job Template**, again business as usual for Automation Controller users. For this part of the Ansible Playbook, we will use the **awx.awx.job_template** module. The name of the Ansible Playbook you want run is `apache_install.yml`.
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>
@@ -225,11 +225,11 @@ Before running an Ansible **Job** from your Automation Controller cluster you mu
   gather_facts: false
   tasks:
   - name: Create an inventory
-    awx.awx.tower_inventory:
+    awx.awx.inventory:
       name: AWX inventory
       organization: Default
   - name: Add hosts to inventory
-    awx.awx.tower_host:
+    awx.awx.host:
       name: "{{  item }}"
       inventory: AWX inventory
       state: present
@@ -237,7 +237,7 @@ Before running an Ansible **Job** from your Automation Controller cluster you mu
       - {{< param "internal_host1" >}}
       - {{< param "internal_host2" >}}
   - name: Machine Credentials
-    awx.awx.tower_credential:
+    awx.awx.credential:
       name: AWX Credentials
       kind: ssh
       organization: Default
@@ -245,7 +245,7 @@ Before running an Ansible **Job** from your Automation Controller cluster you mu
         username: ec2-user
         ssh_key_data: "{{ lookup('file', '~/.ssh/aws-private.pem' ) }}"
   - name: AWX Project
-    awx.awx.tower_project:
+    awx.awx.project:
       name: AWX Project
       organization: Default
       state: present
@@ -254,7 +254,7 @@ Before running an Ansible **Job** from your Automation Controller cluster you mu
       scm_type: git
       scm_url: https://github.com/goetzrieger/ansible-labs-playbooks.git
   - name: AWX Job Template
-    awx.awx.tower_job_template:
+    awx.awx.job_template:
       name: Install Apache
       organization: Default
       state: present
@@ -274,9 +274,9 @@ Run and test your playbook and verify everything works as expected, by logging i
 
 ## Verify the cluster
 
-We are working in a clustered environment. To verify that the resources were created on all instances properly, login to the other Tower nodes web UI's.
+We are working in a clustered environment. To verify that the resources were created on all instances properly, login to the other controller nodes web UI's.
 
-Have a look around, everything we automatically configured on one Tower instance with our Ansible Playbook was **synchronized automatically** to the other nodes. Inventory, credentials, projects, templates, all there.
+Have a look around, everything we automatically configured on one controller instance with our Ansible Playbook was **synchronized automatically** to the other nodes. Inventory, credentials, projects, templates, all there.
 
 ## Challenge Labs
 
@@ -286,7 +286,7 @@ Try to add the necessary tasks to your Ansible Playbook to run the **Job Templat
 <hr/>
 <p>
 
-This is a Challenge Lab! No solution here. If you don't know where to look, check out the documentation of the **awx.awx.tower_job_template** module.
+This is a Challenge Lab! No solution here. If you don't know where to look, check out the documentation of the **awx.awx.job_template** module.
 
 </p>
 <hr/>

@@ -5,7 +5,7 @@ weight = 8
 
 ## OPTIONAL EXERCISE
 
-It’s a common part of the learning curve for Ansible and Ansible Tower: At some point you will have written so many playbooks that a need for structure comes up. Where to put the Playbooks, what about the Templates, Files and so on.
+It’s a common part of the learning curve for Ansible and automation controller: At some point you will have written so many playbooks that a need for structure comes up. Where to put the Playbooks, what about the Templates, Files and so on.
 
 The main recommendations are:
 
@@ -237,15 +237,15 @@ The code can now be launched. We start at the command line. Call the playbook `s
 
     [{{< param "ansible_prompt" >}} structured-content]$ ansible-playbook -i staging site.yml -b
 
-Watch how the changes are done to the target machines. Afterwards, we could similarly execute the playbook against the production stage, but we want to keep something for Tower to do, so we just check it:
+Watch how the changes are done to the target machines. Afterwards, we could similarly execute the playbook against the production stage, but we want to keep something for controller to do, so we just check it:
 
     [{{< param "ansible_prompt" >}} structured-content]$ ansible-playbook -i production site.yml -b --list-hosts --list-tasks
 
 Call e.g. `curl {{< param "internal_host1" >}}` to get the default page.
 
-### From Tower
+### From controller
 
-To configure and use this repository as a **Source Control Management (SCM)** system in Tower you have to create credentials again, this time to access the Git repository over SSH. This credential is user/key based, and we need the following **awx** command (assuming the `TOWER_` environment variables are still defined):
+To configure and use this repository as a **Source Control Management (SCM)** system in controller you have to create credentials again, this time to access the Git repository over SSH. This credential is user/key based, and we need the following **awx** command (assuming the `TOWER_` environment variables are still defined):
 
 ```bash
 [{{< param "awx_prompt" >}} ~]# awx -f human credential create --name "Git Credentials" \
@@ -267,9 +267,9 @@ web UI or use **awx** like shown below.
                     --credential "Git Credentials"
 ```
 
-Now you’ve created the Project in Tower. Earlier on the command line you’ve setup a staged environment by creating and using two different inventory files. But how can we get the same setup in Tower? We use another way to define Inventories\! It is possible to use inventory files provided in a SCM repository as an inventory source. This way we can use the inventory files we keep in Git.
+Now you’ve created the Project in controller. Earlier on the command line you’ve setup a staged environment by creating and using two different inventory files. But how can we get the same setup in controller? We use another way to define Inventories\! It is possible to use inventory files provided in a SCM repository as an inventory source. This way we can use the inventory files we keep in Git.
 
-In your Tower web UI, open the **RESOURCES→Inventories** view. Then click the ![plus](../../images/green_plus.png?classes=inline) button and choose to create a new **Inventory**. In the next view:
+In your controller web UI, open the **RESOURCES→Inventories** view. Then click the ![plus](../../images/green_plus.png?classes=inline) button and choose to create a new **Inventory**. In the next view:
 
 - **NAME:** Structured Content Inventory
 
@@ -324,7 +324,7 @@ Please note that in a real world use case you might want to have different templ
 
 {{% /notice %}}
 
-Now in the Tower web UI go to **RESOURCES→Templates**, launch the
+Now in the controller web UI go to **RESOURCES→Templates**, launch the
 job template **Structured Content Execution** and watch the results.
 
 ## Adding External Roles
@@ -344,7 +344,7 @@ To use external roles in a project, they need to be referenced in a file called 
   name: external-role_locally
 ```
 
-The `requirements.yml` needs to be read - either on the command line by invoking `ansible-galaxy`, or automatically by Ansible Tower during project check outs. In both cases the file is read, and the roles are checked out and stored locally, and the roles can be called in playbooks. The advantage of Tower here is that it takes care of all that - including authorization to the Git repo, finding a proper place to store the role, updating it when needed and so on.
+The `requirements.yml` needs to be read - either on the command line by invoking `ansible-galaxy`, or automatically by automation controller during project check outs. In both cases the file is read, and the roles are checked out and stored locally, and the roles can be called in playbooks. The advantage of controller here is that it takes care of all that - including authorization to the Git repo, finding a proper place to store the role, updating it when needed and so on.
 
 In this example, we will include a role which ships a simple `index.html` file as template and reloads the apache web server. The role is already shared in GitHub at **https://github.com/ansible-labs-summit-crew/shared-apache-role**.
 
@@ -382,7 +382,7 @@ Next, we reference the role itself in our playbook. Change the
     - { role: shared-apache-role }
 ```
 
-Because Tower uses your Git repo, you’ve to add, commit and push the
+Because controller uses your Git repo, you’ve to add, commit and push the
 changes:
 
 ```bash
@@ -391,9 +391,9 @@ changes:
 [{{< param "control_prompt" >}} structured-content]$ git push
 ```
 
-## Launch in Tower
+## Launch in controller
 
-Just in case, make sure to update the Project in Tower: in the menu at **RESOURCES**, pick **Projects**, and click on the sync button next to **Structured Content Repository**.
+Just in case, make sure to update the Project in controller: in the menu at **RESOURCES**, pick **Projects**, and click on the sync button next to **Structured Content Repository**.
 
 Afterwards, go to **RESOURCES→Templates** and launch the **Structured Content Execution** job template. As you will see in the job output, the external role is called just the way the other roles are called:
 
