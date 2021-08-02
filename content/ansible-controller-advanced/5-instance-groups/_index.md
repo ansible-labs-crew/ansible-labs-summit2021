@@ -1,5 +1,5 @@
 +++
-title = "Automation controller Instance Groups"
+title = "Automation Controller Instance Groups"
 weight = 5
 +++
 

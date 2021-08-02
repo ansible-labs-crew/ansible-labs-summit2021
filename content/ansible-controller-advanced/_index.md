@@ -1,14 +1,14 @@
 +++
-title = "Ansible automation controller Advanced"
+title = "Ansible Automation Controller Advanced"
 weight = 3
 +++
-## Ansible automation controller Advanced
+## Ansible Automation Controller Advanced
 
 - [Exercise 1 - Discover your lab](1-intro)
 
-- [Exercise 2 - Introduction to automation controller Clustering](2-clustering)
+- [Exercise 2 - Introduction to Automation Controller Clustering](2-clustering)
 
-- [Exercise 3 - There is more to controller than the Web UI](3-awx-collection-intro)
+- [Exercise 3 - There is more to Controller than the Web UI](3-awx-collection-intro)
 
 - [Exercise 4 - Run a Job in a Cluster](5-tower-cluster-jobs)
 
@@ -20,4 +20,4 @@ weight = 3
 
 - [Exercise 8 - OPTIONAL: Well Structured Content Repositories](8-structured-content)
 
-- [Exercise 9 - OPTIONAL: Discovering the controller API](9-rest-api)
+- [Exercise 9 - OPTIONAL: Discovering the Controller API](9-rest-api)

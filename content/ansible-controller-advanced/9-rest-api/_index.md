@@ -1,5 +1,5 @@
 +++
-title = "Discovering the automation controller API"
+title = "Discovering the Automation Controller API"
 weight = 9
 +++
 

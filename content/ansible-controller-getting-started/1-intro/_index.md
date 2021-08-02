@@ -1,9 +1,9 @@
 +++
-title = "Introduction to automation controller"
+title = "Introduction to Automation Controller"
 weight = 1
 +++
 
-## Automation controller? Where is Ansible Tower?
+## Automation Controller? Where is Ansible Tower?
 
 During the planning of **Red Hat Ansible Automation Platform 2** the decision was made to rename a number of components. The main reason behind this is to make it clear that e.g. Ansible Engine and Ansible Tower are parts of an comprehensive automation platform.
 
@@ -25,7 +25,7 @@ Automation controller basically is an API to Ansible Automation, most users will
 
 And much more... as you'll learn in this lab!
 
-## Your automation controller Lab Environment
+## Your Automation Controller Lab Environment
 
 In this lab you work in a pre-configured lab environment. You will have access to the following hosts:
 

@@ -1,11 +1,11 @@
 +++
-title = "Ansible automation controller Getting Started"
+title = "Ansible Automation Controller Getting Started"
 weight = 2
 +++
 
-## Ansible automation controller Getting Started
+## Ansible Automation Controller Getting Started
 
-- [Exercise 1 - Introduction to controller](1-intro)
+- [Exercise 1 - Introduction to Controller](1-intro)
 
 - [Exercise 2 - Inventories, credentials and ad hoc commands](2-cred)
 

@@ -1,5 +1,5 @@
 +++
-title = "Introduction to automation controller Clustering"
+title = "Introduction to Automation Controller Clustering"
 weight = 2
 +++
 
@@ -20,7 +20,7 @@ where to run.
 The Appendix contains some installation considerations and an installer inventory for reference.
 {{% /notice %}}
 
-## Access the controller Web UI
+## Access the Controller Web UI
 
 For the first contact to your cluster open your browser and login to the
 controller node 1 web UIs as:
