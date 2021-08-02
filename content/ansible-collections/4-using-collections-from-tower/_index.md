@@ -1,5 +1,5 @@
 +++
-title = "Collections in Tower"
+title = "Collections in automation controller"
 weight = 4
 +++
 
@@ -110,7 +110,7 @@ So far you created the code only locally on the control host, now you are ready 
 
 ## Create the Project and Job Template
 
-Now it's time to access your Ansible Tower web UI if you haven't done so out of curiosity already. Point your browser to the URL you were given on the lab landing page, similar to `https://{{< param "external_tower1" >}}` (replace `<N>` with your student number and `<LABID>` with the ID of this lab) and log in as `admin`. You can find the password again on the lab landing page.
+Now it's time to access your Ansible Tower web UI if you haven't done so out of curiosity already. Point your browser to the URL you were given on the lab landing page, similar to `https://{{< param "external_controller1" >}}` (replace `<N>` with your student number and `<LABID>` with the ID of this lab) and log in as `admin`. You can find the password again on the lab landing page.
 
 To run your new Playbook in Ansible Tower you have to configure a number of objects:
 

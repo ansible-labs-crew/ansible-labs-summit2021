@@ -7,7 +7,7 @@
   vars:
     git_user: git
     projects_dir: projects
-    git_project: tower_collections
+    git_project: ansible_labs
     username: "{{ ansible_user }}"  # just because we run it on localhost
     reference_user: ec2-user
 

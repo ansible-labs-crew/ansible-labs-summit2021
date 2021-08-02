@@ -3,7 +3,7 @@ title = "Parallel Jobs"
 weight = 6
 +++
 
-The real power of instance groups is revealed when multiple jobs are started, and they are assigned to different Tower nodes. To launch parallel jobs we will set up a workflow with multiple concurrent jobs.
+The real power of instance groups is revealed when multiple jobs are started, and they are assigned to different controller nodes. To launch parallel jobs we will set up a workflow with multiple concurrent jobs.
 
 ## Lab Scenario
 
@@ -19,7 +19,7 @@ In our demo case we use three playbooks which:
 
 - ensure absence of services and kernel modules (CIS).
 
-The Playbooks can be found in the Github repository you already setup as a **Project** in your Tower.
+The Playbooks can be found in the Github repository you already setup as a **Project** in your controller.
 
 ## Prepare the Compliance Lab
 
@@ -45,11 +45,11 @@ As mentioned the Github repository contains three Playbooks to enforce different
   gather_facts: false
   tasks:
   - name: Create an inventory
-    awx.awx.tower_inventory:
+    awx.awx.inventory:
       name: AWX inventory
       organization: Default
   - name: Add hosts to inventory
-    awx.awx.tower_host:
+    awx.awx.host:
       name: "{{  item }}"
       inventory: AWX inventory
       state: present
@@ -57,7 +57,7 @@ As mentioned the Github repository contains three Playbooks to enforce different
       - {{< param "internal_host1" >}}
       - {{< param "internal_host2" >}}
   - name: Machine Credentials
-    awx.awx.tower_credential:
+    awx.awx.credential:
       name: AWX Credentials
       kind: ssh
       organization: Default
@@ -65,7 +65,7 @@ As mentioned the Github repository contains three Playbooks to enforce different
         username: ec2-user
         ssh_key_data: "{{ lookup('file', '~/.ssh/aws-private.pem' ) }}"
   - name: AWX Project
-    awx.awx.tower_project:
+    awx.awx.project:
       name: AWX Project
       organization: Default
       state: present
@@ -74,7 +74,7 @@ As mentioned the Github repository contains three Playbooks to enforce different
       scm_type: git
       scm_url: https://github.com/goetzrieger/ansible-labs-playbooks.git
   - name: AWX Job Template
-    awx.awx.tower_job_template:
+    awx.awx.job_template:
       name: Install Apache
       organization: Default
       state: present
@@ -84,7 +84,7 @@ As mentioned the Github repository contains three Playbooks to enforce different
       project: AWX Project
       credential: AWX Credentials
   - name: Compliance STIG packages Job Template
-    awx.awx.tower_job_template:
+    awx.awx.job_template:
       name: Compliance STIG packages
       organization: Default
       state: present
@@ -94,7 +94,7 @@ As mentioned the Github repository contains three Playbooks to enforce different
       project: AWX Project
       credential: AWX Credentials
   - name: Compliance STIG config Job Template
-    awx.awx.tower_job_template:
+    awx.awx.job_template:
       name: Compliance STIG config
       organization: Default
       state: present
@@ -104,7 +104,7 @@ As mentioned the Github repository contains three Playbooks to enforce different
       project: AWX Project
       credential: AWX Credentials
   - name: Compliance CIS Job Template
-    awx.awx.tower_job_template:
+    awx.awx.job_template:
       name: Compliance CIS
       organization: Default
       state: present
@@ -164,7 +164,7 @@ Your workflow is ready to go, launch it.
 
 Go to the **Instance Groups** view and find out how the jobs where distributed over the instances:
 
-- Open the **INSTANCES** view of the **tower** instance group.
+- Open the **INSTANCES** view of the **controlplane** instance group.
 
 - Look at the **TOTAL JOBS** view of the three instances
 
@@ -172,11 +172,11 @@ Go to the **Instance Groups** view and find out how the jobs where distributed o
 
 ## Deactivate a node
 
-Now deactivate instance **{{< param "internal_tower1" >}}** with the slider button and wait until it is shown as unavailable. Make a (mental) note of the **TOTAL JOBS** counter of the instance. Go back to the list of templates and launch the workflow **Compliance Workflow** again.
+Now deactivate instance **{{< param "internal_controller1" >}}** with the slider button and wait until it is shown as unavailable. Make a (mental) note of the **TOTAL JOBS** counter of the instance. Go back to the list of templates and launch the workflow **Compliance Workflow** again.
 
-Go back to the **Instance Groups** view, get back to the instance overview of instance group **tower** and verify that the three Playbooks where launched on the remaining instances and the **TOTAL JOBS** counter of instance **{{< param "internal_tower1" >}}** didn’t change.
+Go back to the **Instance Groups** view, get back to the instance overview of instance group **controlplane** and verify that the three Playbooks where launched on the remaining instances and the **TOTAL JOBS** counter of instance **{{< param "internal_controller1" >}}** didn’t change.
 
-Activate **{{< param "internal_tower1" >}}** again by sliding the button to "checked".
+Activate **{{< param "internal_controller1" >}}** again by sliding the button to "checked".
 
 ## Using Instance Groups
 
@@ -220,12 +220,12 @@ You have done this a couple of times now, you should get along without detailed 
 - Verify\!
 
 {{% notice tip %}}
-**Result:** The workflow and the associated jobs will run on **{{< param "internal_tower2" >}}**. Okay, big surprise, in the **dev** instance group there is only one instance.
+**Result:** The workflow and the associated jobs will run on **{{< param "internal_controller2" >}}**. Okay, big surprise, in the **dev** instance group there is only one instance.
 {{% /notice %}}
 
 But what’s going to happen if you disable this instance?
 
-- Disable the **{{< param "internal_tower2" >}}** instance in the **Instance Groups** view.
+- Disable the **{{< param "internal_controller2" >}}** instance in the **Instance Groups** view.
 
 - Run the workflow again.
 
@@ -239,12 +239,12 @@ But what’s going to happen if you disable this instance?
 
 What’s going to happen if you enable the instance again?
 
-- Go to the **Instance Groups** view and enable **{{< param "internal_tower2" >}}** again.
+- Go to the **Instance Groups** view and enable **{{< param "internal_controller2" >}}** again.
 
 - Check in the **Jobs** and **Instance Groups** view what’s happening.
 
 {{% notice tip %}}
-**Result:** After the instance is enabled again the jobs will pickup and run on **{{< param "internal_tower2" >}}**.
+**Result:** After the instance is enabled again the jobs will pickup and run on **{{< param "internal_controller2" >}}**.
 {{% /notice %}}
 
 {{% notice warning %}}
