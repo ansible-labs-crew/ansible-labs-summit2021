@@ -10,11 +10,11 @@ weight = 3
 
 - [Exercise 3 - There is more to Controller than the Web UI](3-awx-collection-intro)
 
-- [Exercise 4 - Run a Job in a Cluster](5-tower-cluster-jobs)
+- [Exercise 4 - Run a Job in a Cluster](4-tower-cluster-jobs)
 
-- [Exercise 5 - Controller Instance Groups](6-instance-groups)
+- [Exercise 5 - Controller Instance Groups](5-instance-groups)
 
-- [Exercise 6 - Start Parallel Jobs across Instances](7-parallel-jobs)
+- [Exercise 6 - Start Parallel Jobs across Instances](6-parallel-jobs)
 
 - [Exercise 7 - Advanced Inventories](7-advanced-inventories)
 
