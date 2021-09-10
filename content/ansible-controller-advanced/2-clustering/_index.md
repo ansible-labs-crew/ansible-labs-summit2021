@@ -3,18 +3,13 @@ title = "Introduction to Automation Controller Clustering"
 weight = 2
 +++
 
-With version 3.1 Ansible Tower introduced clustering, replacing the
-redundancy solution configured with active-passive nodes.
-Clustering is sharing load between controller nodes/instances.
-Each controller instance is able to act as an entry point for UI and API access.
+With version 3.1 Ansible Tower introduced clustering, replacing the redundancy solution configured with active-passive nodes. Clustering is balancing load between controller nodes/instances. Each controller instance is able to act as an entry point for UI and API access.
 
 {{% notice tip %}}
 Using a load balancer in front of the controller nodes is possible, but optional because an automation controller cluster can be accessed via all controller instances.
 {{% /notice %}}
 
-Each instance in a controller cluster expands the cluster’s capacity to
-execute jobs. Jobs can and will run anywhere rather than be directed on
-where to run.
+Each instance in a controller cluster expands the cluster’s capacity to execute jobs. Jobs can and will run anywhere in the cluster by finding the least utilized node and other criteria explained later in this lab.
 
 {{% notice tip %}}
 The Appendix contains some installation considerations and an installer inventory for reference.
