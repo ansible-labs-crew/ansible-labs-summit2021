@@ -1,5 +1,5 @@
 +++
-title = "Automation Controller Instance Groups"
+title = "automation controller instance groups"
 weight = 5
 +++
 
@@ -97,7 +97,7 @@ or use curl to access the API from the command line in your VSCode terminal:
 The curl command has to be on one line. Do _not_ forget or oversee the final slash at the end of the URL, it is relevant!
 {{% /notice %}}
 
-## Deactivating Automation Controller Instances
+## Deactivating automation controller instances
 
 While in the **INSTANCES GROUPS** overview in the web UI click the **INSTANCES** link for, say, the **dev** group. In the next view you’ll see a slide button next to each controller instance (only one in this case).
 

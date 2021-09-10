@@ -2,9 +2,9 @@
 
 [Ansible Getting Started](./ansible-getting-started/)
 
-[Ansible Automation Controller Getting Started](./ansible-controller-getting-started/)
+[Ansible automation controller Getting Started](./ansible-controller-getting-started/)
 
-[Ansible Automation Controller Advanced](./ansible-controller-advanced/)
+[Ansible automation controller Advanced](./ansible-controller-advanced/)
 
 [Ansible Collections](./ansible-collections/)
 

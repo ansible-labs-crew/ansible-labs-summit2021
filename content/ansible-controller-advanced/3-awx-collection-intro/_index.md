@@ -1,14 +1,14 @@
 +++
-title = "There is more to Automation Controller than the Web UI"
+title = "There is more to automation controller than the Web UI"
 weight = 3
 +++
 
-This is an advanced Automation Controller lab so we don’t really want you to use the web UI for everything. To fully embrace automation and adopt the [infrastructure as code](https://en.wikipedia.org/wiki/Infrastructure_as_code) methodology, we want to use Ansible to configure our Ansible Automation Controller Cluster.
+This is an advanced automation controller lab so we don’t really want you to use the web UI for everything. To fully embrace automation and adopt the [infrastructure as code](https://en.wikipedia.org/wiki/Infrastructure_as_code) methodology, we want to use Ansible to configure our Ansible automation controller cluster.
 
-Since Automation Controller is exposing all of its functionality via REST API, we can automate everything. Instead of using the API directly, it is highly recommended to use the [AWX](https://github.com/ansible/awx/tree/devel/awx_collection) or [automation controller](https://cloud.redhat.com/ansible/automation-hub/repo/published/ansible/controller) Ansible Collection (the second link will only work for you, if you have an active Red Hat Ansible Automation Platform Subscription) to setup, configure and maintain your Red Hat Automation Platform Cluster.
+Since automation controller is exposing all of its functionality via REST API, we can automate everything. Instead of using the API directly, it is highly recommended to use the [AWX](https://github.com/ansible/awx/tree/devel/awx_collection) or [automation controller](https://cloud.redhat.com/ansible/automation-hub/repo/published/ansible/controller) Ansible Collection (the second link will only work for you, if you have an active Red Hat Ansible Automation Platform Subscription) to setup, configure and maintain your Red Hat Automation Platform Cluster.
 
 {{% notice info %}}
-For the purpose of this lab, we will use the community AWX collection. Red Hat Customers will prefer the supported Ansible Automation Controller Collection. Since this requires an active subscription and we want to make the lab usable for everyone, we will stick with the AWX collection for the purpose of the lab.
+For the purpose of this lab, we will use the community AWX collection. Red Hat Customers will prefer the supported Ansible automation controller Collection. Since this requires an active subscription and we want to make the lab usable for everyone, we will stick with the AWX collection for the purpose of the lab.
 {{% /notice %}}
 
 First, we need to install the AWX Collection. Installing Ansible Collections is super easy:
@@ -23,10 +23,10 @@ The AWX collection is updated very often. To make sure the following lab instruc
 
 ## Authentication
 
-Before we can do any changes on our Automation Controller, we have to authenticate our user. There are several methods available to provide authentication details to the modules. In this lab, we want to use environment variables.
+Before we can do any changes on our automation controller, we have to authenticate our user. There are several methods available to provide authentication details to the modules. In this lab, we want to use environment variables.
 
 ```bash
-# the Base URI of our Automation Controller Cluster Node
+# the Base URI of our automation controller cluster node
 [{{< param "control_prompt" >}} ~]$ export TOWER_HOST=https://{{< param "external_controller" >}}
 # the user name
 [{{< param "control_prompt" >}} ~]$ export TOWER_USERNAME=admin
@@ -57,13 +57,13 @@ Let's start with a very simple example to see how things work.
       organization: Default
 ```
 
-Since we are calling the REST API of Automation Controller, the Ansible Playbook is running on **localhost**, but the module will connect to the URL provided by the **TOWER_HOST** environment variable.
+Since we are calling the REST API of automation controller, the Ansible Playbook is running on **localhost**, but the module will connect to the URL provided by the **TOWER_HOST** environment variable.
 
 {{% notice info %}}
 You might see a warning message "You are using the awx version of this collection but connecting to Red Hat Ansible Automation Platform". This can be ignored. As said above, we intentionally use the AWX Community Collection for the purpose of the lab. As a Red Hat Customer you would probably prefer the supported Ansible Collection instead.
 {{% /notice %}}
 
-Run and test your playbook and verify everything works as expected, by logging ino the Automation Controller Web UI.
+Run and test your playbook and verify everything works as expected, by logging ino the automation controller Web UI.
 
 ## Add hosts to inventory
 
@@ -102,7 +102,7 @@ Use **ansible-doc awx.awx.host** to open the documentation for the specified mod
 <hr/>
 </details>
 
-Run and test your playbook and verify everything works as expected, by logging ino the Automation Controller Web UI.
+Run and test your playbook and verify everything works as expected, by logging ino the automation controller Web UI.
 
 ## Create Machine Credentials
 
@@ -110,7 +110,7 @@ Run and test your playbook and verify everything works as expected, by logging i
 SSH keys have already been created and distributed in your lab environment and `sudo` has been setup on the managed hosts to allow password-less login. When you SSH into a host as user **student{{< param "student" >}}** from **{{< param "internal_control" >}}** you will become user **ec2-user** on the host you logged in.
 {{% /notice %}}
 
-Now we want to configure these credentials to access our managed hosts from Automation Controller. Your private key is stored in `~/.ssh/aws-private.pem` and already configured on the remote machine. Try to find the necessary attributes in the **awx.awx.credential** module documentation.
+Now we want to configure these credentials to access our managed hosts from automation controller. Your private key is stored in `~/.ssh/aws-private.pem` and already configured on the remote machine. Try to find the necessary attributes in the **awx.awx.credential** module documentation.
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>
@@ -153,7 +153,7 @@ Now we want to configure these credentials to access our managed hosts from Auto
 If you run this Ansible Playbook multiple times, you will notice the **awx.awx.credential** module is not idempotent! Since we store the SSH key encrypted, the Ansible Module is unable to verify it has already been set and didn't change. This is what we want and expect from a secure system, but it also means Ansible has no means to verify it and hence overrides the SSH key or password every time the Ansible Playbook is executed.
 {{% /notice %}}
 
-Run and test your playbook and verify everything works as expected, by logging ino the Automation Controller Web UI.
+Run and test your playbook and verify everything works as expected, by logging ino the automation controller Web UI.
 
 ## Create Projects
 
@@ -205,13 +205,13 @@ The Ansible content used in this lab is hosted on Github in the project [https:/
 <hr/>
 </details>
 
-Run and test your playbook and verify everything works as expected, by logging ino the Automation Controller Web UI.
+Run and test your playbook and verify everything works as expected, by logging ino the automation controller Web UI.
 
 If you wonder why **awx.awx.credential** is not idempotent, read the info box in the [previous chapter](#create-machine-credentials).
 
 ## Create Job Templates
 
-Before running an Ansible **Job** from your Automation Controller cluster you must create a **Job Template**, again business as usual for Automation Controller users. For this part of the Ansible Playbook, we will use the **awx.awx.job_template** module. The name of the Ansible Playbook you want run is `apache_install.yml`.
+Before running an Ansible **Job** from your automation controller cluster you must create a **Job Template**, again business as usual for automation controller users. For this part of the Ansible Playbook, we will use the **awx.awx.job_template** module. The name of the Ansible Playbook you want run is `apache_install.yml`.
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>
@@ -270,7 +270,7 @@ Before running an Ansible **Job** from your Automation Controller cluster you mu
 <hr/>
 </details>
 
-Run and test your playbook and verify everything works as expected, by logging ino the Automation Controller Web UI.
+Run and test your playbook and verify everything works as expected, by logging ino the automation controller Web UI.
 
 ## Verify the cluster
 

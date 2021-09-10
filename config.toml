@@ -52,8 +52,8 @@ home = [ "HTML", "RSS", "JSON"]
   control_prompt = "lab-user@bastion"
   ansible_prompt = "root@bastion"
   awx_prompt = "lab-user@bastion"
-  pre_mng_prompt = "ec2-user@autoctl1"
-  manage_prompt = "root@autoctl1"
+  pre_mng_prompt = "lab-user@bastion"
+  manage_prompt = "root@bastion"
 
 #  deployment = "linklight"
 #  labid = "<LABID>"

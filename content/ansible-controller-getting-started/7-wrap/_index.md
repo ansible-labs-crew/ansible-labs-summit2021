@@ -9,7 +9,7 @@ This is the final challenge where we try to put most of what you have learned to
 
 ## Let’s set the stage
 
-Your team responsible for web application deployments like what they see in Automation Controller. To use it in their environment they put together these requirements:
+Your team responsible for web application deployments like what they see in automation controller. To use it in their environment they put together these requirements:
 
 - As the webservers can be used for either development purposes or in production, there has to be a way to flag them accordingly as **stage dev** or **stage prod**.
 
@@ -25,7 +25,7 @@ Your team responsible for web application deployments like what they see in Auto
 
 ## The Git Repository
 
-All code is already in place - this is a Automation Controller lab after all and not about configuring Apache. Check out the **Ansible Workshop Examples** git repository again at [https://github.com/ansible-labs-crew/ansible-labs-playbooks](https://github.com/ansible-labs-crew/ansible-labs-playbooks). You will find the playbook `webcontent.yml`, which calls the role `role_webcontent`.
+All code is already in place - this is a automation controller lab after all and not about configuring Apache. Check out the **Ansible Workshop Examples** git repository again at [https://github.com/ansible-labs-crew/ansible-labs-playbooks](https://github.com/ansible-labs-crew/ansible-labs-playbooks). You will find the playbook `webcontent.yml`, which calls the role `role_webcontent`.
 
 Compared to the previous Apache installation role there is a major difference: there are now two versions of an `index.html` template, and a task deploying the template file which has a variable as part of the template file name.
 
@@ -75,7 +75,7 @@ There is of course more then one way to accomplish this, but here is what you sh
   - Add `stage: dev` to the inventory `Webserver` by putting it into the **Variables** field beneath the three start-yaml dashes.
 
 {{% notice warning %}}
-Make sure to add the variable to the inventory and **not** to a node! 
+Make sure to add the variable to the inventory and **not** to a node!
 {{% /notice %}}
 
 - In the same way add a variable `stage: prod` but this time only for `node2` (go to the **Hosts** view of the inventory).
@@ -184,4 +184,4 @@ You have done all the required configuration steps in the lab already. If unsure
 
 ## The End
 
-Congratulations, you finished your labs\! We hope you enjoyed your first encounter with Automation Controller as much as we enjoyed creating the labs.
+Congratulations, you finished your labs\! We hope you enjoyed your first encounter with automation controller as much as we enjoyed creating the labs.

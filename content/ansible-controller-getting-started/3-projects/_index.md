@@ -3,9 +3,9 @@ title = "Projects & job templates"
 weight = 3
 +++
 
-An Automation Controller **Project** is a logical collection of Ansible Playbooks. You manage your playbooks by placing them into a source code management (SCM) system supported by Automation Controller, including Git, Subversion, and others.
+An automation controller **Project** is a logical collection of Ansible Playbooks. You manage your playbooks by placing them into a source code management (SCM) system supported by automation controller, including Git, Subversion, and others.
 
-You should definitely keep your Playbooks under version control. 
+You should definitely keep your Playbooks under version control.
 
 ## Setup a Git Repository as a Project
 
@@ -55,7 +55,7 @@ A Playbook to install the Apache webserver has already been committed to the dir
 Note the difference to other Playbooks you might have written\! Most importantly there is no `become` and `hosts` is set to `all`.
 {{% /notice %}}
 
-To configure and use this repository as a **Source Code Management (SCM)** system in Automation Controller you have to create a **Project** that uses the repository
+To configure and use this repository as a **Source Code Management (SCM)** system in automation controller you have to create a **Project** that uses the repository
 
 ## Create the Project
 
@@ -81,7 +81,7 @@ After starting the sync job, go to the **Jobs** view: there are new jobs for the
 
 ## Create a Job Template and Run a Job
 
-A job template is a definition and set of parameters for running an Ansible job. Job templates are useful to execute the same job many times. So before running an Ansible **Job** from Automation Controller you must create a **Job Template** that pulls together:
+A job template is a definition and set of parameters for running an Ansible job. Job templates are useful to execute the same job many times. So before running an Ansible **Job** from automation controller you must create a **Job Template** that pulls together:
 
 - **Inventory**: On what hosts should the job run?
 

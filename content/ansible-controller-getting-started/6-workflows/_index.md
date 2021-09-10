@@ -3,7 +3,7 @@ title = "Workflows"
 weight = 6
 +++
 
-The basic idea of an Automation Controller workflow is to link multiple Job Templates together. They may or may not share inventory, Playbooks or even permissions. The links can be conditional:
+The basic idea of an automation controller workflow is to link multiple Job Templates together. They may or may not share inventory, Playbooks or even permissions. The links can be conditional:
 
 - If job template A succeeds, job template B is automatically executed afterwards.
 
@@ -11,7 +11,7 @@ The basic idea of an Automation Controller workflow is to link multiple Job Temp
 
 And the workflows are not even limited to Job Templates, but can also include project or inventory updates.
 
-This enables new applications for Automation Controller: different Job Templates can build upon each other. E.g. the networking team creates playbooks with their own content, in their own Git repository and even targeting their own inventory, while the operations team also has their own repos, playbooks and inventory.
+This enables new applications for automation controller: different Job Templates can build upon each other. E.g. the networking team creates playbooks with their own content, in their own Git repository and even targeting their own inventory, while the operations team also has their own repos, playbooks and inventory.
 
 In this lab you’ll learn how to setup a workflow.
 
@@ -169,7 +169,7 @@ And now you finally set up the Workflow. Workflows are configured in the **Templ
 
 - After saving the template the **Workflow Visualizer** opens to allow you to build a workflow. You can later open the **Workflow Visualizer** again by using the button on the template details page.
 
-- Click on the **Start** button, a dialog to configure a new **workflow node** opens. 
+- Click on the **Start** button, a dialog to configure a new **workflow node** opens.
 
 - First select the node type, you can choose between **Job Template**, **Project Sync**, **Inventory Source Sync**, **Approval** and **Workflow Job Template**.
 
@@ -191,7 +191,7 @@ You get into the **Workflow Visualizer** overview showing the first workflow nod
 
   - a pencil icon to edit this node's settings
 
-  - a link icon to link to another node 
+  - a link icon to link to another node
 
   - and a delete icon.
 
@@ -233,7 +233,7 @@ You should be greeted with a friendly `Hello World`
 
 ## Workflow Approvals
 
-To make Workflows in Automation Controller even more useful you can add approval steps in your Workflow. Using this feature it's possible to have another user review and approve all or certain nodes in a Workflow. In addition you could set time limits, so a Workflow waiting for approval would be cancelled or proceed after time runs out automatically.
+To make Workflows in automation controller even more useful you can add approval steps in your Workflow. Using this feature it's possible to have another user review and approve all or certain nodes in a Workflow. In addition you could set time limits, so a Workflow waiting for approval would be cancelled or proceed after time runs out automatically.
 
 Let's see how this works by adding an approval step to the **Deploy Webapplication** Workflow Template you configured above. The goal is to:
 
@@ -333,8 +333,3 @@ You're set. The Workflow run **wweb** started is still in pending state, you can
 You'll see how the job picks up after you approved it and goes to the **Web App Deploy** node to finish.
 
 This was a basic example to show how you could create a Job, allow one user to execute it and another user to approve it!
-
-
-
-
-
