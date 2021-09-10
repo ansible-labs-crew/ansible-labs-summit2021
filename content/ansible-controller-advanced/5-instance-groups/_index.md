@@ -77,7 +77,7 @@ You can check your instance groups in a number of ways.
 
 You have configured the groups here, open the URL
 
-    https://{{< param "external_controller" >}}/#/instance_groups
+    https://{{< param "external_controller1" >}}/#/instance_groups
 
 in your browser.
 
@@ -87,7 +87,7 @@ In the **INSTANCE GROUPS** overview all instance groups are listed with details 
 
 You can again query the API to get this information. Either use the browser to access the URL (you might have to login to the API again):
 
-  `https://{{< param "external_controller" >}}/api/v2/instance_groups/`
+  `https://{{< param "external_controller1" >}}/api/v2/instance_groups/`
 
 or use curl to access the API from the command line in your VSCode terminal:
 

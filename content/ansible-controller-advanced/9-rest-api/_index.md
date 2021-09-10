@@ -14,7 +14,7 @@ through it:
 
 1. Go to the controller UI in your browser and make sure you’re logged in as admin.
 
-1. Replace the end of the URL with `/api` e.g. `https://{{< param "external_controller" >}}/api`
+1. Replace the end of the URL with `/api` e.g. `https://{{< param "external_controller1" >}}/api`
 
 1. There is currently only one API valid, so while in `/api/v2`:
 
@@ -59,7 +59,7 @@ and the result should be a 201 telling you about your success. You can login wit
 </details>
 
 Now log in again as admin and go back to the list of users:
-`https://{{< param "external_controller" >}}/api/v2/users/`
+`https://{{< param "external_controller1" >}}/api/v2/users/`
 
 - Click on the **url** field of your new friend John Smith and notice a few more things:
 

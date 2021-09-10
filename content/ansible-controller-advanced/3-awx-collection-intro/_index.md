@@ -3,12 +3,12 @@ title = "There is more to automation controller than the Web UI"
 weight = 3
 +++
 
-This is an advanced automation controller lab so we don’t really want you to use the web UI for everything. To fully embrace automation and adopt the [infrastructure as code](https://en.wikipedia.org/wiki/Infrastructure_as_code) methodology, we want to use Ansible to configure our Ansible automation controller cluster.
+This is an advanced automation controller lab so we don’t really want you to use the web UI for everything. To fully embrace automation and adopt the [infrastructure as code](https://en.wikipedia.org/wiki/Infrastructure_as_code) methodology, we want to use Ansible to configure our automation controller cluster.
 
-Since automation controller is exposing all of its functionality via REST API, we can automate everything. Instead of using the API directly, it is highly recommended to use the [AWX](https://github.com/ansible/awx/tree/devel/awx_collection) or [automation controller](https://cloud.redhat.com/ansible/automation-hub/repo/published/ansible/controller) Ansible Collection (the second link will only work for you, if you have an active Red Hat Ansible Automation Platform Subscription) to setup, configure and maintain your Red Hat Automation Platform Cluster.
+Since automation controller is exposing all of its functionality via REST API, we can automate everything. Instead of using the API directly, it is highly recommended to use the [AWX](https://github.com/ansible/awx/tree/devel/awx_collection) or [automation controller](https://cloud.redhat.com/ansible/automation-hub/repo/published/ansible/controller) Ansible Collection (the second link will only work for you, if you have an active Red Hat Ansible Automation Platform Subscription) to setup, configure and maintain your Red Hat Ansible Automation Platform Cluster.
 
 {{% notice info %}}
-For the purpose of this lab, we will use the community AWX collection. Red Hat Customers will prefer the supported Ansible automation controller Collection. Since this requires an active subscription and we want to make the lab usable for everyone, we will stick with the AWX collection for the purpose of the lab.
+For the purpose of this lab, we will use the community AWX collection. Red Hat Customers will prefer the supported Ansible automation controller collection. Since this requires an active subscription and we want to make the lab usable for everyone, we will stick with the AWX collection for the purpose of the lab.
 {{% /notice %}}
 
 First, we need to install the AWX Collection. Installing Ansible Collections is super easy:
@@ -18,7 +18,7 @@ First, we need to install the AWX Collection. Installing Ansible Collections is 
 ```
 
 {{% notice note %}}
-The AWX collection is updated very often. To make sure the following lab instructions will work for you, we install specifically version 19.1.0. We regularly update these instruction to keep up to date and don't fall behind too much. However, to make sure the lab work for you, we suggest you to use the specified version.
+The AWX collection is updated very often. To make sure the following lab instructions will work for you, we install specifically version 19.1.0. We regularly update these instruction to keep up to date and don't fall behind too much. However, to make sure the lab works for you, we suggest you to use the specified version.
 {{% /notice %}}
 
 ## Authentication
@@ -27,13 +27,13 @@ Before we can do any changes on our automation controller, we have to authentica
 
 ```bash
 # the Base URI of our automation controller cluster node
-[{{< param "control_prompt" >}} ~]$ export TOWER_HOST=https://{{< param "external_controller" >}}
+[{{< param "control_prompt" >}} ~]$ export CONTROLLER_HOST=https://{{< param "external_controller1" >}}
 # the user name
-[{{< param "control_prompt" >}} ~]$ export TOWER_USERNAME=admin
+[{{< param "control_prompt" >}} ~]$ export CONTROLLER_USERNAME=admin
 # and the password
-[{{< param "control_prompt" >}} ~]$ export TOWER_PASSWORD='{{< param "secret_password" >}}'
+[{{< param "control_prompt" >}} ~]$ export CONTROLLER_PASSWORD='{{< param "secret_password" >}}'
 # do not verify the SSL certificate, in production, you will use proper SSL certificates and not need this option or set it to True
-[{{< param "control_prompt" >}} ~]$ export TOWER_VERIFY_SSL=false
+[{{< param "control_prompt" >}} ~]$ export CONTROLLER_VERIFY_SSL=false
 ```
 
 {{% notice warning %}}
