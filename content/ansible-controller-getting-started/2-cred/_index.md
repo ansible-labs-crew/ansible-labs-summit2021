@@ -47,7 +47,7 @@ As this is an important part of your Automation Controller setup, why not make s
 
 To test access to the nodes via SSH do the following:
 
-- In your browser bring up the terminal window in code-server (remember this runs on the Automation Controller node).
+- In your browser bring up the terminal window in **VS Code** server (remember this runs on the Automation Controller node).
 
 - From here as user `ec2-user` SSH into `node1` or one of the other nodes and execute `sudo -i`.
 
@@ -116,7 +116,7 @@ An EE is a container run from an image that contains everything your Ansible Pla
 Your Automation Controller has been preconfigured with some standard EE images. So first go through the next section covering ad hoc commands, we'll look into execution environments a bit deeper later.
 
 {{% notice tip %}}
-Linux containers are technologies that allow you to package and isolate applications with their entire runtime environment. This makes it easy to move the contained application between environments and nodes while retaining full functionality. 
+Linux containers are technologies that allow you to package and isolate applications with their entire runtime environment. This makes it easy to move the contained application between environments and nodes while retaining full functionality.
 In this lab you'll use the command `podman` later on. Podman is a daemonless container engine for developing, managing, and running Open Container Initiative (OCI) containers and container images on your Linux System. If you want to learn more, there is a wealth of information on the Internet, you could start [here](http://docs.podman.io/en/latest/Introduction.html) for Podman or [here](https://www.ansible.com/blog/introduction-to-ansible-builder) for execution environments.
 {{% /notice %}}
 ## Run Ad Hoc Commands
@@ -130,13 +130,13 @@ As you’ve probably done with Ansible before you can run ad hoc commands from A
 - Click **Run Command**. In the next screen you have to specify the ad hoc command:
 
   - As **Module** choose **ping**
-  
+
   - Click **Next**
-  
+
   - As **Execution Environment** choose **Controller Default EE**
-  
+
   - Click **Next**
-  
+
   - For **Machine Credential** choose **Workshop Credentials**.
 
   - Click **Launch**, and watch the output. It should report **SUCCESS** for all nodes, of course.
@@ -193,7 +193,7 @@ Try to click one of the output lines in the window showing the job output. A sma
 
 As promised let's look a bit deeper into execution environments. During the section covering ad hoc commands you have already seen you have to choose an execution environment, the same will hold true for running Playbooks later on. In your Automation Controller web UI, go to **Administration → Execution Environments**. You'll see a list of the configured execution environments and original location of the image, in our case the images are provided in the **quay.io** container registry. Here you could add your own registry with custom EE images, too.
 
-So what happens, when Automation Controller runs an ad hoc command or Playbook? Let's see... 
+So what happens, when Automation Controller runs an ad hoc command or Playbook? Let's see...
 
 You should already have your **VS Code** terminal open in another browser tab, if not open https://{{< param "external_code" >}} and do **Terminal -> New Terminal**. In this terminal:
 
@@ -215,7 +215,7 @@ quay.io/ansible/awx-ee  0.2.0   68b8d8c4702d  2 months ago  1.25 GB
 CONTAINER ID  IMAGE   COMMAND  CREATED  STATUS  PORTS   NAMES
 ```
 
-- Keep podman running, now it's time to execute some automation. 
+- Keep podman running, now it's time to execute some automation.
 
 - In the web UI run an ad hoc command again. Go to **Resources → Inventories → Workshop Inventory**
 
@@ -251,5 +251,4 @@ The `sleep 60` command was only used to keep the container running for some time
 
 - Stop `podman` with `CTRL-C`.
 
-This is how Automation Controller uses Linux containers to run Ansible automation jobs in their own dedicated environments. 
-
+This is how Automation Controller uses Linux containers to run Ansible automation jobs in their own dedicated environments.

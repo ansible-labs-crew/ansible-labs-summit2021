@@ -55,7 +55,7 @@ Some hints to get you started:
 
 - Don’t type everything manually, use copy & paste from the browser when appropriate. But don’t stop to think and understand… ;-)
 
-- To **edit files** or **open a terminal window**, we provide **VS Code** delivered by **code-server**, basically the great Visual Studio Code Editor running in your browser. It's running on the automation controller node and can be accessed through the URL `https://{{< param "external_code" >}}`
+- To **edit files** or **open a terminal window**, we provide **VS Code** delivered by **VS Code** server, basically the great Visual Studio Code Editor running in your browser. It's running on the automation controller node and can be accessed through the URL `https://{{< param "external_code" >}}`
 
 {{% notice tip %}}
 Commands you are supposed to run are shown with or without the expected output, whatever makes more sense in the context.
@@ -87,7 +87,7 @@ Now open code-server using the link from the lab landing page or this link in yo
 
 ![VS Code login](../../images/vscode-pwd.png)
 
-Use the password provided on the landing page to login into the code-server web UI, you can close the **Welcome** tab. Now open a new terminal by heading to the menu item **Terminal** at the top of the page and select **New Terminal**. A new section will appear in the lower half of the screen and you will be greeted with a prompt:
+Use the password provided on the landing page to login into the **VS Code** server web UI, you can close the **Welcome** tab. Now open a new terminal by heading to the menu item **Terminal** at the top of the page and select **New Terminal**. A new section will appear in the lower half of the screen and you will be greeted with a prompt:
 
 ![VS Code terminal](../../images/vscode-terminal.png)
 

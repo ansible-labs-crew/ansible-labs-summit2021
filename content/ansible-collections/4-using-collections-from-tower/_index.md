@@ -143,7 +143,7 @@ As we are using SSH key authentication, you have to provide an SSH private key t
 The Playbook we used to configure Git added the SSH private key to the `authorized_keys` of user `git`
 {{% /notice %}}
 
-Bring up your code-server terminal on Tower and use `cat` to get the SSH private key:
+Bring up your **VS Code** server terminal on Tower and use `cat` to get the SSH private key:
 
 ```bash
 [{{< param "internal_control" >}} ~]$ cat ~/.ssh/aws-private.pem

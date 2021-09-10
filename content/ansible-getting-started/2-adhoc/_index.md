@@ -7,7 +7,7 @@ For our first exercise, we are going to run some ad hoc commands to help you get
 
 ## Work with your Inventory
 
-To use the ansible command for host management, you need to provide an inventory file which defines a list of hosts to be managed from the control node. In this lab the inventory is provided by your instructor. The inventory is an ini formatted file listing your hosts, sorted in groups, additionally providing some variables. Have a look for yourself, in your **code-server terminal** run:
+To use the ansible command for host management, you need to provide an inventory file which defines a list of hosts to be managed from the control node. In this lab the inventory is provided by your instructor. The inventory is an ini formatted file listing your hosts, sorted in groups, additionally providing some variables. Have a look for yourself, in your **VS Code** server terminal run:
 
 ```bash
 [{{< param "control_prompt" >}} ~]$ cat lab_inventory/hosts

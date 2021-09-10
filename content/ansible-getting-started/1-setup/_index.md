@@ -26,17 +26,17 @@ On the lab landing page you'll find the URLs you need to access complete with st
 
 Your main points of contact with the lab is **VS Code**, providing a VSCode-experience in your browser.
 
-Now open code-server using the **VS Code access** link from the lab landing page or use this link in your browser by replacing **\<N\>** by your student number and the **\<LABID\>**:
+Now open **VS Code** server using the **VS Code access** link from the lab landing page or use this link in your browser by replacing **\<N\>** by your student number and the **\<LABID\>**:
 
     https://{{< param "external_code" >}}
 
 ![code-server login](../../images/vscode-pwd.png)
 
-Use the password **provided on the lab landing page** to login into the code-server web UI, you can close the **Welcome** tab. Now open a new terminal by heading to the menu item **Terminal** at the top of the page and select **New Terminal**. A new section will appear in the lower half of the screen and you will be greeted with a prompt:
+Use the password **provided on the lab landing page** to login into the **VS Code** server web UI, you can close the **Welcome** tab. Now open a new terminal by heading to the menu item **Terminal** at the top of the page and select **New Terminal**. A new section will appear in the lower half of the screen and you will be greeted with a prompt:
 
 ![code-server terminal](../../images/vscode-terminal.png)
 
-If unsure how to use code-server, read the [Visual Studio Code Server introduction](../../vscode-intro/), to learn more about how to create and edit files, and to work with the Terminal.
+If unsure how to use **VS Code** server, read the [Visual Studio Code Server introduction](../../vscode-intro/), to learn more about how to create and edit files, and to work with the Terminal.
 
 Congrats, you now have a shell terminal on your Ansible control node. From here you run commands or access the other hosts in your lab environment if the lab task requires it.
 
