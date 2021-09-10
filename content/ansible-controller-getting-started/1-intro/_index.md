@@ -1,9 +1,9 @@
 +++
-title = "Introduction to Automation Controller"
+title = "Introduction to automation controller"
 weight = 1
 +++
 
-## Automation Controller? Where is Ansible Tower?
+## Automation controller? Where is Ansible Tower?
 
 During the planning of **Red Hat Ansible Automation Platform 2** the decision was made to rename a number of components. The main reason behind this is to make it clear that e.g. Ansible Engine and Ansible Tower are parts of an comprehensive automation platform.
 
@@ -17,7 +17,7 @@ Automation controller basically is an API to Ansible Automation, most users will
 
 - One-click automation templates
 
-- Mangement of dynamic inventory sources
+- Management of dynamic inventory sources
 
 - Automation workflows with approval
 
@@ -25,7 +25,7 @@ Automation controller basically is an API to Ansible Automation, most users will
 
 And much more... as you'll learn in this lab!
 
-## Your Automation Controller Lab Environment
+## Your automation controller Lab Environment
 
 In this lab you work in a pre-configured lab environment. You will have access to the following hosts:
 
@@ -55,7 +55,7 @@ Some hints to get you started:
 
 - Don’t type everything manually, use copy & paste from the browser when appropriate. But don’t stop to think and understand… ;-)
 
-- To **edit files** or **open a terminal window**, we provide **VS Code** delivered by **code-server**, basically the great Visual Studio Code Editor running in your browser. It's running on the automation controller node and can be accessed through the URL `https://{{< param "external_code" >}}`
+- To **edit files** or **open a terminal window**, we provide **VS Code** delivered by **VS Code** server, basically the great Visual Studio Code Editor running in your browser. It's running on the automation controller node and can be accessed through the URL `https://{{< param "external_code" >}}`
 
 {{% notice tip %}}
 Commands you are supposed to run are shown with or without the expected output, whatever makes more sense in the context.
@@ -87,7 +87,7 @@ Now open code-server using the link from the lab landing page or this link in yo
 
 ![VS Code login](../../images/vscode-pwd.png)
 
-Use the password provided on the landing page to login into the code-server web UI, you can close the **Welcome** tab. Now open a new terminal by heading to the menu item **Terminal** at the top of the page and select **New Terminal**. A new section will appear in the lower half of the screen and you will be greeted with a prompt:
+Use the password provided on the landing page to login into the **VS Code** server web UI, you can close the **Welcome** tab. Now open a new terminal by heading to the menu item **Terminal** at the top of the page and select **New Terminal**. A new section will appear in the lower half of the screen and you will be greeted with a prompt:
 
 ![VS Code terminal](../../images/vscode-terminal.png)
 

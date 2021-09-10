@@ -5,7 +5,7 @@ weight = 2
 
 ## Create an Inventory
 
-Let’s get started: The first thing we need is an inventory of your managed hosts. This is the equivalent of an inventory file when using Ansible on the commandline. There is a lot more to it (like dynamic inventories) but let’s start with the basics.
+Let’s get started: The first thing we need is an inventory of your managed hosts. This is the equivalent of an inventory file when using Ansible on the command line. There is a lot more to it (like dynamic inventories) but let’s start with the basics.
 
 - You should already have the web UI open, if not: Point your browser to the URL you were given, similar to **`https://{{< param "external_controller1" >}}`** (replace "\<N\>" and "\<LABID\>") and log in as `admin` with the password given on the lab landing page.
 
@@ -23,7 +23,7 @@ Go back to the **Inventories** list, your new **Workshop Inventory** should show
 
 So let's add some hosts. As mentioned in the intro you have three managed hosts in your lab environment, the names are resolved through the `/etc/hosts` file. The nodes are named `node1`, `node2` and `node3`.
 
-Now add the hosts to the inventory in Automation Controller:
+Now add the hosts to the inventory in automation controller:
 
 - Click the blue ![Add](../../images/blue_add.png?classes=inline) button.
 
@@ -37,17 +37,17 @@ You have now created an inventory with three managed hosts.
 
 ## Machine Credentials
 
-One of the great features of Automation Controller is to make credentials usable to users without making them visible. To allow Automation Controller to execute jobs on remote hosts, you must configure connection credentials.
+One of the great features of automation controller is to make credentials usable to users without making them visible. To allow automation controller to execute jobs on remote hosts, you must configure connection credentials.
 
 {{% notice tip %}}
-This is one of the most important features of Automation Controller: **Credential Separation**\! Credentials are defined separately and not with the hosts or inventory settings.
+This is one of the most important features of automation controller: **Credential Separation**\! Credentials are defined separately and not with the hosts or inventory settings.
 {{% /notice %}}
 
-As this is an important part of your Automation Controller setup, why not make sure that connecting to the managed nodes from Automation Controller is working in the first place?
+As this is an important part of your automation controller setup, why not make sure that connecting to the managed nodes from automation controller is working in the first place?
 
 To test access to the nodes via SSH do the following:
 
-- In your browser bring up the terminal window in code-server (remember this runs on the Automation Controller node).
+- In your browser bring up the terminal window in **VS Code** server (remember this runs on the automation controller node).
 
 - From here as user `ec2-user` SSH into `node1` or one of the other nodes and execute `sudo -i`.
 
@@ -65,13 +65,13 @@ sudo -i
 
 What does this mean?
 
-- Automation Controller user **student{{< param "student" >}}** can connect to the managed hosts with SSH key authentication as user **ec2-user**.
+- Automation controller user **student{{< param "student" >}}** can connect to the managed hosts with SSH key authentication as user **ec2-user**.
 
 - User **ec2-user** can execute commands on the managed hosts as **root** with `sudo`.
 
 ## Configure Machine Credentials
 
-Now we will configure the credentials to access our managed hosts from Automation Controller. In the **Resources** menu choose **Credentials**. Now:
+Now we will configure the credentials to access our managed hosts from automation controller. In the **Resources** menu choose **Credentials**. Now:
 
 Click the ![Add](../../images/blue_add.png?classes=inline) button to add new credentials
 
@@ -87,7 +87,7 @@ Click the ![Add](../../images/blue_add.png?classes=inline) button to add new cre
 
 As we are using SSH key authentication, you have to provide an SSH private key that can be used to access the hosts. You could also configure password authentication here.
 
-Bring up your code-server terminal on Automation Controller, and `cat` the SSH private key:
+Bring up your code-server terminal on automation controller, and `cat` the SSH private key:
 
 ```bash
 [{{< param "internal_control" >}} ~]$ cat .ssh/aws-private.pem
@@ -107,21 +107,22 @@ You have now setup credentials for Ansible to access your managed hosts.
 
 ## Hold on: Ansible Execution Environments Primer!
 
-Before you run your first Ansible ad hoc commands in Automation Controller it's about time to learn about one of the major new features in Ansible Automation Platform 2: **Execution Environments**!
+Before you run your first Ansible ad hoc commands in automation controller it's about time to learn about one of the major new features in Ansible Automation Platform 2: **Execution Environments**!
 
 Before AAP 2 the Automation Platform execution relied on using **bubblewrap** to isolate processes and Python virtual environments (venv) to sandbox dependencies. This lead to a number of issues like maintaining multiple venv, migrating Ansible content between execution nodes and much more. The concept of execution environments (EE) solves this by using Linux containers.
 
 An EE is a container run from an image that contains everything your Ansible Playbook needs to run. It's basically a control node in a box that can be executed everywhere a Linux container can run. There are ready-made image that contain everything you would expect on an Ansible control node, but you can (and probably will) start to build your own, custom image for your very own requirements at some point.
 
-Your Automation Controller has been preconfigured with some standard EE images. So first go through the next section covering ad hoc commands, we'll look into execution environments a bit deeper later.
+Your automation controller has been preconfigured with some standard EE images. So first go through the next section covering ad hoc commands, we'll look into execution environments a bit deeper later.
 
 {{% notice tip %}}
-Linux containers are technologies that allow you to package and isolate applications with their entire runtime environment. This makes it easy to move the contained application between environments and nodes while retaining full functionality. 
-In this lab you'll use the command `podman` later on. Podman is a daemonless container engine for developing, managing, and running Open Container Initiative (OCI) containers and container images on your Linux System. If you want to learn more, there is a wealth of information on the Internet, you could start [here](http://docs.podman.io/en/latest/Introduction.html) for Podman or [here](https://www.ansible.com/blog/introduction-to-ansible-builder) for execution environments.
+Linux containers are technologies that allow you to package and isolate applications with their entire runtime environment. This makes it easy to move the contained application between environments and nodes while retaining full functionality.
+In this lab you'll use the command `podman` later on. Podman is a daemon less container engine for developing, managing, and running Open Container Initiative (OCI) containers and container images on your Linux System. If you want to learn more, there is a wealth of information on the Internet, you could start [here](http://docs.podman.io/en/latest/Introduction.html) for Podman or [here](https://www.ansible.com/blog/introduction-to-ansible-builder) for execution environments.
 {{% /notice %}}
+
 ## Run Ad Hoc Commands
 
-As you’ve probably done with Ansible before you can run ad hoc commands from Automation Controller as well.
+As you’ve probably done with Ansible before you can run ad hoc commands from automation controller as well.
 
 - In the web UI go to **Resources → Inventories → Workshop Inventory**
 
@@ -130,13 +131,13 @@ As you’ve probably done with Ansible before you can run ad hoc commands from A
 - Click **Run Command**. In the next screen you have to specify the ad hoc command:
 
   - As **Module** choose **ping**
-  
+
   - Click **Next**
-  
+
   - As **Execution Environment** choose **Controller Default EE**
-  
+
   - Click **Next**
-  
+
   - For **Machine Credential** choose **Workshop Credentials**.
 
   - Click **Launch**, and watch the output. It should report **SUCCESS** for all nodes, of course.
@@ -165,7 +166,7 @@ As you see, this time it worked. For tasks that have to run as root you need to 
 
 ## Challenge Lab: Ad Hoc Commands
 
-Okay, a small challenge: Run an ad hoc to make sure the package "tmux" is installed on all hosts. If unsure, consult the Ansible documentation either via the web or by running `ansible-doc yum` in the VS Code terminal on your Automation Controller control host.
+Okay, a small challenge: Run an ad hoc to make sure the package "tmux" is installed on all hosts. If unsure, consult the Ansible documentation either via the web or by running `ansible-doc yum` in the VS Code terminal on your automation controller control host.
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>
@@ -191,9 +192,9 @@ Try to click one of the output lines in the window showing the job output. A sma
 
 ## Execution Environments: A deeper look
 
-As promised let's look a bit deeper into execution environments. During the section covering ad hoc commands you have already seen you have to choose an execution environment, the same will hold true for running Playbooks later on. In your Automation Controller web UI, go to **Administration → Execution Environments**. You'll see a list of the configured execution environments and original location of the image, in our case the images are provided in the **quay.io** container registry. Here you could add your own registry with custom EE images, too.
+As promised let's look a bit deeper into execution environments. During the section covering ad hoc commands you have already seen you have to choose an execution environment, the same will hold true for running Playbooks later on. In your automation controller web UI, go to **Administration → Execution Environments**. You'll see a list of the configured execution environments and original location of the image, in our case the images are provided in the **quay.io** container registry. Here you could add your own registry with custom EE images, too.
 
-So what happens, when Automation Controller runs an ad hoc command or Playbook? Let's see... 
+So what happens, when automation controller runs an ad hoc command or Playbook? Let's see...
 
 You should already have your **VS Code** terminal open in another browser tab, if not open https://{{< param "external_code" >}} and do **Terminal -> New Terminal**. In this terminal:
 
@@ -215,7 +216,7 @@ quay.io/ansible/awx-ee  0.2.0   68b8d8c4702d  2 months ago  1.25 GB
 CONTAINER ID  IMAGE   COMMAND  CREATED  STATUS  PORTS   NAMES
 ```
 
-- Keep podman running, now it's time to execute some automation. 
+- Keep podman running, now it's time to execute some automation.
 
 - In the web UI run an ad hoc command again. Go to **Resources → Inventories → Workshop Inventory**
 
@@ -243,6 +244,7 @@ Now go back to the **VS Code** terminal. You'll see a container is launched to r
 CONTAINER ID  IMAGE                         COMMAND               CREATED       STATUS            PORTS   NAMES
 c8e9a13ab475  quay.io/ansible/awx-ee:0.2.0  ssh-agent sh -c t...  1 second ago  Up 2 seconds ago          ansible_runner_18
 ```
+
 {{% notice tip %}}
 The `sleep 60` command was only used to keep the container running for some time. Your output will differ slightly.
 {{% /notice %}}
@@ -251,5 +253,4 @@ The `sleep 60` command was only used to keep the container running for some time
 
 - Stop `podman` with `CTRL-C`.
 
-This is how Automation Controller uses Linux containers to run Ansible automation jobs in their own dedicated environments. 
-
+This is how automation controller uses Linux containers to run Ansible automation jobs in their own dedicated environments.

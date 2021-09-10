@@ -1,5 +1,5 @@
 +++
-title = "Automation Controller Instance Groups"
+title = "automation controller instance groups"
 weight = 5
 +++
 
@@ -77,7 +77,7 @@ You can check your instance groups in a number of ways.
 
 You have configured the groups here, open the URL
 
-    https://{{< param "external_controller" >}}/#/instance_groups
+    https://{{< param "external_controller1" >}}/#/instance_groups
 
 in your browser.
 
@@ -87,7 +87,7 @@ In the **INSTANCE GROUPS** overview all instance groups are listed with details 
 
 You can again query the API to get this information. Either use the browser to access the URL (you might have to login to the API again):
 
-  `https://{{< param "external_controller" >}}/api/v2/instance_groups/`
+  `https://{{< param "external_controller1" >}}/api/v2/instance_groups/`
 
 or use curl to access the API from the command line in your VSCode terminal:
 
@@ -97,7 +97,7 @@ or use curl to access the API from the command line in your VSCode terminal:
 The curl command has to be on one line. Do _not_ forget or oversee the final slash at the end of the URL, it is relevant!
 {{% /notice %}}
 
-## Deactivating Automation Controller Instances
+## Deactivating automation controller instances
 
 While in the **INSTANCES GROUPS** overview in the web UI click the **INSTANCES** link for, say, the **dev** group. In the next view you’ll see a slide button next to each controller instance (only one in this case).
 

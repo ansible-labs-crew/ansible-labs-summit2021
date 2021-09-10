@@ -70,15 +70,7 @@ have:
 
 - A three-node automation controller cluster with a separate DB host, accessed via SSH or web UI
 
-- Two managed RHEL 8 hosts
-
-<!-- A diagram says more then a thousand words:
-
-![tower diagram.png](../../images/tower_diagram.png) -->
-
-{{% notice tip %}}
-Access to the isolated node and the managed hosts is actually not restricted in the lab environment. Just imagine filtered, DMZ-like access rules for educational purposes… ;-)
-{{% /notice %}}
+- Three managed RHEL 8 hosts
 
 ## Working the Lab
 
@@ -86,7 +78,7 @@ Some hints to get you started:
 
 - Don’t type everything manually, use copy & paste from the browser when appropriate. But don’t stop to think and understand… ;-)
 
-- To **edit files** or **open a terminal window**, we provide **VS Code**, basically the great VSCode Editor running in your browser. It's running on the first controller node and can be accessed through the URL **https://{{< param "external_code" >}}**
+- To **edit files** or **open a terminal window**, we provide **VS Code**, basically the great VSCode Editor running in your browser. It's running on the bastion node and can be accessed through the URL **https://{{< param "external_code" >}}**
 
 {{% notice tip %}}
 Commands you are supposed to run are shown with or without the expected output, whatever makes more sense in the context.
@@ -110,7 +102,7 @@ Your main points of contact with the lab are the automation controller WebUI and
 - open virtual terminals
 - edit files
 
-Now open code-server using the link from the lab landing page or this link in your browser by replacing **{{< param "student" >}}** by your {{< param "student_label" >}} and the **{{< param "labid" >}}**:
+Now open **VS Code** server using the link from the lab landing page or this link in your browser by replacing **{{< param "student" >}}** with your {{< param "student_label" >}} and the **{{< param "labid" >}}**:
 
 ```bash
      https://{{< param "external_code" >}}
@@ -118,7 +110,7 @@ Now open code-server using the link from the lab landing page or this link in yo
 
 ![code-server login](../../images/vscode-pwd.png)
 
-Use the password provided on the landing page to login into the code-server web UI, you can close the **Welcome** tab. Now open a new terminal by heading to the menu item **Terminal** at the top of the page and select **New Terminal**. A new section will appear in the lower half of the screen and you will be greeted with a prompt:
+Use the password provided on the landing page to login into the **VS Code** server web UI, you can close the **Welcome** tab. Now open a new terminal by heading to the menu item **Terminal** at the top of the page and select **New Terminal**. A new section will appear in the lower half of the screen and you will be greeted with a prompt:
 
 ![code-server terminal](../../images/vscode-terminal.png)
 

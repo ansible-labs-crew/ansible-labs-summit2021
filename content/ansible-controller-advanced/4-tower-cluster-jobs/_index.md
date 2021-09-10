@@ -67,9 +67,9 @@ Note you used the internal hostname above, when using your browser, you have to 
 
 - Now get the job details via the API interface:
 
-  - Login to the API with user `admin` and password `{{< param "secret_password" >}}`: `https://{{< param "external_controller" >}}/api/`
+  - Login to the API with user `admin` and password `{{< param "secret_password" >}}`: `https://{{< param "external_controller1" >}}/api/`
 
-  - Open the URL `https://{{< param "external_controller" >}}/api/v2/jobs/<ID>/` where `<ID>` is the number of the job you just looked up in the UI.
+  - Open the URL `https://{{< param "external_controller1" >}}/api/v2/jobs/<ID>/` where `<ID>` is the number of the job you just looked up in the UI.
 
   - Search the page for the string you are interested in, e.g. `execution_node`
 

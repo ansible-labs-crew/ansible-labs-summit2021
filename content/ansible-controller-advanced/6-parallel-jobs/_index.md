@@ -180,9 +180,9 @@ Activate **{{< param "internal_controller1" >}}** again by sliding the button to
 
 ## Using Instance Groups
 
-So we have seen how a Automation Controller cluster is distributing jobs over instances by default. We have already created instance groups which allow us to take control over which job is executed on which node, so let’s use them.
+So we have seen how a automation controller cluster is distributing jobs over instances by default. We have already created instance groups which allow us to take control over which job is executed on which node, so let’s use them.
 
-To make it easier to spot where the jobs were run, let’s first empty the jobs history. This can be done using **awx-manage** on one of the Automation Controller instances. From your VSCode terminal **and as `root`** run the command:
+To make it easier to spot where the jobs were run, let’s first empty the jobs history. This can be done using **awx-manage** on one of the automation controller instances. From your VSCode terminal **and as `root`** run the command:
 
 ```bash
 [{{< param "control_prompt" >}} ~]$ sudo -i
