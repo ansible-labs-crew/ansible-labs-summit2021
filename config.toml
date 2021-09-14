@@ -49,9 +49,9 @@ home = [ "HTML", "RSS", "JSON"]
   external_controller1 = "autoctl1.<GUID>.<SANDBOXID>.opentlc.com"
   external_controller2 = "autoctl2.<GUID>.<SANDBOXID>.opentlc.com"
   external_controller3 = "autoctl3.<GUID>.<SANDBOXID>.opentlc.com"
-  control_prompt = "lab-user@bastion"
+  control_prompt = "ec2-user@autoctl1"
   ansible_prompt = "root@bastion"
-  awx_prompt = "lab-user@bastion"
+  awx_prompt = "root@autoctl1"
   pre_mng_prompt = "lab-user@bastion"
   manage_prompt = "root@bastion"
 
