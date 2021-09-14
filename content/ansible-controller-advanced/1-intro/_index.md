@@ -117,3 +117,11 @@ Use the password provided on the landing page to login into the **VS Code** serv
 If unsure about the usage, read the [Visual Studio Code Server introduction](../../vscode-intro/), to learn more about how to create and edit files, and to work with the Terminal.
 
 Congrats, you now have a shell terminal on your automation controller node 1. From here you run commands or access the other hosts in your lab environment if the lab task requires it.
+
+## Install Ansible
+
+Before we can get started writing Ansible Playbooks, we have to install Ansible first. We did all the preparation for you, so the installation is super easy:
+
+```bash
+[{{< param "pre_mng_prompt" >}} ~]$ sudo yum -y install ansible
+```
