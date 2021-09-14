@@ -19,17 +19,17 @@ There are a couple of ways to find the node that executed the job.
 
 ### From the Job Output
 
-The most obvious way is to look up the **EXECUTION NODE** in the details of the job output. If you closed it already or want to look it up later, go to **VIEWS->Jobs** and look up the job in question.
+The most obvious way is to look up the **Execution Node** in the details of the job output (this information is only shown after the job finished). If you closed it already or want to look it up later, go to **Views->Jobs** and look up the job in question.
 
 ### From the instance groups
 
-In one of the controller instances web UI under **ADMINISTRATION** go to the **Instance Groups** view. For the `controlplane` instance group, the **TOTAL JOBS** counter shows the number of finished jobs. If you click **TOTAL JOBS** you’ll get a detailed list of jobs.
+In one of the controller instances web UI under **Administration** go to the **Instance Groups** view. For the `controlplane` instance group, the **Total Jobs** counter shows the number of finished jobs. If you click on the instance group and then **Jobs** you’ll get a detailed list of all jobs.
 
-To see on what instance a job actually run go back to the **Instance Groups** view. If you click **INSTANCES** under the **controlplane** group, you will get an overview of the **TOTAL JOBS** each controller instance in this group executed. Clicking **TOTAL JOBS** for an instance leads to a detailed job list for this instance.
+To see on what instance a job actually ran go back to the **Instance Groups** view. If you click **Instances** under the **controlplane** group, you will get an overview of the **Total Jobs** each controller instance in this group executed. Clicking **Total Jobs** for an instance leads to a detailed job list for this instance.
 
 ### Using the API
 
-- First find the job ID: In the web UI access **VIEWS→Jobs**
+- First find the job ID: In the web UI access **Views→Jobs**
 
 - The jobs names are prefixed with the job ID, example **3 - Install Apache**
 
@@ -46,7 +46,7 @@ Replace **\<ID>** with the job ID you want to query and **{{< param "secret_pass
 {{% /notice %}}
 
 ```bash
-[{{< param "control_prompt" >}} ~]$ curl -s -k -u admin:{{< param "secret_password" >}} https://{{< param "internal_controller1" >}}/api/v2/jobs/<ID>/ | python3 -m json.tool | grep execution_node
+[{{< param "pre_mng_prompt" >}} ~]$ curl -s -k -u admin:{{< param "secret_password" >}} https://{{< param "internal_controller1" >}}/api/v2/jobs/<ID>/ | python3 -m json.tool | grep execution_node
 
     "execution_node": "{{< param "internal_controller1" >}}",
 ```

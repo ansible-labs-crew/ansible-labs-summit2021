@@ -107,7 +107,7 @@ Run and test your playbook and verify everything works as expected, by logging i
 ## Create Machine Credentials
 
 {{% notice tip %}}
-SSH keys have already been created and distributed in your lab environment and `sudo` has been setup on the managed hosts to allow password-less login. When you SSH into a host as user **student{{< param "student" >}}** from **{{< param "internal_control" >}}** you will become user **ec2-user** on the host you logged in.
+SSH keys have already been created and distributed in your lab environment and `sudo` has been setup on the managed hosts to allow password-less login. When you become root on your bastion host by running `sudo -i` you can ssh into your managed nodes by using the pre-deployed SSH keys.
 {{% /notice %}}
 
 Now we want to configure these credentials to access our managed hosts from automation controller. Your private key is stored in `~/.ssh/aws-private.pem` and already configured on the remote machine. Try to find the necessary attributes in the **awx.awx.tower_credential** module documentation.
@@ -142,7 +142,7 @@ Now we want to configure these credentials to access our managed hosts from auto
       organization: Default
       inputs:
         username: ec2-user
-        ssh_key_data: "{{ lookup('file', '~/.ssh/aws-private.pem' ) }}"
+        ssh_key_data: "{{ lookup('file', '~/.ssh/<GUID>.pem' ) }}"
 ```
 
 </p>
