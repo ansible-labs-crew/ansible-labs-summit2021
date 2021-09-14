@@ -95,6 +95,14 @@ If unsure about the usage, read the [Visual Studio Code Server introduction](../
 
 Congrats, you now have a shell terminal on your automation controller node. From here you run commands or access the other hosts in your lab environment if the lab task requires it.
 
+## Install Ansible
+
+Before we can get started writing Ansible Playbooks, we have to install Ansible first. We did all the preparation for you, so the installation is super easy:
+
+```bash
+[{{< param "pre_mng_prompt" >}} ~]$ sudo yum -y install ansible
+```
+
 ## Dashboard
 
 Let's have a first look at the automation controller: Point your browser to the URL you were given on the lab landing page, similar to `https://{{< param "external_controller1" >}}` (replace `{{< param "student" >}}` with your {{< param "student_label" >}} and `{{< param "labid" >}}` with the {{< param "labid_label" >}}) and log in as `admin`. You can find the password again on the lab landing page.
