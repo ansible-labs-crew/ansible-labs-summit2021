@@ -49,10 +49,15 @@ home = [ "HTML", "RSS", "JSON"]
   external_controller1 = "autoctl1.<GUID>.<SANDBOXID>.opentlc.com"
   external_controller2 = "autoctl2.<GUID>.<SANDBOXID>.opentlc.com"
   external_controller3 = "autoctl3.<GUID>.<SANDBOXID>.opentlc.com"
+  # this is the prompt seen after ssh into autoctl1 as root from bastion
   control_prompt = "ec2-user@autoctl1"
-  ansible_prompt = "root@bastion"
+  # this prompt is seen after becoming root on autoctl1
   awx_prompt = "root@autoctl1"
+  # this prompt is seen after becoming root on the bastion
+  ansible_prompt = "root@bastion"
+  # this is the prompt the attendee will see after opening a terminal on VS Code
   pre_mng_prompt = "lab-user@bastion"
+  # this prompt is seen after becoming root on the bastion
   manage_prompt = "root@bastion"
 
 #  deployment = "linklight"
