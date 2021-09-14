@@ -48,7 +48,7 @@ A terminal window opens at the bottom, become root:
 
 ```bash
     [{{< param "pre_mng_prompt" >}} ~]$ sudo -i
-    [{{< param "manage_prompt" >}} ~]#
+    [{{< param "manage_prompt" >}} ~]# ssh {{< param "internal_controller1" >}}
 ```
 
 In the terminal run the following command:
@@ -58,7 +58,8 @@ Your exact hostnames will differ, of course!
 {{% /notice %}}
 
 ```bash
-    [{{< param "manage_prompt" >}} ~]# awx-manage list_instances
+    [{{< param "control_prompt" >}} ~]# sudo -i
+    [{{< param "awx_prompt" >}} ~]# awx-manage list_instances
     [controlplane capacity=171]
         {{< param "internal_controller1" >}} capacity=57 version=4.0.0 heartbeat="2020-08-27 09:06:21"
         {{< param "internal_controller2" >}} capacity=57 version=4.0.0 heartbeat="2020-08-27 09:05:58"
