@@ -269,17 +269,17 @@ web UI or use **awx** like shown below.
 
 Now you’ve created the Project in controller. Earlier on the command line you’ve setup a staged environment by creating and using two different inventory files. But how can we get the same setup in controller? We use another way to define Inventories\! It is possible to use inventory files provided in a SCM repository as an inventory source. This way we can use the inventory files we keep in Git.
 
-In your controller web UI, open the **RESOURCES→Inventories** view. Then click the ![plus](../../images/green_plus.png?classes=inline) button and choose to create a new **Inventory**. In the next view:
+In your controller web UI, open the **Resources→Inventories** view. Then click the ![plus](../../images/green_plus.png?classes=inline) button and choose to create a new **Inventory**. In the next view:
 
-- **NAME:** Structured Content Inventory
+- **Name:** Structured Content Inventory
 
-- Click **SAVE**
+- Click **Save**
 
 - Click the button **SOURCES** which is now active at the top
 
 - Click the ![plus](../../images/green_plus.png?classes=inline) button (the top right one)
 
-- **NAME:** Production
+- **Name:** Production
 
 - **SOURCE:** Pick **Sourced from a Project**
 
@@ -287,13 +287,13 @@ In your controller web UI, open the **RESOURCES→Inventories** view. Then click
 
 - In the **INVENTORY FILE** drop down menu, pick **production**
 
-- Click the green **SAVE** button
+- Click the green **Save** button
 
 And now for the staging inventory:
 
 - Down below in the view, click the ![plus](../../images/green_plus.png?classes=inline) button again
 
-- In the next view, add as **NAME:** Staging
+- In the next view, add as **Name:** Staging
 
 - **SOURCE:** Pick **Sourced from a Project**
 
@@ -301,7 +301,7 @@ And now for the staging inventory:
 
 - In the **INVENTORY FILE** drop down menu, pick **staging**
 
-- Click the green **SAVE** button
+- Click the green **Save** button
 
 - In the screen below, click the sync button for both sources, or **SYNC ALL** once so that the cloud icon on the left site next to the name of each inventory turns green.
 
@@ -324,7 +324,7 @@ Please note that in a real world use case you might want to have different templ
 
 {{% /notice %}}
 
-Now in the controller web UI go to **RESOURCES→Templates**, launch the
+Now in the controller web UI go to **Resources→Templates**, launch the
 job template **Structured Content Execution** and watch the results.
 
 ## Adding External Roles
@@ -393,9 +393,9 @@ changes:
 
 ## Launch in controller
 
-Just in case, make sure to update the Project in controller: in the menu at **RESOURCES**, pick **Projects**, and click on the sync button next to **Structured Content Repository**.
+Just in case, make sure to update the Project in controller: in the menu at **Resources**, pick **Projects**, and click on the sync button next to **Structured Content Repository**.
 
-Afterwards, go to **RESOURCES→Templates** and launch the **Structured Content Execution** job template. As you will see in the job output, the external role is called just the way the other roles are called:
+Afterwards, go to **Resources→Templates** and launch the **Structured Content Execution** job template. As you will see in the job output, the external role is called just the way the other roles are called:
 
     TASK [shared-apache-role : deploy content] *************************************
     changed: [{{< param "internal_host2" >}}]

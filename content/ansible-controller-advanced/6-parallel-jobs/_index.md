@@ -126,29 +126,29 @@ To enable parallel execution of the tasks in these job templates, we will create
 
 - Go to the **Templates** view and click the ![plus](../../images/green_plus.png?classes=inline) button. This time choose **Workflow Template**
 
-  - **NAME:** Compliance Workflow
+  - **Name:** Compliance Workflow
 
-  - **ORGANIZATION:** Default - click on the magnifying glass if necessary
+  - **Organization:** Default - click on the magnifying glass if necessary
 
-  - Click **SAVE**
+  - Click **Save**
 
-- Now the **WORKFLOW VISUALIZER** button becomes active and the     graphical workflow designer opens.
+- Now the **Workflow visualizer** button becomes active and the     graphical workflow designer opens.
 
-- Click on the **START** button, a new node opens. To the right you can assign an action to the node, you can choose between **TEMPLATE**, **PROJECT SYNC**, **INVENTORY SYNC** or **APPROVAL**.
+- Click on the **Start** button, a new node opens. To the right you can assign an action to the node, you can choose between **Template**, **Project Sync**, **Inventory sync** or **Approval**.
 
-- In this lab we’ll link multiple jobs to the **START**, so select the **Compliance STIG packages** job template and click **SELECT**. The node gets annotated with the name of the job.
+- In this lab we’ll link multiple jobs to the **Start**, so select the **Compliance STIG packages** job template and click **Select**. The node gets annotated with the name of the job.
 
-- Click on the **START** button again, another new node opens.
+- Click on the **Start** button again, another new node opens.
 
-- Select the **Compliance STIG config** job template and click **SELECT**. The node gets annotated with the name of the job.
+- Select the **Compliance STIG config** job template and click **Select**. The node gets annotated with the name of the job.
 
-- Click on the **START** button again, another new node opens.
+- Click on the **Start** button again, another new node opens.
 
-- Select the **Compliance CIS** job template and click **SELECT**. The node gets annotated with the name of the job.
+- Select the **Compliance CIS** job template and click **Select**. The node gets annotated with the name of the job.
 
-- Click **SAVE**
+- Click **Save**
 
-- In the workflow overview window, again click **SAVE**
+- In the workflow overview window, again click **Save**
 
 You have configured a Workflow that is not going through templates one after the other but rather executes three templates in parallel.
 
@@ -164,17 +164,17 @@ Your workflow is ready to go, launch it.
 
 Go to the **Instance Groups** view and find out how the jobs where distributed over the instances:
 
-- Open the **INSTANCES** view of the **controlplane** instance group.
+- Open the **Instances** view of the **controlplane** instance group.
 
-- Look at the **TOTAL JOBS** view of the three instances
+- Look at the **Total jobs** view of the three instances
 
 - Because the Job Templates called in the workflow didn’t specify an instance group, they where distributed (more or less) evenly over the instances.
 
 ## Deactivate a node
 
-Now deactivate instance **{{< param "internal_controller1" >}}** with the slider button and wait until it is shown as unavailable. Make a (mental) note of the **TOTAL JOBS** counter of the instance. Go back to the list of templates and launch the workflow **Compliance Workflow** again.
+Now deactivate instance **{{< param "internal_controller1" >}}** with the slider button and wait until it is shown as unavailable. Make a (mental) note of the **Total jobs** counter of the instance. Go back to the list of templates and launch the workflow **Compliance Workflow** again.
 
-Go back to the **Instance Groups** view, get back to the instance overview of instance group **controlplane** and verify that the three Playbooks where launched on the remaining instances and the **TOTAL JOBS** counter of instance **{{< param "internal_controller1" >}}** didn’t change.
+Go back to the **Instance Groups** view, get back to the instance overview of instance group **controlplane** and verify that the three Playbooks where launched on the remaining instances and the **Total jobs** counter of instance **{{< param "internal_controller1" >}}** didn’t change.
 
 Activate **{{< param "internal_controller1" >}}** again by sliding the button to "checked".
 
@@ -197,13 +197,13 @@ notifications: 0 deleted, 0 skipped.
 
 One way to assign a job to an instance group is in the job template. As our compliance workflow uses three job templates, do this for all of them:
 
-- In the web UI, go to **RESOURCES→Templates**
+- In the web UI, go to **Resources→Templates**
 
 - Open one of the three compliance templates
 
-- In the **Instance Groups** field, choose the **dev** instance group and click **SAVE**.
+- In the **Instance Groups** field, choose the **dev** instance group and click **Save**.
 
-- Click **SAVE** again for the job template!
+- Click **Save** again for the job template!
 
 - Do this for the other two compliance templates, too.
 

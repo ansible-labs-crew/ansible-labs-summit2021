@@ -128,13 +128,13 @@ The inventory **Workshop Inventory** and the machine credentials **Workshop Cred
 
 ## Configure SCM Credentials
 
-Now we will configure the credentials to access our the Git repo on your control host via SSH. In the **RESOURCES** menu choose **Credentials**. Now:
+Now we will configure the credentials to access our the Git repo on your control host via SSH. In the **Resources** menu choose **Credentials**. Now:
 
 Click the ![plus](../../images/green_plus.png?classes=inline) button to add new credentials
 
-- **NAME:** Git Credentials
-- **ORGANIZATION:** Click on the magnifying glass, pick **Default** and click **SELECT**
-- **CREDENTIAL TYPE:** Click on the magnifying glass, pick **Source Control** as type and click **SELECT** (you will have to use the search or cycle through the types to find it).
+- **Name:** Git Credentials
+- **Organization:** Click on the magnifying glass, pick **Default** and click **Select**
+- **CREDENTIAL TYPE:** Click on the magnifying glass, pick **Source Control** as type and click **Select** (you will have to use the search or cycle through the types to find it).
 - **USERNAME:** ec2-user
 
 As we are using SSH key authentication, you have to provide an SSH private key that can be used to access the host with the Git repo as the user `git`.
@@ -155,7 +155,7 @@ MIIEpAIBAAKCAQEA2nnL3m5sKvoSy37OZ8DQCTjTIPVmCJt/M02KgDt53+baYAFu1TIkC3Yk+HK1
 
 - Copy the **complete private key** (including "BEGIN" and "END" lines) from the output and paste it into the **SSH PRIVATE KEY** field in the web UI.
 
-- Click **SAVE**
+- Click **Save**
 
 You have now setup credentials to access the Git repo on your control host.
 
@@ -163,17 +163,17 @@ You have now setup credentials to access the Git repo on your control host.
 
 It's time to set up the Tower Project pointing to your Git repository holding your Playbook and collections requirements file.
 
-- Go to **RESOURCES → Projects** in the side menu view click the ![plus](../../images/green_plus.png?classes=inline) button. Fill in the form:
-- **NAME:** Collections Repo
-- **ORGANIZATION:** Default
+- Go to **Resources → Projects** in the side menu view click the ![plus](../../images/green_plus.png?classes=inline) button. Fill in the form:
+- **Name:** Collections Repo
+- **Organization:** Default
 - **SCM TYPE:** Git
 
 Now you need the URL to access the repo. You could get the URL in Github as **Clone URL**. Enter the URL into the Project configuration:
 
 - **SCM URL:** {{< param "git_user" >}}@{{< param "internal_control" >}}:projects/tower_collections
-- **SCM CREDENTIAL:** Click the magnifying glass and choose `Git Credentials`, click **SELECT**
+- **SCM CREDENTIAL:** Click the magnifying glass and choose `Git Credentials`, click **Select**
 - **SCM UPDATE OPTIONS:** Tick the first three boxes to always get a fresh copy of the repository and to update the repository when launching a job.
-- Click **SAVE**
+- Click **Save**
 
 The new Project will be synced automatically after creation. If everything went fine, you should see a green icon to the left of the new Project.
 
@@ -181,7 +181,7 @@ The new Project will be synced automatically after creation. If everything went 
 
 The last step is to create a Job Template to run the Playbook. Go to the **Templates** view, click the ![plus](../../images/green_plus.png?classes=inline) button and choose **Job Template**.
 
-- **NAME:** Install AT Job
+- **Name:** Install AT Job
 - **JOB TYPE:** Run
 - **INVENTORY:** Workshop Inventory
 - **PROJECT:** Collections Repo
@@ -190,7 +190,7 @@ The last step is to create a Job Template to run the Playbook. Go to the **Templ
 
 - We need to run the tasks as root so check **Enable privilege escalation**
 
-- Click **SAVE**
+- Click **Save**
 
 You can start the job by directly clicking the blue **LAUNCH** button, or by clicking on the rocket in the Job Templates overview. After launching the Job Template, you are automatically brought to the job overview where you can follow the playbook execution in real time.
 

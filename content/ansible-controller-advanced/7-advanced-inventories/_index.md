@@ -123,35 +123,35 @@ So now you have a source of (slightly static) dynamic inventory data (talk about
 
 The first step is to add the inventory script to controller:
 
-- In the web UI, open **RESOURCES→Inventory Scripts**.
+- In the web UI, open **Resources→Inventory Scripts**.
 
 - To create a new custom inventory script, click the ![plus](../../images/green_plus.png?classes=inline) button.
 
 - Fill in the needed data:
 
-  - **NAME:** Cloud Inventory Script
+  - **Name:** Cloud Inventory Script
 
   - Copy the Bash script from above and paste it into the **CUSTOM
     SCRIPT** field
 
-- Click **SAVE**
+- Click **Save**
 
 Finally the new inventory script can be used in an actual **Inventory**.
 
-- Go to **RESOURCES→Inventories**
+- Go to **Resources→Inventories**
 
 - Click the ![plus](../../images/green_plus.png?classes=inline) button and choose
   **Inventory**.
 
-- **NAME:** Cloud Inventory
+- **Name:** Cloud Inventory
 
-- Click **SAVE**
+- Click **Save**
 
 - The **SOURCES** button on top becomes active now, click it
 
 - Click the ![plus](../../images/green_plus.png?classes=inline) to add a new source
 
-- **NAME:** Cloud Custom Script
+- **Name:** Cloud Custom Script
 
 - From the **SOURCE** drop-down choose **Custom Script**
 
@@ -159,7 +159,7 @@ Finally the new inventory script can be used in an actual **Inventory**.
 
 - Under **UPDATE OPTIONS** check **Overwrite** and **Overwrite Variables**
 
-- Click **SAVE**
+- Click **Save**
 
 To sync your new source into the inventory:
 
@@ -200,9 +200,9 @@ The base rules of a search are:
 
 ### A Simple Smart Inventory
 
-Let’s start with a simple string example. In your controller web UI, open the **RESOURCES→Inventories** view. Then click the ![plus](../../images/green_plus.png?classes=inline) button and choose to create a new **Smart Inventory**. In the next view:
+Let’s start with a simple string example. In your controller web UI, open the **Resources→Inventories** view. Then click the ![plus](../../images/green_plus.png?classes=inline) button and choose to create a new **Smart Inventory**. In the next view:
 
-- **NAME:** Smart Inventory Simple
+- **Name:** Smart Inventory Simple
 
 - Click the magnifying glass icon next to **SMART HOST FILTER**
 
@@ -216,7 +216,7 @@ Search terms are automatically saved so make sure to hit **CLEAR ALL** to clear 
 
 Or what about searching by inventory groups? In the **SEARCH** field enter **`groups.name:dyngroup`**. After hitting **ENTER** the hosts from the dynamic inventory exercise should show up.
 
-When your search returns the expected results, hit **SAVE** for the **DYNAMIC HOSTS** window and again for the Smart Inventory. Now your Smart Inventory is usable for executing job templates!
+When your search returns the expected results, hit **Save** for the **DYNAMIC HOSTS** window and again for the Smart Inventory. Now your Smart Inventory is usable for executing job templates!
 
 {{% notice tip %}}
 You may press the **KEY** button to get a feeling along which fields you can search. Browsing through the API becomes necessary to understand which related fields have which attributes (e.g. name for groups).
@@ -234,7 +234,7 @@ Fact caching is not enabled by default\!
 
 Fact caching can be enabled for **Templates** and is not enabled by default. So first we have to enable it. Check **{{< param "internal_host1" >}}** and **{{< param "internal_host2" >}}** have no facts stored:
 
-- In **RESOURCES→Inventories** open the **Example Inventory** and click the **HOSTS** button.
+- In **Resources→Inventories** open the **Example Inventory** and click the **HOSTS** button.
 
 - Now inspect both hosts by opening the host details and clicking the **FACTS** button at the top.
 
@@ -242,9 +242,9 @@ Fact caching can be enabled for **Templates** and is not enabled by default. So 
 
 Now enable fact caching for the **Install Apache** template:
 
-- In **RESOURCES→Templates** open the **Install Apache** template.
+- In **Resources→Templates** open the **Install Apache** template.
 
-- Check the **ENABLE FACT CACHE** tick box and click **SAVE**
+- Check the **ENABLE FACT CACHE** tick box and click **Save**
 
 To gather and save the facts you have to run the job template.
 

@@ -26,13 +26,13 @@ Some things to keep in mind about Instance Groups:
 Instance Groups allows some pretty cool setups, e.g. you could have some nodes shared over the whole cluster (by putting them into all groups) but then have other nodes that are dedicated to one group to reserve some capacity.
 
 {{% notice warning %}}
-The base `controlplane` group does house keeping like processing events from jobs for all groups so the node count of this group has to scale with your overall cluster load, even if these nodes are not used to run Jobs.
+The base `controlplane` group does house keeping like processing events from jobs for all groups. The node count of this group has to scale with your overall cluster load, even if these nodes are not used to run regular end user Jobs.
 {{% /notice %}}
 
 Talking about the `controlplane` group: As you have learned this group is crucial for the operations of a controller cluster. Apart from the house keeping tasks, if a resource is not associated with an Instance Group, one of the nodes from the `controlplane` group will run the Job. So if there are no operational nodes in the base group, the cluster will not be able to run Jobs.
 
 {{% notice warning %}}
-It is important to have enough nodes in the `controlplane` group
+It is important to have enough nodes in the `controlplane` group.
 {{% /notice %}}
 
 {{% notice tip %}}
@@ -45,13 +45,13 @@ Having the introduction out of the way, let’s get back to our lab and give Ins
 
 In a basic cluster setup like ours you just have the `controlplane` base group. So let’s go and setup two instance groups:
 
-- In the **Instance Groups** add a new group by clicking the green ![plus](../../images/green_plus.png?classes=inline) icon and then **CREATE INSTANCE GROUP**
+- In the **Instance Groups** add a new group by clicking the green ![plus](../../images/green_plus.png?classes=inline) icon and then **Create instance group**
 
 - Name the new group **dev**
 
-- **SAVE**
+- **Save**
 
-- Click the **INSTANCES** button and add node **{{< param "internal_controller2" >}}** again using the ![plus](../../images/green_plus.png?classes=inline) icon
+- Click the **Instance** button and add node **{{< param "internal_controller2" >}}** again using the ![plus](../../images/green_plus.png?classes=inline) icon
 
 Do the same to create a the new group **prod** with instance **{{< param "internal_controller3" >}}**
 
@@ -81,7 +81,7 @@ You have configured the groups here, open the URL
 
 in your browser.
 
-In the **INSTANCE GROUPS** overview all instance groups are listed with details of the group itself like number of instances in the group, running jobs and finished jobs. Like you’ve seen before the current capacity of the instance groups is shown in a live view, thus providing a quick insight if there are capacity problems.
+In the **Instance groups** overview all instance groups are listed with details of the group itself like number of instances in the group, running jobs and finished jobs. Like you’ve seen before the current capacity of the instance groups is shown in a live view, thus providing a quick insight if there are capacity problems.
 
 ### Via the API
 
@@ -99,7 +99,7 @@ The curl command has to be on one line. Do _not_ forget or oversee the final sla
 
 ## Deactivating automation controller instances
 
-While in the **INSTANCES GROUPS** overview in the web UI click the **INSTANCES** link for, say, the **dev** group. In the next view you’ll see a slide button next to each controller instance (only one in this case).
+While in the **Instance groups** overview in the web UI click the **Instance** link for, say, the **dev** group. In the next view you’ll see a slide button next to each controller instance (only one in this case).
 
 - The button should be set to "checked" meaning "active". Clicking it would deactivate the corresponding instance and would prevent that further jobs are assigned to it.
 
