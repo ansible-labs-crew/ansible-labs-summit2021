@@ -13,7 +13,7 @@ Your team responsible for web application deployments like what they see in auto
 
 - As the webservers can be used for either development purposes or in production, there has to be a way to flag them accordingly as **stage dev** or **stage prod**.
 
-  - Currently `node1` and `node3` should be used as a development systems and `node2` in production.
+  - Currently `node1.<GUID>.internal` and `node3.<GUID>.internal` should be used as a development systems and `node2.<GUID>.internal` in production.
 
 - Of course the content of the world famous application "index.html" will be different between dev and prod stages.
 
@@ -25,7 +25,7 @@ Your team responsible for web application deployments like what they see in auto
 
 ## The Git Repository
 
-All code is already in place - this is a automation controller lab after all and not about configuring Apache. Check out the **Ansible Workshop Examples** git repository again at [https://github.com/ansible-labs-crew/ansible-labs-playbooks](https://github.com/ansible-labs-crew/ansible-labs-playbooks). You will find the playbook `webcontent.yml`, which calls the role `role_webcontent`.
+All code is already in place - this is a automation controller lab after all and not about configuring Apache. Check out the **Ansible Workshop Examples** git repository again at [https://github.com/ansible-labs-crew/playbooks_summit2021](https://github.com/ansible-labs-crew/playbooks_summit2021). You will find the playbook `webcontent.yml`, which calls the role `role_webcontent`.
 
 Compared to the previous Apache installation role there is a major difference: there are now two versions of an `index.html` template, and a task deploying the template file which has a variable as part of the template file name.
 
@@ -72,13 +72,13 @@ There is of course more then one way to accomplish this, but here is what you sh
 
 - Define a variable `stage` with the value `dev` for the `Webserver` inventory:
 
-  - Add `stage: dev` to the inventory `Webserver` by putting it into the **Variables** field beneath the three start-yaml dashes.
+  - Add `stage: dev` to the **Details** of inventory `Webserver` by putting it into the **Variables** field beneath the three start-yaml dashes.
 
 {{% notice warning %}}
 Make sure to add the variable to the inventory and **not** to a node!
 {{% /notice %}}
 
-- In the same way add a variable `stage: prod` but this time only for `node2` (go to the **Hosts** view of the inventory).
+- In the same way add a variable `stage: prod` but this time only for `node2.<GUID>.internal` (go to the **Hosts** view of the inventory).
 
 {{% notice tip %}}
 This way the host variable overrides the variable set at the Inventory level because it's more specific and takes precedence.
@@ -86,7 +86,7 @@ This way the host variable overrides the variable set at the Inventory level bec
 
 ## Create the Template
 
-- Create a new **Job Template** named `Create Web Content` that
+- Create a new **Template** named `Create Web Content` that
 
   - Targets the `Webserver` inventory.
 
@@ -100,36 +100,25 @@ This way the host variable overrides the variable set at the Inventory level bec
 
 ## Check the results
 
-This time we use the power of Ansible to check the results: execute curl to get the web content from each node, orchestrated by an ad hoc command on the command line of your **VS Code** terminal:
-
-{{% notice tip %}}
-We are using the `ansible_host` variable in the URL to access every node in the inventory group.
-{{% /notice %}}
+Execute curl to get the web content from each node in your **VS Code** terminal:
 
 ```bash
-[{{< param "internal_control" >}} ~]$ ansible web -m command -a "curl -s http://{{ ansible_host }}"
- [WARNING]: Consider using the get_url or uri module rather than running 'curl'.  If you need to use command because get_url or uri is insufficient you can add 'warn: false' to this command task or set 'command_warnings=False' in ansible.cfg to get rid of this message.
-
-node2 | CHANGED | rc=0 >>
+[{{< param "pre_mng_prompt" >}} ~]$ curl -s http://node1.<GUID>.internal
+<body>
+<h1>This is a development webserver, have fun!</h1>
+default dev content
+</body>
+[lab-user@bastion 0 /etc/ansible]$ curl -s http://node2.<GUID>.internal
 <body>
 <h1>This is a production webserver, take care!</h1>
-prod wweb
+default prod content
 </body>
-
-node1 | CHANGED | rc=0 >>
+[lab-user@bastion 0 /etc/ansible]$ curl -s http://node3.<GUID>.internal
 <body>
 <h1>This is a development webserver, have fun!</h1>
-dev wweb
-</body>
-
-node3 | CHANGED | rc=0 >>
-<body>
-<h1>This is a development webserver, have fun!</h1>
-dev wweb
+default dev content
 </body>
 ```
-
-Note the warning in the first line about not to use `curl` via the `command` module since there are better modules right within Ansible. We will come back to that in the next part.
 
 ## Add Survey
 
@@ -139,34 +128,7 @@ Note the warning in the first line about not to use `curl` via the `command` mod
 
 - Run the survey as user `wweb`.
 
-Check the results again from your **VS Code** terminal. Since we got a warning last time using `curl` via the `command` module, this time we will use the dedicated `uri` module. As arguments it needs the actual URL and a flag to output the body in the results.
-
-```bash
-[student{{< param "student" >}}ansible ~]$ ansible web -m uri -a "url=http://{{ ansible_host }} return_content=yes"
-node3 | SUCCESS => {
-    "accept_ranges": "bytes",
-    "ansible_facts": {
-        "discovered_interpreter_python": "/usr/bin/python"
-    },
-    "changed": false,
-    "connection": "close",
-    "content": "<body>\n<h1>This is a development webserver, have fun!</h1>\nwerners dev content\n</body>\n",
-    "content_length": "87",
-    "content_type": "text/html; charset=UTF-8",
-    "cookies": {},
-    "cookies_string": "",
-    "date": "Tue, 29 Oct 2019 11:14:24 GMT",
-    "elapsed": 0,
-    "etag": "\"57-5960ab74fc401\"",
-    "last_modified": "Tue, 29 Oct 2019 11:14:12 GMT",
-    "msg": "OK (87 bytes)",
-    "redirected": false,
-    "server": "Apache/2.4.6 (Red Hat Enterprise Linux)",
-    "status": 200,
-    "url": "http://18.205.236.208"
-}
-[...]
-```
+Check the results again from your **VS Code** terminal using `curl` as above.
 
 ## Solution
 

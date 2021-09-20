@@ -35,13 +35,9 @@ The web developer team has to:
 
 - Deploy the most recent version of the JavaScript web application.
 
-  - Make sure stuff like making sure the directory structure is fine and service restarts happen.
+- Make sure everything is prepared to run the application like the directory structure and service restarts.
 
 To make things somewhat easier for you, everything needed already exists in a Github repository: Playbooks, JavaScript files etc. You just need to glue it together.
-
-{{% notice tip %}}
-In this example we use two different tags (each on its specific branch) of the same repository for the content of the separate teams. In reality the structure of your SCM repositories depends on a lot of factors and could be different.
-{{% /notice %}}
 
 ## Set up Projects
 
@@ -55,19 +51,19 @@ If you are still logged in as user **wweb**, log out of and log in as user **adm
 
   - It should be named **Webops Git Repo**.
 
-  - The URL to access the repo is **https\://github.com/ansible-labs-crew/playbooks_ops_summit2021.git**.
+  - The URL to access the repo is **https\://github.com/ansible-labs-crew/playbooks_ops_summit2021.git**
 
 - Create the project for the application developers:
 
   - It should be named **Webdev Git Repo**.
 
-  - The URL to access the repo is **https\://github.com/ansible-labs-crew/playbooks_dev_summit2021.git**.
+  - The URL to access the repo is **https\://github.com/ansible-labs-crew/playbooks_dev_summit2021.git**
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>
 <p>
 
-- Create the project for web operations. In the **Projects** view click the green us button and fill in:
+- Create the project for web operations. In the **Projects** view click the blue **Add** button and fill in:
 
   - **Name:** Webops Git Repo
 
@@ -81,7 +77,7 @@ If you are still logged in as user **wweb**, log out of and log in as user **adm
 
 - Click **Save**
 
-- Create the project for the application developers. In the **Projects** view click the green plus button and fill in:
+- Create the project for the application developers. In the **Projects** view click the blue **Add** button and fill in:
 
   - **Name:** Webdev Git Repo
 
@@ -117,15 +113,15 @@ We want to install the **NodeJS app on node3 only**. The Inventory **Workshop In
 
   - **Project:** Webops Git Repo
 
-  - **Execution Environment:** Controller Default EE
+  - **Execution Environment:** Default execution environment
 
   - **Playbook:** `web_infrastructure.yml`
 
   - **Credentials:** Workshop Credentials
 
-  - **Limit:** node3
+  - **Limit:** node3.\<GUID>.internal
 
-  - **Options:** Enable privilege escalation
+  - **Options:** Privilege Escalation
 
 - Click **Save**
 
@@ -139,25 +135,25 @@ We want to install the **NodeJS app on node3 only**. The Inventory **Workshop In
 
   - **Project:** Webdev Git Repo
 
-  - **Execution Environment:** Controller Default EE
+  - **Execution Environment:** Default execution environment
 
   - **Playbook:** `install_node_app.yml`
 
   - **Credentials:** Workshop Credentials
 
-  - **Limit:** node3
+  - **Limit:** node3,\<GUID>.internal
 
-  - **OPTIONS:** Enable privilege escalation
+  - **OPTIONS:** Privilege Escalation
 
 - Click **Save**
 
 {{% notice tip %}}
-If you want to know what the Playbooks look like, check out the Github URL and switch to the appropriate branches.
+If you want to know what the Playbooks look like, check out the Github URL.
 {{% /notice %}}
 
 ## Set up the Workflow
 
-And now you finally set up the Workflow. Workflows are configured in the **Templates** view, you might have noticed you can choose between **Add job template** and **Add workflow wemplate** when adding a template so this is finally making sense.
+And now you finally set up the Workflow. Workflows are configured in the **Templates** view, you might have noticed you can choose between **Add job template** and **Add workflow template** when adding a template so this is finally making sense.
 
 - Go to the **Templates** view and click the ![Add](../../images/blue_add.png?classes=inline) button. This time choose **Add workflow template**
 
@@ -223,11 +219,11 @@ Your **Deploy Webapplication** workflow is ready to go, launch it.
 
 ![jobs view of workflow](../../images/job_workflow.png)
 
-Note how the workflow run is shown in the job view as a visual representation of the different workflow steps including timing. Same as for a normal job template executions you can go to the **Details** tab to get more information. If you want to look at the actual Jobs behind the workflow nodes, click the workflow nodes. If you want to get back from a details view to the corresponding workflow, just hit your browsers back button.
+Note how the workflow run is shown in the job view as a visual representation of the different workflow steps. Same as for a normal job template executions you can go to the **Details** tab to get more information. If you want to look at the actual Jobs behind the workflow nodes, click the workflow nodes. If you want to get back from a details view to the corresponding workflow, just hit your browsers back button.
 
 After the job has finished, check if everything worked fine. In your **VS Code** terminal, run:
 
-    [{{< param "control_prompt" >}} ~]$ curl http://node3/nodejs
+    [{{< param "pre_mng_prompt" >}} ~]$ curl http://node3.<GUID>.internal/nodejs
 
 You should be greeted with a friendly `Hello World`
 
@@ -259,7 +255,7 @@ Start with inserting the approval into the workflow:
 
 - **Name**: approve app install
 
-- **Save**
+- **Save** and **Save** again for the workflow.
 
 ![Workflow Approval](../../images/workflow_approval.png)
 
@@ -273,7 +269,7 @@ Now give members of the team **Web Content** access rights to execute the Workfl
 
 - **Save**
 
-Log out and log in again as user **wweb**.
+Log out and log in again as user **wweb** with password `ansible`.
 
 - You should be able to execute the Workflow Template **Deploy Webapplication**
 
