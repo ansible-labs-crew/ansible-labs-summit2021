@@ -7,7 +7,7 @@ weight = 2
 
 Let’s get started: The first thing we need is an inventory of your managed hosts. This is the equivalent of an inventory file when using Ansible on the command line. There is a lot more to it (like dynamic inventories) but let’s start with the basics.
 
-- You should already have the web UI open, if not: Point your browser to the URL you were given, similar to **`https://{{< param "external_controller1" >}}`** (replace "\<N\>" and "\<LABID\>") and log in as `admin` with the password given on the lab landing page.
+- You should already have the web UI open, if not: Point your browser to the URL you were given, similar to **`https://{{< param "external_controller1" >}}`** and log in as `admin` with the password provided.
 
 Create the inventory:
 
@@ -21,17 +21,17 @@ Create the inventory:
 
 Go back to the **Inventories** list, your new **Workshop Inventory** should show up. Open the **Workshop Inventory** and click the **Hosts** tab, the list will be empty since we have not added any hosts yet.
 
-So let's add some hosts. As mentioned in the intro you have three managed hosts in your lab environment, the names are resolved through the `/etc/hosts` file. The nodes are named `node1`, `node2` and `node3`.
+So let's add some hosts. As mentioned in the intro you have three managed hosts in your lab environment. The nodes are named `node1.<GUID>.internal`, `node2.<GUID>.internal` and `node3.<GUID>.internal`, just replace **\<GUID>** by your code.
 
 Now add the hosts to the inventory in automation controller:
 
 - Click the blue ![Add](../../images/blue_add.png?classes=inline) button.
 
-- **Name:** node1
+- **Name:** node1.\<GUID>.internal
 
 - Click **Save**
 
-- Click the **Back to Hosts** button and repeat to add **node2** as a second and **node3** as a third node.
+- Click the **Back to Hosts** button and repeat to add **node2.\<GUID>.internal** as a second and **node3.\<GUID>.internal** as a third node.
 
 You have now created an inventory with three managed hosts.
 
@@ -47,31 +47,30 @@ As this is an important part of your automation controller setup, why not make s
 
 To test access to the nodes via SSH do the following:
 
-- In your browser bring up the terminal window in **VS Code** server (remember this runs on the automation controller node).
+- In your browser bring up the terminal window in **VS Code** server (remember this runs on the bastion node).
 
-- From here as user `ec2-user` SSH into `node1` or one of the other nodes and execute `sudo -i`.
+- From here (you should be `lab-user`) SSH into `node1.<GUID>.internal` or one of the other nodes and execute `sudo -i`.
 
 {{% notice tip %}}
 In your lab environment SSH key authentication has already been configured.
 {{% /notice %}}
 
 ```bash
-[{{< param "internal_control" >}} ~]$ ssh ec2-user@node1
-[ec2-user@node1 ~]$
-sudo -i
+[{{< param "pre_mng_prompt" >}} ~]$ ssh node1.<GUID>.internal
+[ec2-user@node1 ~]$ sudo -i
 [root@node1 ~]# exit
 [ec2-user@node1 ~]$ exit
 ```
 
 What does this mean?
 
-- Automation controller user **student{{< param "student" >}}** can connect to the managed hosts with SSH key authentication as user **ec2-user**.
+- Automation controller user **lab-user** on the bastion node can connect to the managed hosts with SSH key authentication as user **ec2-user** (this happens automatically through `ssh_config`).
 
 - User **ec2-user** can execute commands on the managed hosts as **root** with `sudo`.
 
 ## Configure Machine Credentials
 
-Now we will configure the credentials to access our managed hosts from automation controller. In the **Resources** menu choose **Credentials**. Now:
+Now we will configure the credentials to access our managed hosts in automation controller. In the automation controller web ui go to the **Resources** menu and choose **Credentials**. Now:
 
 Click the ![Add](../../images/blue_add.png?classes=inline) button to add new credentials
 
@@ -87,10 +86,10 @@ Click the ![Add](../../images/blue_add.png?classes=inline) button to add new cre
 
 As we are using SSH key authentication, you have to provide an SSH private key that can be used to access the hosts. You could also configure password authentication here.
 
-Bring up your code-server terminal on automation controller, and `cat` the SSH private key:
+Bring up your VSCode terminal and `cat` the SSH private key of user `lab-user` (note your **\<GUID>** is part of the key name, you have to replace it!):
 
 ```bash
-[{{< param "internal_control" >}} ~]$ cat .ssh/aws-private.pem
+[{{< param "pre_mng_prompt" >}} ~]$ cat .ssh/<GUID>key.pem
 -----BEGIN RSA PRIVATE KEY-----
 MIIEpAIBAAKCAQEA2nnL3m5sKvoSy37OZ8DQCTjTIPVmCJt/M02KgDt53+baYAFu1TIkC3Yk+HK1
 [...]
@@ -101,19 +100,19 @@ MIIEpAIBAAKCAQEA2nnL3m5sKvoSy37OZ8DQCTjTIPVmCJt/M02KgDt53+baYAFu1TIkC3Yk+HK1
 
 - Click **Save**
 
-Your new credentials have been created, go back to the **Resources -> Credentials -> Workshop Credentials** and note that the SSH key is not visible but shown as "encrypted".
+Your new credentials have been created, go back to the **Resources -> Credentials -> Workshop Credentials**, click **Edit** and note that the SSH key is not visible but shown as "encrypted"! Click **Cancel** to leave edit mode again.
 
 You have now setup credentials for Ansible to access your managed hosts.
 
 ## Hold on: Ansible Execution Environments Primer!
 
-Before you run your first Ansible ad hoc commands in automation controller it's about time to learn about one of the major new features in Ansible Automation Platform 2: **Execution Environments**!
+Before you run your first Ansible ad hoc command in automation controller it's about time to learn about one of the major new features in Ansible Automation Platform 2: **Execution Environments**!
 
 Before AAP 2 the Automation Platform execution relied on using **bubblewrap** to isolate processes and Python virtual environments (venv) to sandbox dependencies. This lead to a number of issues like maintaining multiple venv, migrating Ansible content between execution nodes and much more. The concept of execution environments (EE) solves this by using Linux containers.
 
-An EE is a container run from an image that contains everything your Ansible Playbook needs to run. It's basically a control node in a box that can be executed everywhere a Linux container can run. There are ready-made image that contain everything you would expect on an Ansible control node, but you can (and probably will) start to build your own, custom image for your very own requirements at some point.
+An EE is a container run from an image that contains everything your Ansible Playbook needs to run. It's basically a control node in a box that can be executed everywhere a Linux container can run. There are ready-made images that contain everything you would expect on an Ansible control node, but you can (and probably will) start to build your own, custom image for your very own requirements at some point.
 
-Your automation controller has been preconfigured with some standard EE images. So first go through the next section covering ad hoc commands, we'll look into execution environments a bit deeper later.
+Your automation controller has been preconfigured with some standard EE images. So first go through the next section covering ad hoc commands, we'll look a bit deeper into execution environments later.
 
 {{% notice tip %}}
 Linux containers are technologies that allow you to package and isolate applications with their entire runtime environment. This makes it easy to move the contained application between environments and nodes while retaining full functionality.
@@ -132,15 +131,19 @@ As you’ve probably done with Ansible before you can run ad hoc commands from a
 
   - As **Module** choose **ping**
 
-  - Click **Next**
+  - As the **ping** module doesn't require arguments, click **Next**
 
-  - As **Execution Environment** choose **Controller Default EE**
+  - As **Execution Environment** choose **Default execution environment** (Note: if you don't specify an EE here, the Default EE will be used)
 
   - Click **Next**
 
   - For **Machine Credential** choose **Workshop Credentials**.
 
   - Click **Launch**, and watch the output. It should report **SUCCESS** for all nodes, of course.
+
+{{% notice tip %}}
+The first run of a job using an execution environment (EE) can take a bit longer then subsequent runs if the EE image has to be pulled down from the container registry first.
+{{% /notice %}}
 
 The simple **ping** module doesn’t need options. For other modules you need to supply the command to run as an argument. Run another ad hoc command, this time try the **command** module to find the user ID of the executing user using an ad hoc command.
 
@@ -166,7 +169,7 @@ As you see, this time it worked. For tasks that have to run as root you need to 
 
 ## Challenge Lab: Ad Hoc Commands
 
-Okay, a small challenge: Run an ad hoc to make sure the package "tmux" is installed on all hosts. If unsure, consult the Ansible documentation either via the web or by running `ansible-doc yum` in the VS Code terminal on your automation controller control host.
+Okay, a small challenge: Run an ad hoc to make sure the package "nano" is installed on all hosts. If unsure, consult the Ansible documentation either via the web or by running `ansible-doc yum` in the VS Code terminal on your automation controller control host.
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>
@@ -174,7 +177,7 @@ Okay, a small challenge: Run an ad hoc to make sure the package "tmux" is instal
 
 - **Module:** yum
 
-- **Arguments:** name=tmux
+- **Arguments:** name=nano
 
 - Tick **Enable Privilege Escalation**
 
@@ -187,25 +190,28 @@ The yellow output of the command indicates Ansible has actually done something (
 {{% /notice %}}
 
 {{% notice tip %}}
-Try to click one of the output lines in the window showing the job output. A small window with a lot of information about the job like module args will open. Have a look and close it again.
+Try to click one of the output lines in the window showing the job output. A small window **Host Details** will open. Clock the **JSON** "tab" of the window and have a look at the information you'll get.
 {{% /notice %}}
 
 ## Execution Environments: A deeper look
 
-As promised let's look a bit deeper into execution environments. During the section covering ad hoc commands you have already seen you have to choose an execution environment, the same will hold true for running Playbooks later on. In your automation controller web UI, go to **Administration → Execution Environments**. You'll see a list of the configured execution environments and original location of the image, in our case the images are provided in the **quay.io** container registry. Here you could add your own registry with custom EE images, too.
+As promised let's look a bit deeper into execution environments. During the section covering ad hoc commands you have already seen you can choose an execution environment (or get the default), the same will hold true for running Playbooks later on. In your automation controller web UI, go to **Administration → Execution Environments**. You'll see a list of the configured execution environments and original location of the image, in our case the images are provided in the **quay.io** container registry. Here you could add your own registry with custom EE images, too.
 
 So what happens, when automation controller runs an ad hoc command or Playbook? Let's see...
 
 You should already have your **VS Code** terminal open in another browser tab, if not open https://{{< param "external_code" >}} and do **Terminal -> New Terminal**. In this terminal:
 
-- You should be your **student\<N>** user, become the **awx** user by running `sudo -u awx -i`
+- SSH into your automation controller node (obviously replace \<GUID> by your value):
+  - `ssh autoctl1.<GUID>.internal`
 
-- First let's look for the image:
+- You should be the **ec2-user** user on your automation controller now, become the **awx** user by running `sudo -u awx -i`
+
+- First let's look for the image, you should have used the **Default execution environment** during the ad-hoc command exercise which should result in this image (details might be different):
 
 ```
-[awx@ansible-1 ~]$ podman images
-REPOSITORY              TAG     IMAGE ID      CREATED       SIZE
-quay.io/ansible/awx-ee  0.2.0   68b8d8c4702d  2 months ago  1.25 GB
+[awx@autoctl1 ~]$ podman images
+REPOSITORY                                                                         TAG     IMAGE ID      CREATED      SIZE
+registry.redhat.io/ansible-automation-platform-20-early-access/ee-supported-rhel8  2.0.0   85ca2003a842  5 weeks ago  920 MB
 ```
 
 - It was pulled from the registry to be available locally.
@@ -230,7 +236,7 @@ CONTAINER ID  IMAGE   COMMAND  CREATED  STATUS  PORTS   NAMES
 
   - **Next**
 
-  - **Execution Environment**: Controller Default EE
+  - **Execution Environment**: Don't specify an EE, the **Default execution environment** will be used.
 
   - **Next**
 
@@ -252,5 +258,7 @@ The `sleep 60` command was only used to keep the container running for some time
 - Feel free to relaunch the job again!
 
 - Stop `podman` with `CTRL-C`.
+
+- Logout of automation controller (`exit`, `exit`)
 
 This is how automation controller uses Linux containers to run Ansible automation jobs in their own dedicated environments.

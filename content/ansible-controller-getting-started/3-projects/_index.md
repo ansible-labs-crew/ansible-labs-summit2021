@@ -5,7 +5,7 @@ weight = 3
 
 An automation controller **Project** is a logical collection of Ansible Playbooks. You manage your playbooks by placing them into a source code management (SCM) system supported by automation controller, including Git, Subversion, and others.
 
-You should definitely keep your Playbooks under version control.
+And yes, you should definitely keep your Playbooks under version control.
 
 ## Setup a Git Repository as a Project
 
@@ -105,23 +105,23 @@ Remember that you can often click on magnifying glasses to get an overview of op
 
 - **Project:** Ansible Workshop Examples
 
-- **Execution Environment:** Controller Default EE
+- **Execution Environment:** Default execution environment
 
 - **Playbook:** `rhel/apache/apache_install.yml`
 
 - **Credentials:** Workshop Credentials
 
-- We need to run the tasks as root so check **Enable privilege escalation** under **Options**
+- We need to run the tasks as root so check **Privilege Escalation** under **Options**
 
 - Click **Save**
 
-You can start the job by directly clicking the blue **Launch** button, or by clicking on the rocket in the Job Templates overview. After launching the Job Template, you are automatically brought to the job overview where you can follow the playbook execution in real time:
+You can start the job directly from the **Details** view by clicking the **Launch** button, or by clicking on the rocket in the Templates overview. After launching the Job Template, you are automatically brought to the job overview where you can follow the playbook execution in real time:
 
 ![job execution](../../images/job_overview.png)
 
 Since this might take some time, have a closer look at all the details provided:
 
-- The default is the **Output** view of the playbook run. Click on a node underneath a task to get detailed information for the task.
+- The default is the **Output** view of the playbook run. Click on a node underneath a task and switch to **JSON** to get detailed information for the task.
 
 Now switch to the **Details** view:
 
@@ -131,7 +131,7 @@ Now switch to the **Details** view:
 
 - Also the time of execution with start and end time is recorded, giving you an idea of how long a job execution actually was.
 
-After the Job has finished go to the main **Jobs** view: All jobs are listed here, you should see directly before the Playbook run an SCM update was started. This is the Git update we configured for the **Project** on Job Template launch\!
+After the Job has finished go to the main **Jobs** view: All jobs are listed here, you should see directly before the Playbook run a job of type **Source Control Update** was started. This is the Git update we configured for the **Project** on Template launch\!
 
 ## Challenge Lab: Check the Result
 
@@ -159,11 +159,11 @@ What about `systemctl status httpd`?
 
 - **Next**
 
-- **Execution Environment**: Controller Default EE
+- **Execution Environment**: Don't specify, the **Default execution environment** will be used.
 
 - **Next**
 
-- **Machine Credentials:** Workshop Credentials
+- **Machine Credential:** Workshop Credentials
 
 - Click **Launch**
 
@@ -181,7 +181,7 @@ Here is a list of tasks:
 Please make sure to finish these steps as the next chapter depends on it!
 {{% /notice %}}
 
-- Create a new inventory called `Webserver` and make only `node1` member of it.
+- Create a new inventory called `Webserver` and make only `node1.<GUID>.internal` member of it.
 
 - Copy the `Install Apache` template using the copy icon in the **Templates** view.
 
@@ -195,7 +195,7 @@ Please make sure to finish these steps as the next chapter depends on it!
 
 - It will now ask for the inventory to use, choose the `Webserver` inventory and click **Next** and **Launch**.
 
-- Wait until the Job has finished and make sure it ran only on `node1`.
+- Wait until the Job has finished and make sure it ran only on `node1.<GUID>.internal`.
 
 {{% notice tip %}}
 The Job didn’t change anything because Apache was already installed in the latest version.

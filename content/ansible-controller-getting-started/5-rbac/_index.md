@@ -91,15 +91,15 @@ Add the permission to use the template:
 
 Now log out of automation controller’s web UI and in again as the **wweb** user.
 
-- Go to the **Templates** view, you should notice for wweb only the `Create index.html` template is listed. He is allowed to view and launch, but not to edit the Template. Just open the template and try to change it.
+- Go to the **Templates** view, you should notice for wweb only the `Create index.html` template is listed. He is allowed to view and launch, but not to edit the Template. Just open the template and try to change it, there is not even an **Edit** button.
 
 - Run the Job Template by clicking the rocket icon. Enter the survey content to your liking and launch the job.
 
 - In the following **Jobs** view have a good look around, note that there where changes to the host (of course…​).
 
-Check the result: In the **VS Code** terminal execute `curl` to pull the content of the webserver on `node1` (you could of course check `node2`, too):
+Check the result: In the **VS Code** terminal execute `curl` to pull the content of the webserver on `node1.<GUID>.internal` (you could of course check `node2.<GUID>.internal`, too):
 
-    [{{< param "control_prompt" >}} ~]$ curl http://node1
+    [{{< param "pre_mng_prompt" >}} ~]$ curl http://node1.<GUID>.internal
 
 - In the web UI, log out user **wweb** and in again as **admin**.
 

@@ -51,7 +51,7 @@ Now you create a new Template that includes a survey.
 
   - `Ansible Workshop Examples` as the **Project**.
 
-  - `Controller Default EE` for the **Execution Environment**.
+  - `Default execution environment` for the **Execution Environment**.
 
   - `apache_role_install.yml` as the **Playbook** to execute.
 
@@ -73,7 +73,7 @@ Try for yourself, the solution is below.
 
 - **Project:** Ansible Workshop Examples
 
-- **Execution Environment:** Controller Default EE 
+- **Execution Environment:** Default execution environment
 
 - **Playbook:** `rhel/apache/apache_role_install.yml`
 
@@ -128,10 +128,10 @@ Before the actual launch the survey will ask for **First Line** and **Second Lin
 Note how the two survey lines are shown on the **Details** tab of the Job view as **Variables**.
 {{% /notice %}}
 
-After the job has completed, check the Apache homepage. In your **VS Code** terminal, execute `curl` against `node1`:
+After the job has completed, check the Apache homepage. In your **VS Code** terminal, execute `curl` against `http://node1.<GUID>.internal`:
 
 ```bash
-[{{< param "control_prompt" >}} ~]$ curl http://node1
+[{{< param "pre_mng_prompt" >}} ~]$ curl http://node1.<GUID>.internal
 <body>
 <h1>Apache is running fine</h1>
 <h1>This is survey field "First Line": line one</h1>
@@ -149,8 +149,8 @@ Here is a list of tasks:
 **Please make sure to finish these steps as the next chapter depends on it!**
 {{% /notice %}}
 
-- Take the inventory `Webserver` and add node `node2` to it.
+- Take the inventory `Webserver` and add node `node2.<GUID>.internal` to it.
 
 - Run the **Create index.html** Template again.
 
-- Verify the results on node2 by using `curl`.
+- Verify the results on `http://node2.<GUID>.internal` by using `curl`.
