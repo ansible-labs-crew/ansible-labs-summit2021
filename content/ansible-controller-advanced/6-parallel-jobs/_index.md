@@ -128,7 +128,7 @@ Remove or comment out the task that starts your `Install Apache` template, if yo
 
 To enable parallel execution of the tasks in these job templates, we will create a workflow. We’ll use the web UI because using **awx** for this is a bit too involved for a lab. Workflows are configured in the **Templates** view, you might have noticed you can choose between **Job Template** and **Workflow Template** when adding a template.
 
-- Go to the **Templates** view and click the ![plus](../../images/green_plus.png?classes=inline) button. This time choose **Workflow Template**
+- Go to the **Templates** view and click the ![add](../../images/blue_add.png?classes=inline) button. This time choose **Workflow Template**
 
   - **NAME:** Compliance Workflow
 
