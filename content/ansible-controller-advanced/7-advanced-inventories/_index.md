@@ -222,3 +222,11 @@ There are many additional attributes you can create a filter for - including Ans
 ### Advanced lab
 
 Create a filter to find only enabled hosts in your smart inventory. Hosts can be temporarily disabled, for example due to some maintenance work. We want to exclude them from our inventory.
+
+<details><summary><b>Click here for Solution</b></summary>
+<hr/>
+<p>
+This is an advanced lab, no solution here. But check the previous lab and change the filter to **enabled** and filter by **Yes**.
+</p>
+<hr/>
+</details>

@@ -23,7 +23,7 @@ The AWX collection is updated very often. To make sure the following lab instruc
 
 ## Authentication
 
-Before we can do any changes on our automation controller, we have to authenticate our user. There are several methods available to provide authentication details to the modules. In this lab, we'll use environment variables. In your VSCode UI use either your prefered editor from the commandline or the visual editor (open a new file by going to **File->New File**) to open a new file and add the following:
+Before we can do any changes on our automation controller, we have to authenticate our user. There are several methods available to provide authentication details to the modules. In this lab, we'll use environment variables. In your VSCode UI use either your preferred editor from the command line or the visual editor (open a new file by going to **File->New File**) to open a new file and add the following:
 
 ```bash
 # the Base URI of our automation controller cluster node
@@ -40,7 +40,7 @@ export CONTROLLER_VERIFY_SSL=false
 As always make sure to replace `<GUID>` and `<SANDBOXID>`!
 {{% /notice %}}
 
-Save the file in the home directoy of `lab-user` as `set-connection.sh`, when using the visual editor in VSCode do **File->Save as**.
+Save the file in the home directory of `lab-user` as `set-connection.sh`, when using the visual editor in VSCode do **File->Save as**.
 
 Now set the environment variables by sourcing the file:
 
@@ -56,7 +56,7 @@ Make sure you define the environment variables in the same shell you want to lat
 
 Now we'll start to create a Playbook with the tasks needed to configure our automation controller. Let's start with creating an inventory and then extend the Playbook step by step.
 
-In your VSCode UI use either your prefered editor from the commandline or the visual editor again to open a new file and add the following:
+In your VSCode UI use either your preferred editor from the command line or the visual editor again to open a new file and add the following:
 
 ```yaml
 ---
@@ -70,9 +70,10 @@ In your VSCode UI use either your prefered editor from the commandline or the vi
       name: AWX inventory
       organization: Default
 ```
+
 Since we are calling the REST API of automation controller, the Ansible Playbook is run against **localhost**, but the module will connect to the URL provided by the **CONTROLLER_HOST** environment variable you set above.
 
-Save the file in the home directoy of `lab-user` as `configure-controller.yml`.
+Save the file in the home directory of `lab-user` as `configure-controller.yml`.
 
 Run your playbook:
 
