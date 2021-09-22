@@ -10,7 +10,7 @@ weight = 3
 
 - [Exercise 3 - There is more to automation controller than the web UI](3-awx-collection-intro)
 
-- [Exercise 4 - Run a job in a cluster](4-tower-cluster-jobs)
+- [Exercise 4 - Run a job in a cluster](4-cluster-jobs)
 
 - [Exercise 5 - Controller instance groups](5-instance-groups)
 
