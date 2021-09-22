@@ -25,7 +25,7 @@ The Playbooks can be found in the Github repository you already setup as a **Pro
 
 ### Create three Templates
 
-As mentioned the Github repository contains three Playbooks to enforce different compliance requirements. Since you learned in the previous chapter how to do things with the AWX Collection, we want to put that knowledge to the test. Extend your existing Playbook by adding tasks to create job **Templates** for the Ansible Playbooks listed below. Create one new task for each of the three Ansible Playbooks:
+As mentioned the Github repository you configured as a **Project** contains three Playbooks to enforce different compliance requirements. Since you learned in the previous chapter how to do things with the AWX Collection in a Playbook, we want to put that knowledge to the test. Create a new Playbook to create the needed job **Templates** for the provided Ansible Playbooks. Create one task for each of the three Ansible Playbooks:
 
 - stig-packages.yml
 
@@ -34,10 +34,10 @@ As mentioned the Github repository contains three Playbooks to enforce different
 - cis.yml
 
 {{% notice tip %}}
-Remove or comment out the task that starts your `Install Apache` template, if you finished the challenge.
+If you closed your VSCode terminal or lost connection, the environment variables with the connection parameters are gone. Just set them again by sourcing the `set-connection.sh` file you created before.
 {{% /notice %}}
 
-<details><summary><b>Click here for Solution (the whole Playbook)</b></summary>
+<details><summary><b>Click here for Solution</b></summary>
 <hr/>
 <p>
 
@@ -48,45 +48,7 @@ Remove or comment out the task that starts your `Install Apache` template, if yo
   become: false
   gather_facts: false
   tasks:
-  - name: Create an inventory
-    awx.awx.inventory:
-      name: AWX inventory
-      organization: Default
-  - name: Add hosts to inventory
-    awx.awx.host:
-      name: "{{  item }}"
-      inventory: AWX inventory
-      state: present
-    loop:
-      - {{< param "internal_host1" >}}
-      - {{< param "internal_host2" >}}
-  - name: Machine Credentials
-    awx.awx.credential:
-      name: AWX Credentials
-      kind: ssh
-      organization: Default
-      inputs:
-        username: ec2-user
-        ssh_key_data: "{{ lookup('file', '~/.ssh/aws-private.pem' ) }}"
-  - name: AWX Project
-    awx.awx.project:
-      name: AWX Project
-      organization: Default
-      state: present
-      scm_update_on_launch: True
-      scm_delete_on_update: True
-      scm_type: git
-      scm_url: https://github.com/goetzrieger/ansible-labs-playbooks.git
-  - name: AWX Job Template
-    awx.awx.job_template:
-      name: Install Apache
-      organization: Default
-      state: present
-      inventory: AWX inventory
-      become_enabled: True
-      playbook: apache_install.yml
-      project: AWX Project
-      credential: AWX Credentials
+
   - name: Compliance STIG packages Job Template
     awx.awx.job_template:
       name: Compliance STIG packages
@@ -117,7 +79,6 @@ Remove or comment out the task that starts your `Install Apache` template, if yo
       playbook: cis.yml
       project: AWX Project
       credential: AWX Credentials
-
 ```
 
 </p>
@@ -126,33 +87,37 @@ Remove or comment out the task that starts your `Install Apache` template, if yo
 
 ## Create Parallel Workflow
 
-To enable parallel execution of the tasks in these job templates, we will create a workflow. We’ll use the web UI because using **awx** for this is a bit too involved for a lab. Workflows are configured in the **Templates** view, you might have noticed you can choose between **Job Template** and **Workflow Template** when adding a template.
+To enable parallel execution of the tasks in these job templates, we will create a workflow using the web UI. Workflows are configured in the **Templates** view, you might have noticed you can choose between **Add job template** and **Add workflow template** when adding a template.
 
-- Go to the **Templates** view and click the ![add](../../images/blue_add.png?classes=inline) button. This time choose **Workflow Template**
+- Go to the **Templates** view and click the ![Add](../../images/blue_add_dd.png?classes=inline) button. Choose **Add workflow template**
 
-  - **NAME:** Compliance Workflow
+  - **Name:** Compliance Workflow
 
-  - **ORGANIZATION:** Default - click on the magnifying glass if necessary
+  - **Organization:** Default - click on the magnifying glass if necessary
 
-  - Click **SAVE**
+  - Click **Save**
 
-- Now the **WORKFLOW VISUALIZER** button becomes active and the     graphical workflow designer opens.
+- Now the **Workflow Visualizer** graphical workflow designer opens.
 
-- Click on the **START** button, a new node opens. To the right you can assign an action to the node, you can choose between **TEMPLATE**, **PROJECT SYNC**, **INVENTORY SYNC** or **APPROVAL**.
+- Click on the **Start** button, a dialog to configure a new workflow node opens.
 
-- In this lab we’ll link multiple jobs to the **START**, so select the **Compliance STIG packages** job template and click **SELECT**. The node gets annotated with the name of the job.
+- First select the node type, you can choose between **Job Template, Project Sync, Inventory Source Sync, Approval** and **Workflow Job Template**.
 
-- Click on the **START** button again, another new node opens.
+- Select **Job Template**
 
-- Select the **Compliance STIG config** job template and click **SELECT**. The node gets annotated with the name of the job.
+- In this lab we’ll link multiple jobs to the **Start**, so select the **Compliance STIG packages** job template your Playbook configured and click **Save**. The new workflow node gets annotated with the name of the job.
 
-- Click on the **START** button again, another new node opens.
+- Hover your mouse over the now blue **Start** button and click the **+** sign, the **Add Node** dialog opens again.
 
-- Select the **Compliance CIS** job template and click **SELECT**. The node gets annotated with the name of the job.
+- This time select the **Compliance STIG config** job template and hit **Save**.
 
-- Click **SAVE**
+- Hover your mouse over the **Start** button again, and configure the last job template.
 
-- In the workflow overview window, again click **SAVE**
+- Select the **Compliance CIS** job template and click **Save**.
+
+- Click the blue **Save** button at the upper right to save the workflow.
+
+- Your workflow is now ready, you can always open the workflow visualizer again by clicking the **Visualizer** tab of the workflow.
 
 You have configured a Workflow that is not going through templates one after the other but rather executes three templates in parallel.
 
@@ -168,46 +133,47 @@ Your workflow is ready to go, launch it.
 
 Go to the **Instance Groups** view and find out how the jobs where distributed over the instances:
 
-- Open the **INSTANCES** view of the **controlplane** instance group.
+- Open the **controlplane** instance group by clicking it and switch to the **Instances** tab.
 
-- Look at the **TOTAL JOBS** view of the three instances
+- Look at the **Total Jobs** view of the three instances
 
 - Because the Job Templates called in the workflow didn’t specify an instance group, they where distributed (more or less) evenly over the instances.
 
 ## Deactivate a node
 
-Now deactivate instance **{{< param "internal_controller1" >}}** with the slider button and wait until it is shown as unavailable. Make a (mental) note of the **TOTAL JOBS** counter of the instance. Go back to the list of templates and launch the workflow **Compliance Workflow** again.
+Now deactivate instance **{{< param "internal_controller1" >}}** by setting the slider button to **Off** and wait until it is shown as unavailable. Make a (mental) note of the **Total Jobs** counter of the instance. Go back to the list of templates and launch the workflow **Compliance Workflow** again.
 
-Go back to the **Instance Groups** view, get back to the instance overview of instance group **controlplane** and verify that the three Playbooks where launched on the remaining instances and the **TOTAL JOBS** counter of instance **{{< param "internal_controller1" >}}** didn’t change.
+Go back to the **Instance Groups** view, get back to the instance overview of instance group **controlplane** and verify that the three Playbooks where launched on the remaining instances and the **Total Jobs** counter of instance **{{< param "internal_controller1" >}}** didn’t change.
 
-Activate **{{< param "internal_controller1" >}}** again by sliding the button to "checked".
+Activate **{{< param "internal_controller1" >}}** by sliding the button to **On** again.
 
 ## Using Instance Groups
 
 So we have seen how a automation controller cluster is distributing jobs over instances by default. We have already created instance groups which allow us to take control over which job is executed on which node, so let’s use them.
 
-To make it easier to spot where the jobs were run, let’s first empty the jobs history. This can be done using **awx-manage** on one of the automation controller instances. From your VSCode terminal **and as `root`** run the command:
+To make it easier to spot where the jobs were run, let’s first empty the jobs history. This can be done using the **awx-manage** utility on one of the automation controller instances. From your VSCode terminal as `lab-user` SSH to your `autoctl1.<GUID>.internal` node, become user `awx` and run the actual command:
 
 ```bash
-[{{< param "control_prompt" >}} ~]$ sudo -i
-[{{< param "manage_prompt" >}} ~]# awx-manage cleanup_jobs  --days=0
-deleting "2020-04-08 15:43:12.121133+00:00-2-failed" (2 host summaries, 8 events)
-[...]
-notifications: 0 deleted, 0 skipped.
-[{{< param "internal_control" >}} ~]# exit
+[lab-user@bastion ~]$ ssh autoctl1.<GUID>.internal
+[ec2-user@autoctl1 ~]$ sudo -u awx -i
+[awx@autoctl1 ~]$ awx-manage cleanup_jobs  --days=0
 ```
+
+Then exit back to being `lab-user` on the bastion node again. If you now check the **Total Jobs** of your instances they should show count "0".
 
 ### Assign Jobs to Instance Groups
 
 One way to assign a job to an instance group is in the job template. As our compliance workflow uses three job templates, do this for all of them:
 
-- In the web UI, go to **RESOURCES→Templates**
+- In the web UI, go to **Templates**
 
-- Open one of the three compliance templates
+- Open one of the three (Compliance CIS, Compliance STIG config, Compliance STIG packages) compliance templates (**not** the workflow template)
 
-- In the **Instance Groups** field, choose the **dev** instance group and click **SAVE**.
+- Click **Edit**
 
-- Click **SAVE** again for the job template!
+- In the **Instance Group** field, choose the **dev** instance group and click **Select**.
+
+- Click **Save** for the job template!
 
 - Do this for the other two compliance templates, too.
 
@@ -229,7 +195,7 @@ You have done this a couple of times now, you should get along without detailed 
 
 But what’s going to happen if you disable this instance?
 
-- Disable the **{{< param "internal_controller2" >}}** instance in the **Instance Groups** view.
+- Disable the **{{< param "internal_controller2" >}}** instance on the **Instances** tab of **Instance Group** `dev` by setting the switch to **off**.
 
 - Run the workflow again.
 
@@ -238,12 +204,12 @@ But what’s going to happen if you disable this instance?
 - Verify\!
 
 {{% notice tip %}}
-**Result:** The workflow is running but the associated jobs will stay in pending state because there are no instance available in the **dev** instance group, and the workflow runs "forever".
+**Result:** The workflow is running but the associated jobs will stay in pending state because there are no instances available in the `dev' instance group, and the workflow runs "forever".
 {{% /notice %}}
 
 What’s going to happen if you enable the instance again?
 
-- Go to the **Instance Groups** view and enable **{{< param "internal_controller2" >}}** again.
+- Go to the **Instances** tab of the instance group `dev` again and enable **{{< param "internal_controller2" >}}**.
 
 - Check in the **Jobs** and **Instance Groups** view what’s happening.
 

@@ -31,9 +31,11 @@ To be honest we got carried away slightly while trying to press all these cool f
 
 ## Want to Use this Lab after the event?
 
-Definitely, the Markdown sources are available here:
+Definitely, the lab documentation is available here:
 
-**[https://github.com/ansible-labs-crew/ansible-labs-summit2021/tree/master/content/ansible-controller-advanced](https://github.com/ansible-labs-crew/ansible-labs-summit2021/tree/master/content/ansible-controller-advanced)**
+**[https://ansible-labs-crew.github.io/](https://ansible-labs-crew.github.io/)**
+
+If you want to contribute to the workshop to make it better, file an issue in our [GitHub project](https://github.com/ansible-labs-crew/ansible-labs-summit2021).
 
 ## Your Ansible Automation Platform Lab Environment
 
