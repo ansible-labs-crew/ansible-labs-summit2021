@@ -25,7 +25,7 @@ The Playbooks can be found in the Github repository you already setup as a **Pro
 
 ### Create three Templates
 
-As mentioned the Github repository contains three Playbooks to enforce different compliance requirements. Since you learned in the previous chapter how to do things with the AWX Collection, we want to put that knowledge to the test. Extend your existing Playbook by adding tasks to create job **Templates** for the Ansible Playbooks listed below. Create one new task for each of the three Ansible Playbooks:
+As mentioned the Github repository you configured as a **Project** contains three Playbooks to enforce different compliance requirements. Since you learned in the previous chapter how to do things with the AWX Collection in a Playbook, we want to put that knowledge to the test. Create a new Playbook to create the needed job **Templates** for the provided Ansible Playbooks. Create one task for each of the three Ansible Playbooks:
 
 - stig-packages.yml
 
@@ -34,10 +34,10 @@ As mentioned the Github repository contains three Playbooks to enforce different
 - cis.yml
 
 {{% notice tip %}}
-Remove or comment out the task that starts your `Install Apache` template, if you finished the challenge.
+If you closed your VSCode terminal or lost connection, the environment variables with the connection parameters are gone. Just set them again by sourcing the `set-connection.sh` file you created before.
 {{% /notice %}}
 
-<details><summary><b>Click here for Solution (the whole Playbook)</b></summary>
+<details><summary><b>Click here for Solution</b></summary>
 <hr/>
 <p>
 
@@ -48,45 +48,7 @@ Remove or comment out the task that starts your `Install Apache` template, if yo
   become: false
   gather_facts: false
   tasks:
-  - name: Create an inventory
-    awx.awx.inventory:
-      name: AWX inventory
-      organization: Default
-  - name: Add hosts to inventory
-    awx.awx.host:
-      name: "{{  item }}"
-      inventory: AWX inventory
-      state: present
-    loop:
-      - {{< param "internal_host1" >}}
-      - {{< param "internal_host2" >}}
-  - name: Machine Credentials
-    awx.awx.credential:
-      name: AWX Credentials
-      kind: ssh
-      organization: Default
-      inputs:
-        username: ec2-user
-        ssh_key_data: "{{ lookup('file', '~/.ssh/aws-private.pem' ) }}"
-  - name: AWX Project
-    awx.awx.project:
-      name: AWX Project
-      organization: Default
-      state: present
-      scm_update_on_launch: True
-      scm_delete_on_update: True
-      scm_type: git
-      scm_url: https://github.com/goetzrieger/ansible-labs-playbooks.git
-  - name: AWX Job Template
-    awx.awx.job_template:
-      name: Install Apache
-      organization: Default
-      state: present
-      inventory: AWX inventory
-      become_enabled: True
-      playbook: apache_install.yml
-      project: AWX Project
-      credential: AWX Credentials
+
   - name: Compliance STIG packages Job Template
     awx.awx.job_template:
       name: Compliance STIG packages
@@ -117,7 +79,6 @@ Remove or comment out the task that starts your `Install Apache` template, if yo
       playbook: cis.yml
       project: AWX Project
       credential: AWX Credentials
-
 ```
 
 </p>
@@ -126,7 +87,7 @@ Remove or comment out the task that starts your `Install Apache` template, if yo
 
 ## Create Parallel Workflow
 
-To enable parallel execution of the tasks in these job templates, we will create a workflow. We’ll use the web UI because using **awx** for this is a bit too involved for a lab. Workflows are configured in the **Templates** view, you might have noticed you can choose between **Job Template** and **Workflow Template** when adding a template.
+To enable parallel execution of the tasks in these job templates, we will create a workflow using the web UI. Workflows are configured in the **Templates** view, you might have noticed you can choose between **Add job template** and **Add workflow template** when adding a template.
 
 - Go to the **Templates** view and click the ![plus](../../images/green_plus.png?classes=inline) button. This time choose **Workflow Template**
 
