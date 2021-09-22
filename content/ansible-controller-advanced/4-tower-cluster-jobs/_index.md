@@ -7,7 +7,7 @@ After boot-strapping the controller configuration from bottom up you are ready t
 
 - Open the **Templates** view
 
-- Look for the **Install Apache** Template you created with the script
+- Look for the **Install Apache** Template you created with the Playbook
 
 - Run it by clicking the rocket icon.
 
@@ -19,17 +19,17 @@ There are a couple of ways to find the node that executed the job.
 
 ### From the Job Output
 
-The most obvious way is to look up the **EXECUTION NODE** in the details of the job output. If you closed it already or want to look it up later, go to **VIEWS->Jobs** and look up the job in question.
+The most obvious way is to look up the **Execution Node** in the details of the job output. If you closed it already or want to look it up later, go to **Views->Jobs** and look up the job in question.
 
 ### From the instance groups
 
-In one of the controller instances web UI under **ADMINISTRATION** go to the **Instance Groups** view. For the `controlplane` instance group, the **TOTAL JOBS** counter shows the number of finished jobs. If you click **TOTAL JOBS** you’ll get a detailed list of jobs.
+In one of the controller instances web UI under **Administration** go to the **Instance Groups** view. For the `controlplane` instance group, the **Total Jobs** counter shows the number of finished jobs. If you click the `controlplane` instance group and switch to the **Jobs** tab in the next page, you’ll get a detailed list of jobs.
 
-To see on what instance a job actually run go back to the **Instance Groups** view. If you click **INSTANCES** under the **controlplane** group, you will get an overview of the **TOTAL JOBS** each controller instance in this group executed. Clicking **TOTAL JOBS** for an instance leads to a detailed job list for this instance.
+To see how jobs are distributed over the instances in an **Instance Groups**, go to the **Instances** tab under the **controlplane** group, you will get an overview of the **Total Jobs** each controller instance in this group executed.
 
 ### Using the API
 
-- First find the job ID: In the web UI access **VIEWS→Jobs**
+- First find the job ID: In the web UI access **Views→Jobs**
 
 - The jobs names are prefixed with the job ID, example **3 - Install Apache**
 
@@ -42,11 +42,11 @@ Make sure you choose a job with type "Playbook run".
 Bring up the terminal in your VSCode session and run:
 
 {{% notice warning %}}
-Replace **\<ID>** with the job ID you want to query and **{{< param "secret_password" >}}** with your actual password from the landing page.
+Replace **\<ID>** with the job ID you want to query and **{{< param "secret_password" >}}** with your actual password. And don't forget the proper \<GUiD>. Just saying...
 {{% /notice %}}
 
 ```bash
-[{{< param "control_prompt" >}} ~]$ curl -s -k -u admin:{{< param "secret_password" >}} https://{{< param "internal_controller1" >}}/api/v2/jobs/<ID>/ | python3 -m json.tool | grep execution_node
+[{{< param "pre_mng_prompt" >}} ~]$ curl -s -k -u admin:{{< param "secret_password" >}} https://{{< param "internal_controller1" >}}/api/v2/jobs/<ID>/ | python3 -m json.tool | grep execution_node
 
     "execution_node": "{{< param "internal_controller1" >}}",
 ```

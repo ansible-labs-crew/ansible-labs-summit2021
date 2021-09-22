@@ -45,13 +45,13 @@ Having the introduction out of the way, let’s get back to our lab and give Ins
 
 In a basic cluster setup like ours you just have the `controlplane` base group. So let’s go and setup two instance groups:
 
-- In the **Instance Groups** add a new group by clicking the green ![plus](../../images/green_plus.png?classes=inline) icon and then **CREATE INSTANCE GROUP**
+- In **Instance Groups** add a new group by clicking the ![Add](../../images/blue_add_dd.png?classes=inline) icon and then **Add instance group**
 
 - Name the new group **dev**
 
-- **SAVE**
+- **Save**
 
-- Click the **INSTANCES** button and add node **{{< param "internal_controller2" >}}** again using the ![plus](../../images/green_plus.png?classes=inline) icon
+- Go to the **Instances** tab of the new Instances Group and add node **{{< param "internal_controller2" >}}** by clicking the **Associate** button.
 
 Do the same to create a the new group **prod** with instance **{{< param "internal_controller3" >}}**
 
@@ -81,7 +81,7 @@ You have configured the groups here, open the URL
 
 in your browser.
 
-In the **INSTANCE GROUPS** overview all instance groups are listed with details of the group itself like number of instances in the group, running jobs and finished jobs. Like you’ve seen before the current capacity of the instance groups is shown in a live view, thus providing a quick insight if there are capacity problems.
+In the **INSTANCE GROUPS** overview all instance groups are listed with details of the group itself like number of instances in the group, running jobs and total jobs. Like you’ve seen before the current capacity of the instance groups is shown in a live view, thus providing a quick insight if there are capacity problems.
 
 ### Via the API
 
@@ -91,7 +91,7 @@ You can again query the API to get this information. Either use the browser to a
 
 or use curl to access the API from the command line in your VSCode terminal:
 
-`[{{< param "control_prompt" >}} ~]$ curl -s -k -u admin:{{< param "secret_password" >}} https://{{< param "internal_controller1" >}}/api/v2/instance_groups/| python3 -m json.tool`
+`[{{< param "pre_mng_prompt" >}} ~]$ curl -s -k -u admin:{{< param "secret_password" >}} https://{{< param "internal_controller1" >}}/api/v2/instance_groups/| python3 -m json.tool`
 
 {{% notice tip %}}
 The curl command has to be on one line. Do _not_ forget or oversee the final slash at the end of the URL, it is relevant!
@@ -99,10 +99,10 @@ The curl command has to be on one line. Do _not_ forget or oversee the final sla
 
 ## Deactivating automation controller instances
 
-While in the **INSTANCES GROUPS** overview in the web UI click the **INSTANCES** link for, say, the **dev** group. In the next view you’ll see a slide button next to each controller instance (only one in this case).
+While in the **Instances Groups** overview in the web UI click the **dev** group. In the next view change to the **Instances** tab, at the right you’ll see a slide button for each controller instance (only one in this case).
 
-- The button should be set to "checked" meaning "active". Clicking it would deactivate the corresponding instance and would prevent that further jobs are assigned to it.
+- The button should be set to **On** meaning "active". Clicking it would deactivate the corresponding instance and would prevent that further jobs are assigned to it.
 
-- Running jobs on an instance which is set to "OFF" are finished in a normal way.
+- Running jobs on an instance which is set to **Off** are finished in a normal way.
 
-- Further to the right a slider can change the amount of forks scheduled on an instance. This way it is possible to influence in which ratio the jobs are assigned.
+- The slider **Capacity Adjustment** can change the amount of forks scheduled on an instance. This way it is possible to influence in which ratio the jobs are assigned.

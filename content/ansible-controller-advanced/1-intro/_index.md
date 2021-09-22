@@ -15,8 +15,6 @@ We prepared this lab to give a hands-on introduction to some of the more advance
 
 - Working with Instance Groups
 
-- Using isolated nodes to manage remote locations
-
 - Ways to provide inventories (importing inventory, dynamic inventory)
 
 - The Smart Inventory feature
@@ -45,8 +43,8 @@ access to the following hosts:
 | Role                         | URL for External Access (if applicable)  | Hostname Internal                    |
 | ---------------------------- | ---------------------------------------- | ------------------------------------ |
 | Automation controller node 1 | {{< param "external_controller1" >}}     | {{< param "internal_controller1" >}} |
-| Automation controller node 2 |                                          | {{< param "internal_controller2" >}} |
-| Automation controller node 3 |                                          | {{< param "internal_controller3" >}} |
+| Automation controller node 2 | {{< param "external_controller2" >}}     | {{< param "internal_controller2" >}} |
+| Automation controller node 3 | {{< param "external_controller3" >}}     | {{< param "internal_controller3" >}} |
 | Visual Code Web UI           | {{< param "external_code" >}}            |                                      |
 | Database Node                |                                          | {{< param "internal_dbnode" >}}      |
 | Managed RHEL8 Host 1         |                                          | {{< param "internal_host1" >}}       |
@@ -62,11 +60,12 @@ Ansible Automation Platform (AAP) has already been installed and licensed for yo
 {{% /notice %}}
 
 {{% notice info %}}
-Wherever you see the placeholder **{{< param "secret_password" >}}** in the following pages, use instead the specific password provided to you on the lab page. In general, whenever you need a password, even without the placeholder explicitly written, it's the same one.
+In general, whenever you need a password, it's the same one provided for lab access.
 {{% /notice %}}
 
-As you can see the lab environment is pretty extensive. You basically
-have:
+As you can see the lab environment is pretty extensive. You basically have:
+
+- A bastion host running the VSCode server.
 
 - A three-node automation controller cluster with a separate DB host, accessed via SSH or web UI
 
@@ -90,33 +89,37 @@ The command line can wrap on the HTML page from time to time. Therefore the outp
 
 ## Accessing your Lab Environment
 
-You'll get the access information for your lab (URL's, password) from a landing page. Getting access to this page depends on how you are consuming the lab:
+You'll get the access information for your lab (URL's, password) from your lab facilitator. Your main points of contact with the lab are the automation controller node's web UI and **VS Code** in your browser. You'll use **VS Code** to:
 
-- If you deployed from RHPDS, you'll receive an email with the landing page URL
-- If you attend this lab at an event, your lab facilitator will lead you to the landing page
+- Open virtual terminals
 
-Either way you'll get an URL similar to this: `http://{{< param "external_domain" >}}`
+- Edit files
 
-Your main points of contact with the lab are the automation controller WebUI and the **VS Code** server, providing a VSCode-experience in your browser. You'll use **VS Code** to:
+Now open **VS Code** in your browser using the link provided or use this link by replacing **{{< param "student" >}}** by your {{< param "student_label" >}} and the **{{< param "labid" >}}**:
 
-- open virtual terminals
-- edit files
+`https://{{< param "external_code" >}}`
 
-Now open **VS Code** server using the link from the lab landing page or this link in your browser by replacing **{{< param "student" >}}** with your {{< param "student_label" >}} and the **{{< param "labid" >}}**:
+![VS Code login](../../images/vscode-pwd.png)
 
-```bash
-     https://{{< param "external_code" >}}
-```
+Use the password provided to login into the **VS Code** server web UI, you can close the **Welcome** tab. Now open a new terminal by heading to the menu item **Terminal** at the top of the page and select **New Terminal**. A new section will appear in the lower half of the screen and you will be greeted with a prompt:
 
-![code-server login](../../images/vscode-pwd.png)
-
-Use the password provided on the landing page to login into the **VS Code** server web UI, you can close the **Welcome** tab. Now open a new terminal by heading to the menu item **Terminal** at the top of the page and select **New Terminal**. A new section will appear in the lower half of the screen and you will be greeted with a prompt:
-
-![code-server terminal](../../images/vscode-terminal.png)
+![VS Code terminal](../../images/vscode-terminal.png)
 
 If unsure about the usage, read the [Visual Studio Code Server introduction](../../vscode-intro/), to learn more about how to create and edit files, and to work with the Terminal.
 
-Congrats, you now have a shell terminal on your automation controller node 1. From here you run commands or access the other hosts in your lab environment if the lab task requires it.
+Congrats, you now have a shell terminal on your bastion node. From here you run commands or access the other hosts in your lab environment if a lab task requires it.
+
+{{% notice tip %}}
+The user you are accessing the terminal as is `lab-user`, but your bastion node is setup to let you become `root` using _sudo_ without a password.
+{{% /notice %}}
+
+### Managed Nodes hostnames
+
+As mentioned you can construct your internal hostnames with your **\<GUID>**. But there is an easier way: On your bastion host you can find an Ansible inventory file for your environment. Just look at it in your VSCode terminal and you'll get the internal hostnames:
+
+```bash
+[{{< param "pre_mng_prompt" >}} ~]$ cat /etc/ansible/hosts
+```
 
 ## Install Ansible
 

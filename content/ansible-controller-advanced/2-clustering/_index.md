@@ -3,7 +3,7 @@ title = "Introduction to automation controller clustering"
 weight = 2
 +++
 
-With version 3.1 Ansible Tower introduced clustering, replacing the redundancy solution configured with active-passive nodes. Clustering is balancing load between controller nodes/instances. Each controller instance is able to act as an entry point for UI and API access.
+With version 3.1 Ansible Tower introduced clustering, replacing the redundancy solution configured with active-passive nodes. Clustering is balancing load between controller nodes. Each controller instance is able to act as an entry point for UI and API access.
 
 {{% notice tip %}}
 Using a load balancer in front of the controller nodes is possible, but optional because an automation controller cluster can be accessed via all controller instances.
@@ -18,14 +18,10 @@ The Appendix contains some installation considerations and an installer inventor
 ## Access the Controller Web UI
 
 For the first contact to your cluster open your browser and login to the
-controller node 1 web UIs as:
-
-- user **admin**
-
-- password **{{< param "secret_password" >}}**
+controller node 1 web UIs as user `admin`with the password provided.
 
 {{% notice warning %}}
-Use the pre-created URLs from the lab landing page or replace **{{< param "labid" >}}** with the session ID and **{{< param "student" >}}** with your student number!
+Replace **{{< param "labid" >}}** and **{{< param "student" >}}** with your values!
 {{% /notice %}}
 
 **`https://{{< param "external_controller1" >}}`**
@@ -34,7 +30,7 @@ Just from the web UI you wouldn’t know you’ve got a controller cluster at yo
 
 Right now we have only one instance group named **controlplane**. When you get more groups, from this view you will see how the instances are distributed over the groups. Click on **controlplane**.
 
-To dig deeper click on **Instances** to get more information about the instances assigned to a group. In the instances view you can toggle nodes off/online and adjust the number of forks (don't do this now). You’ll learn more about this later.
+To dig deeper click on the **Instances** tab to get more information about the instances assigned to a group. In the instances view you can toggle nodes off/online and adjust the number of forks (don't do this now). You’ll learn more about this later.
 
 ## Access your controller cluster via command line
 
@@ -47,8 +43,7 @@ Your VSCode session is running on your bastion host. Again if not still open, op
 A terminal window opens at the bottom, become root:
 
 ```bash
-    [{{< param "pre_mng_prompt" >}} ~]$ sudo -i
-    [{{< param "manage_prompt" >}} ~]# ssh {{< param "internal_controller1" >}}
+    [{{< param "pre_mng_prompt" >}} ~]$ ssh {{< param "internal_controller1" >}}
 ```
 
 In the terminal run the following command:
@@ -67,6 +62,11 @@ Your exact hostnames will differ, of course!
 ```
 
 So what we’ve got is a three-node controller cluster, no surprises here. In addition the command tells us the capacity (maximum number of forks/concurrent jobs) per node and for the instance groups. Here the capacity value of 57 is allocated to any of our three nodes.
+
+{{% notice warning %}}
+Please logout of the automation controller node so in the terminal you are user `lab-user` on the `bastion` host again!
+{{% /notice %}}
+
 
 {{% notice tip %}}
 The **awx-manage** (formerly tower-manage) utility can be used to manage a lot of the more internal aspects of the automation controller.
