@@ -25,7 +25,7 @@ The Playbooks can be found in the Github repository you already setup as a **Pro
 
 ### Create three Templates
 
-As mentioned the Github repository contains three Playbooks to enforce different compliance requirements. Since you learned in the previous chapter how to do things with the AWX Collection, we want to put that knowledge to the test. Extend your existing Playbook to create **Job Templates** for the provided Ansible Playbooks. Create one new task for each of the three Ansible Playbooks:
+As mentioned the Github repository contains three Playbooks to enforce different compliance requirements. Since you learned in the previous chapter how to do things with the AWX Collection, we want to put that knowledge to the test. Extend your existing Playbook by adding tasks to create job **Templates** for the Ansible Playbooks listed below. Create one new task for each of the three Ansible Playbooks:
 
 - stig-packages.yml
 
@@ -33,7 +33,11 @@ As mentioned the Github repository contains three Playbooks to enforce different
 
 - cis.yml
 
-<details><summary><b>Click here for Solution</b></summary>
+{{% notice tip %}}
+Remove or comment out the task that starts your `Install Apache` template, if you finished the challenge.
+{{% /notice %}}
+
+<details><summary><b>Click here for Solution (the whole Playbook)</b></summary>
 <hr/>
 <p>
 
