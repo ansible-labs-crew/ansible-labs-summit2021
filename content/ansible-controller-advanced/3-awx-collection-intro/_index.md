@@ -187,9 +187,9 @@ If you run this Ansible Playbook multiple times, you will notice the **awx.awx.c
 
 Run and test your playbook and verify everything works as expected, by logging into the automation controller Web UI.
 
-## Create Projects
+## Create Project
 
-The Ansible content used in this lab is hosted on Github in the project [https://github.com/goetzrieger/ansible-labs-playbooks.git](https://github.com/goetzrieger/ansible-labs-playbooks.git). The next step is to add a project to import the Ansible Playbooks. As before, try to figure out the necessary parameters by reading the documentation of the **awx.awx.project** module documentation.
+The Ansible content used in this lab is hosted on Github in the project [https://github.com/ansible-labs-crew/playbooks_adv_summit2021.git](https://github.com/ansible-labs-crew/playbooks_adv_summit2021.git). The next step is to add a project to import the Ansible Playbooks. As before, try to figure out the necessary parameters by reading the documentation of the **awx.awx.project** module documentation.
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>
@@ -230,7 +230,7 @@ The Ansible content used in this lab is hosted on Github in the project [https:/
       scm_update_on_launch: True
       scm_delete_on_update: True
       scm_type: git
-      scm_url: https://github.com/goetzrieger/ansible-labs-playbooks.git
+      scm_url: https://github.com/ansible-labs-crew/playbooks_adv_summit2021.git
 ```
 
 </p>
@@ -284,7 +284,7 @@ Before running an Ansible **Job** from your automation controller cluster you mu
       scm_update_on_launch: True
       scm_delete_on_update: True
       scm_type: git
-      scm_url: https://github.com/goetzrieger/ansible-labs-playbooks.git
+      scm_url: https://github.com/ansible-labs-crew/playbooks_adv_summit2021.git
   - name: AWX Job Template
     awx.awx.job_template:
       name: Install Apache

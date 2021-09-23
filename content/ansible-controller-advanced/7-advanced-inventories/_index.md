@@ -23,10 +23,10 @@ Don’t get this wrong... we’ve chosen to use Bash to make it as simple as pos
 
 First you need a source. In **real life** this would be your cloud provider, your CMDB or what not. For the sake of this lab we put a simple file into a Github repository.
 
-Use curl to query your external inventory source:
+Use curl to query your "external inventory source":
 
 ```bash
-[{{< param "control_prompt" >}} ~]$ curl https://raw.githubusercontent.com/goetzrieger/ansible-labs-playbooks/master/inventory_list
+[{{< param "pre_mng_prompt" >}} ~]$ curl https://raw.githubusercontent.com/ansible-labs-crew/playbooks_adv_summit2021/master/inventory/inventory_list
 {
     "dyngroup":{
         "hosts":[
@@ -66,7 +66,7 @@ As looping over all hosts and calling the script with **--host** can be pretty s
 #!/bin/bash
 
 if [ "$1" == "--list" ] ; then
-    curl -sS https://raw.githubusercontent.com/goetzrieger/ansible-labs-playbooks/master/inventory_list
+    curl -sS https://raw.githubusercontent.com/ansible-labs-crew/playbooks_adv_summit2021/master/inventory/inventory_list
 elif [ "$1" == "--host" ]; then
     echo '{"_meta": {"hostvars": {}}}'
 else
@@ -78,18 +78,18 @@ What it basically does is to return the data collected by curl when called with 
 
 But before we integrate the custom inventory script into our controller cluster, it’s a good idea to test it on the command line first:
 
-- Bring up your VSCode terminal
-- Create the file `dyninv.sh` with the content shown above (use VI or the VSCode editor)
+- Bring up your VSCode browser tab.
+- In either the visual editor or in the terminal using your favorite commandline editor, Create the file `dyninv.sh` with the content shown above.
 - Make the script executable:
 
 ```bash
-[{{< param "control_prompt" >}} ~]$ chmod +x dyninv.sh
+[{{< param "pre_mng_prompt" >}} ~]$ chmod +x dyninv.sh
 ```
 
 - Execute it:
 
 ```bash
-[{{< param "control_prompt" >}} ~]$ ./dyninv.sh --list
+[{{< param "pre_mng_prompt" >}} ~]$ ./dyninv.sh --list
 {
     "dyngroup":{
         "hosts":[
@@ -121,33 +121,15 @@ So now you have a source of (slightly static) dynamic inventory data (talk about
 
 ### Integrate into controller
 
-The first step is to add the inventory script to controller is to create the git repository where the inventory script is stored.
+In Ansible Tower up to version 3.8, you could create inventory scripts directly in the web UI. Since automation controller 4.0 the only way to get inventory scripts into controller is by putting the script into a source control repository.
 
-- In the web UI, open **Resources -> Projects**.
+For this lab the inventory script was already created in the Git repo you have configured as a **Project** earlier, so you can use this as-is.
 
-- Add a new project by clicking on the ![add](../../images/blue_add.png?classes=inline) button
-
-- Enter the necessary information:
-
-  - **Name:** Dynamic Inventory
-
-  - **Default Execution Environment:** Default execution environment
-
-  - **Source Control Credential Type:** Git
-
-  - **Source Control URL:** https://github.com/ansible-labs-crew/playbooks_summit2021.git
-
-  - enable **Update Revision on Launch**
-
-- Click **Save**.
-
-You can watch the initial project sync by navigating to **Views -> Jobs**. Wait until it completed successfully, before you continue.
-
-The second step is to add the dynamic inventory and point it to the Git project you just added.
+You can directly proceed to adding the dynamic inventory and pointing it to the inventory script.
 
 - In the web UI, open **Resources→Inventories**.
 
-- To create a new custom inventory, click the ![add](../../images/blue_add.png?classes=inline) button and click on **Add inventory**.
+- To create a new custom inventory, click the ![add](../../images/blue_add_dd.png?classes=inline) button and click on **Add inventory**.
 
 - Fill in the needed data:
 
@@ -155,7 +137,7 @@ The second step is to add the dynamic inventory and point it to the Git project 
 
 - Click **Save**
 
-- In the Details page, click on **Sources** and once more on the blue ![add](../../images/blue_add.png?classes=inline) button.
+- Change to the **Sources** tab and once more click the blue ![add](../../images/blue_add.png?classes=inline) button.
 
 - Fill in the needed data:
 
@@ -163,7 +145,7 @@ The second step is to add the dynamic inventory and point it to the Git project 
 
   - **Source:** Sourced from a project
 
-  - **Project:** Dynamic Inventory
+  - **Project:** AWX Project
 
   - **Inventory file:** inventory/inventory-script
 
@@ -173,9 +155,9 @@ The second step is to add the dynamic inventory and point it to the Git project 
 
 - Start the initial sync by clicking on **Sync**
 
-Navigate to **Views -> Jobs** to watch the initial sync. When you click on the job, you should see the script running and the inventory data reported by the script.
+Navigate to **Views -> Jobs** to watch the initial sync, the **Type** is `Inventory Sync`.
 
-Investigate the new hosts which were added to your inventory, by navigating to **Resources -> Hosts**. You should find two new hosts: `cloud1.cloud.example.com` and `cloud2.cloud.example.com`.
+After the inventory sync has finished investigate the new hosts which were added by it to your inventory, by navigating to **Resources -> Hosts**. You should find two new hosts: `cloud1.cloud.example.com` and `cloud2.cloud.example.com`.
 
 ### What is the take-away?
 
@@ -197,7 +179,7 @@ Automation controller 4.0 introduces a new UI to build these search filters with
 
 ### A Simple Smart Inventory
 
-Let’s start with a simple string example. In your controller web UI, open the **Resources -> Inventories** view. Then click the ![add](../../images/blue_add.png?classes=inline) button and choose to create a new **Smart Inventory**. In the next view:
+Let’s start with a simple string example. In your controller web UI, open the **Resources -> Inventories** view. Then click the ![add](../../images/blue_add_dd.png?classes=inline) button and choose to create a new **Smart Inventory**. In the next view:
 
 - **Name:** Simple Smart Inventory
 
@@ -211,22 +193,24 @@ To start with you can just use simple search terms. Try **cloud** or **example.c
 Search terms are automatically saved so make sure to hit **Clear all filters** to clear the saved search when testing expressions.
 {{% /notice %}}
 
-Or what about searching by inventory groups? Switch from **Name** to **Group** and enter `dyngroup` into the search field. After hitting **ENTER** you should only see cloud1 and cloud2.
+Or what about searching by inventory groups? Switch from **Name** to **Group** and enter `dyngroup` into the search field. After hitting **ENTER** you should only see cloud1 and cloud2. Try to narrow it down further by e.g. adding a second filter for **Name** `cloud2`.
 
-When your search returns the expected results, hit **Select** for the **Perform a search to define a host filter** window and **Save** for the Smart Inventory. Now your Smart Inventory is usable for executing job templates!
+When your search returns the results you want, hit **Select** for the **Perform a search to define a host filter** window and **Save** for the Smart Inventory. Now your Smart Inventory is usable for executing job templates!
 
 {{% notice tip %}}
 There are many additional attributes you can create a filter for - including Ansible facts returned from your managed nodes - but that's for another lab...
 {{% /notice %}}
 
-### Advanced lab
+### Challenge
 
-Create a filter to find only enabled hosts in your smart inventory. Hosts can be temporarily disabled, for example due to some maintenance work. We want to exclude them from our inventory.
+Change the **Simple Smart Inventory** filter to include only enabled hosts in your smart inventory. Hosts can be temporarily disabled, for example due to some maintenance work. We want to exclude them from our inventory.
+
+To test the filter, go to **Resources->Hosts** and disable `cloud1.cloud.example.com` by switching the slider button to the right to *Off*. Then open **Resources->Inventories->Simple Smart Inventory**, go to the **Hosts** tab and check the hosts.
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>
 <p>
-This is an advanced lab, no solution here. But check the previous lab and change the filter to **enabled** and filter by **Yes**.
+This is an advanced lab, no solution here. But check the previous lab and change the filter to <b>Enabled</b> and <b>Yes</b>.
 </p>
 <hr/>
 </details>
