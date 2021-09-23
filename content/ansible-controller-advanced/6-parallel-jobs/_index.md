@@ -25,13 +25,17 @@ The Playbooks can be found in the Github repository you already setup as a **Pro
 
 ### Create three Templates
 
-As mentioned the Github repository you configured as a **Project** contains three Playbooks to enforce different compliance requirements. Since you learned in the previous chapter how to do things with the AWX Collection in a Playbook, we want to put that knowledge to the test. Create a new Playbook to create the needed job **Templates** for the provided Ansible Playbooks. Create one task for each of the three Ansible Playbooks:
+As mentioned the Github repository you configured as a **Project** contains three Playbooks to enforce different compliance requirements. Since you learned in the previous chapter how to configure automation controller with the AWX Collection from a Playbook, we want to put that knowledge to the test. Create a new Playbook in your VScode editor on the bastion node that creates the needed job **Templates** for the provided Ansible Playbooks in automation controller. Create one task for each of the three Ansible Playbooks:
 
-- stig-packages.yml
+- **stig-packages.yml** (task name `Compliance STIG packages`)
 
-- stig-config.yml
+- **stig-config.yml** (task name `Compliance STIG config`)
 
-- cis.yml
+- **cis.yml** (task name `Compliance CIS`)
+
+You can basically use the task definition `AWX Job Template` from the Playbook `configure-controller.yml` and adapt the task's name and playbook parameters. With one important addition:
+
+- Change the Execution Environment by adding `execution_environment: Ansible Engine 2.9 execution environment` to each task. This is needed because the default Execution Environment doesn't contain a module we use in the Playbooks (`modprobe`)
 
 {{% notice tip %}}
 If you closed your VSCode terminal or lost connection, the environment variables with the connection parameters are gone. Just set them again by sourcing the `set-connection.sh` file you created before.
@@ -59,6 +63,8 @@ If you closed your VSCode terminal or lost connection, the environment variables
       playbook: stig-packages.yml
       project: AWX Project
       credential: AWX Credentials
+      execution_environment: Ansible Engine 2.9 execution environment
+
   - name: Compliance STIG config Job Template
     awx.awx.job_template:
       name: Compliance STIG config
@@ -69,6 +75,8 @@ If you closed your VSCode terminal or lost connection, the environment variables
       playbook: stig-config.yml
       project: AWX Project
       credential: AWX Credentials
+      execution_environment: Ansible Engine 2.9 execution environment
+
   - name: Compliance CIS Job Template
     awx.awx.job_template:
       name: Compliance CIS
@@ -79,6 +87,7 @@ If you closed your VSCode terminal or lost connection, the environment variables
       playbook: cis.yml
       project: AWX Project
       credential: AWX Credentials
+      execution_environment: Ansible Engine 2.9 execution environment
 ```
 
 </p>

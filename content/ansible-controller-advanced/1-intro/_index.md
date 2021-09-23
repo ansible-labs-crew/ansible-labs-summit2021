@@ -109,6 +109,18 @@ Use the password provided to login into the **VS Code** server web UI, you can c
 
 If unsure about the usage, read the [Visual Studio Code Server introduction](../../vscode-intro/), to learn more about how to create and edit files, and to work with the Terminal.
 
+{{% notice warning %}}
+There is a **known bug when using VSCode in the Chrome browser**: Under some circumstances/locale settings the keyboard layout in the terminal window (not the visual editor) is mixed up. It works fine in Firefox, though.
+{{% /notice %}}
+
+### Direct Access using SSH
+
+Last but not least you can of course use SSH directly to access the bastion node when you have an SSH client ready to go and know your way around:
+
+`ssh lab-user@bastion.{{< param "student" >}}.{{< param "labid" >}}.opentlc.com`
+
+The password is still the same.
+
 Congrats, you now have a shell terminal on your bastion node. From here you run commands or access the other hosts in your lab environment if a lab task requires it.
 
 {{% notice tip %}}
