@@ -9,13 +9,13 @@ It’s a common part of the learning curve for Ansible and automation controller
 
 The main recommendations are:
 
-- Put your content in a version control system like Git or SVN. This comes naturally since Ansible code is usually in text form anyway, and thus can be managed easily.
+- Put your content in a version control system like Git or SVN. This comes naturally since Ansible code is in text form anyway, and thus can be managed easily.
 
-- Group your code by logical units, called "[roles](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html)" in Ansible.
+- Group your code by logical units, called [roles](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html) in Ansible.
 
   - Example: have all code, config templates and files for the apache web server in one role, and all code, configuration and sql statements for the database in another role. That way the code becomes much better to read and handle, and roles can be made re-usable and shared between projects, teams or with the global community.
 
-Of course, what structure works best in the end depends on the individual requirements, but we will highlight some common ground rules which apply to almost all use cases.
+Of course, which structure works best in the end depends on the individual requirements, but we will highlight some common ground rules which apply to almost all use cases.
 
 The first recommendation is to separate *specific code* from *reusable/generic code* from *data*:
 
@@ -54,19 +54,16 @@ Next we will clone the repository on the control host. To enable you to work wit
     [{{< param "control_prompt" >}} ~]$ cd structured-content/
 
 {{% notice tip %}}
-The repository is currently empty. The three config commands are just there to avoid useless warnings from Git.
+The repository is currently empty. The three config commands are just there to avoid warnings from Git.
 {{% /notice %}}
 
 You are now going to add some default directories and files:
 
     [{{< param "control_prompt" >}} structured-content]$ touch {staging,production}
 
-This command creates two inventory files: in this case we have different stages with different hosts which we keep them in separate inventory files. Note that those files are right now still empty and need to be filled with content to work properly.
+This command creates two inventory files: in this case we have different stages with different hosts which we keep in separate inventory files. Note that those files are right now still empty and need to be filled with content to work properly.
 
-In the current setup we have two instances. Let’s assume that
-`{{< param "internal_host1" >}}` is part of the staging environment, and
-`{{< param "internal_host2" >}}` is part of the production environment. To reflect
-that in the inventory files, edit the two empty inventory files to look like this:
+In the current setup we have two instances. Let’s assume that `{{< param "internal_host1" >}}` is part of the staging environment, and `{{< param "internal_host2" >}}` is part of the production environment. To reflect that in the inventory files, edit the two empty inventory files to look like this:
 
     [{{< param "control_prompt" >}} structured-content]$ cat staging
     [staging]
@@ -87,7 +84,7 @@ Next we add some directories:
 
     [{{< param "control_prompt" >}} structured-content]$ mkdir -p {group_vars,host_vars,library,roles}
 
-Now to the two roles we’ll use in this example. First we’ll create a structure where we’ll add content later. This can easily be achieved with the command `ansible-galaxy`: it creates **role skeletons** with all appropriate files, directories and so on already in place.
+Now let's add two roles we’ll later use in this example. First we’ll create a structure where we’ll add content later. This can easily be achieved with the command `ansible-galaxy`: it creates **role skeletons** with all appropriate files and directories already in place.
 
 ```bash
 [{{< param "control_prompt" >}} structured-content]$ ansible-galaxy init --offline --init-path=roles security
@@ -95,7 +92,7 @@ Now to the two roles we’ll use in this example. First we’ll create a structu
 ```
 
 {{% notice tip %}}
-Even if a good role is generally self-explanatory, it still makes sense to have proper documentation. The right location to document roles is the file **meta/main.yml**.
+Even if a good role is generally self-explanatory, it still makes sense to have proper documentation. The right location to document roles are the files **meta/main.yml** and **README.md**.
 {{% /notice %}}
 
 The roles are empty, so we need to add a few tasks to each. In the last chapters we set up an Apache webserver and used some security tasks. Let’s add that code to our roles by editing the two task files:
@@ -245,45 +242,59 @@ Call e.g. `curl {{< param "internal_host1" >}}` to get the default page.
 
 ### From controller
 
-To configure and use this repository as a **Source Control Management (SCM)** system in controller you have to create credentials again, this time to access the Git repository over SSH. This credential is user/key based, and we need the following **awx** command (assuming the `TOWER_` environment variables are still defined):
+To configure and use this repository as a **Source Control Management (SCM)** system in controller you have to create credentials again, this time to access the Git repository over SSH. This credential is user/key based, and we need the following playbook (assuming the `CONTROLLER_` environment variables are still defined):
 
-```bash
-[{{< param "awx_prompt" >}} ~]# awx -f human credential create --name "Git Credentials" \
-          --organization "Default" \
-          --credential_type "Source Control" \
-          --inputs '{"username": "git", "ssh_key_data": "@~/.ssh/aws-private.pem"}'
+```yaml
+---
+- name: Create git SCM
+  hosts: localhost
+  tasks:
+    - name: create GitLab credentials
+      awx.awx.credential:
+        name: git
+        credential_type: Source Control
+        organization: Default
+        state: present
+        inputs:
+          ssh_key_data: '{{ lookup("file", "~/.ssh/<GUID>key.pem") }}'
+          username: git
+    - name: create git project
+      awx.awx.project:
+        name: Structured Content Repository
+        organization: Default
+        scm_credential: git
+        scm_type: git
+        scm_update_on_launch: true
+        scm_delete_on_update: true
+        scm_url: "{{< param "git_user" >}}@{{< param "internal_control" >}}:{{< param "content_git_uri" >}}"
+        state: present
 ```
 
-The new repository needs to be added as project. Feel free to use the
-web UI or use **awx** like shown below.
+{{% notice warning %}}
+Make sure to replace the GUID in the code before starting it!
+{{% /notice %}}
 
-```bash
-[{{< param "awx_prompt" >}} ~]# awx -f human project create --name "Structured Content Repository" \
-                    --organization Default \
-                    --scm_type git \
-                    --scm_url  {{< param "git_user" >}}@{{< param "internal_control" >}}:{{< param "content_git_uri" >}} \
-                    --scm_clean 1 \
-                    --scm_update_on_launch 1 \
-                    --credential "Git Credentials"
-```
+Save the playbook as `scm.yml` and run it with `ansible-playbook`.
 
 Now you’ve created the Project in controller. Earlier on the command line you’ve setup a staged environment by creating and using two different inventory files. But how can we get the same setup in controller? We use another way to define Inventories\! It is possible to use inventory files provided in a SCM repository as an inventory source. This way we can use the inventory files we keep in Git.
 
-In your controller web UI, open the **RESOURCES→Inventories** view. Then click the ![add](../../images/blue_add.png?classes=inline) button and choose to create a new **Inventory**. In the next view:
+In your controller web UI, open the **Resources -> Inventories** view. Then click the ![add](../../images/blue_add_dd.png?classes=inline) button and choose to create a new **Inventory**. In the next view:
 
-- **NAME:** Structured Content Inventory
+TODO: Review ended here since git user is missing - waiting on
 
-- Click **SAVE**
+- **Name:** Structured Content Inventory
 
-- Click the button **SOURCES** which is now active at the top
+- Click **Save**
+
+- Click the button **Sources** which is now active at the top
 
 - Click the ![add](../../images/blue_add.png?classes=inline) button (the top right one)
 
-- **NAME:** Production
+- **Name:** Production
 
-- **SOURCE:** Pick **Sourced from a Project**
+- **Source:** Pick **Sourced from a Project**
 
-- **PROJECT:** Structured Content Repository
+- **Project:** Structured Content Repository
 
 - In the **INVENTORY FILE** drop down menu, pick **production**
 
