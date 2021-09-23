@@ -130,7 +130,7 @@ The inventory **Workshop Inventory** and the machine credentials **Workshop Cred
 
 Now we will configure the credentials to access our the Git repo on your control host via SSH. In the **RESOURCES** menu choose **Credentials**. Now:
 
-Click the ![plus](../../images/green_plus.png?classes=inline) button to add new credentials
+Click the ![add](../../images/blue_add.png?classes=inline) button to add new credentials
 
 - **NAME:** Git Credentials
 - **ORGANIZATION:** Click on the magnifying glass, pick **Default** and click **SELECT**
@@ -163,7 +163,7 @@ You have now setup credentials to access the Git repo on your control host.
 
 It's time to set up the Tower Project pointing to your Git repository holding your Playbook and collections requirements file.
 
-- Go to **RESOURCES → Projects** in the side menu view click the ![plus](../../images/green_plus.png?classes=inline) button. Fill in the form:
+- Go to **RESOURCES → Projects** in the side menu view click the ![add](../../images/blue_add.png?classes=inline) button. Fill in the form:
 - **NAME:** Collections Repo
 - **ORGANIZATION:** Default
 - **SCM TYPE:** Git
@@ -179,7 +179,7 @@ The new Project will be synced automatically after creation. If everything went 
 
 ## Create the Job Template and run it
 
-The last step is to create a Job Template to run the Playbook. Go to the **Templates** view, click the ![plus](../../images/green_plus.png?classes=inline) button and choose **Job Template**.
+The last step is to create a Job Template to run the Playbook. Go to the **Templates** view, click the ![add](../../images/blue_add.png?classes=inline) button and choose **Job Template**.
 
 - **NAME:** Install AT Job
 - **JOB TYPE:** Run

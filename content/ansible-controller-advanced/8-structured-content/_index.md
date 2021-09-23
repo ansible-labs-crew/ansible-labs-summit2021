@@ -269,7 +269,7 @@ web UI or use **awx** like shown below.
 
 Now you’ve created the Project in controller. Earlier on the command line you’ve setup a staged environment by creating and using two different inventory files. But how can we get the same setup in controller? We use another way to define Inventories\! It is possible to use inventory files provided in a SCM repository as an inventory source. This way we can use the inventory files we keep in Git.
 
-In your controller web UI, open the **RESOURCES→Inventories** view. Then click the ![plus](../../images/green_plus.png?classes=inline) button and choose to create a new **Inventory**. In the next view:
+In your controller web UI, open the **RESOURCES→Inventories** view. Then click the ![add](../../images/blue_add.png?classes=inline) button and choose to create a new **Inventory**. In the next view:
 
 - **NAME:** Structured Content Inventory
 
@@ -277,7 +277,7 @@ In your controller web UI, open the **RESOURCES→Inventories** view. Then click
 
 - Click the button **SOURCES** which is now active at the top
 
-- Click the ![plus](../../images/green_plus.png?classes=inline) button (the top right one)
+- Click the ![add](../../images/blue_add.png?classes=inline) button (the top right one)
 
 - **NAME:** Production
 
@@ -291,7 +291,7 @@ In your controller web UI, open the **RESOURCES→Inventories** view. Then click
 
 And now for the staging inventory:
 
-- Down below in the view, click the ![plus](../../images/green_plus.png?classes=inline) button again
+- Down below in the view, click the ![add](../../images/blue_add.png?classes=inline) button again
 
 - In the next view, add as **NAME:** Staging
 
