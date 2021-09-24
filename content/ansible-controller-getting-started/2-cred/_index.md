@@ -195,7 +195,7 @@ Try to click one of the output lines in the window showing the job output. A sma
 
 ## Execution Environments: A deeper look
 
-As promised let's look a bit deeper into execution environments. During the section covering ad hoc commands you have already seen you can choose an execution environment (or get the default), the same will hold true for running Playbooks later on. In your automation controller web UI, go to **Administration → Execution Environments**. You'll see a list of the configured execution environments and original location of the image, in our case the images are provided in the **quay.io** container registry. Here you could add your own registry with custom EE images, too.
+As promised let's look a bit deeper into execution environments. During the section covering ad hoc commands you have already seen you can choose an execution environment (or get the default), the same will hold true for running Playbooks later on. In your automation controller web UI, go to **Administration → Execution Environments**. You'll see a list of the configured execution environments and original location of the image, in our case the images are provided in the **registry.redhat.io** container registry. Here you could add your own registry with custom EE images, too.
 
 So what happens, when automation controller runs an ad hoc command or Playbook? Let's see...
 
