@@ -19,7 +19,8 @@ There are a couple of ways to find the node that executed the job.
 
 ### From the Job Output
 
-The most obvious way is to look up the **Execution Node** in the details of the job output. If you closed it already or want to look it up later, go to **Views->Jobs** and look up the job in question.
+The most obvious way is to look up the **Execution Node** in the **Details** tab of the job.
+If you closed it already or want to look it up later, go to **Views ⇒ Jobs** and look up the job in question.
 
 ### From the instance groups
 
@@ -29,7 +30,7 @@ To see how jobs are distributed over the instances in an **Instance Groups**, go
 
 ### Using the API
 
-- First find the job ID: In the web UI access **Views→Jobs**
+- First find the job ID: In the web UI access **Views ⇒ Jobs**
 
 - The jobs names are prefixed with the job ID, example **3 - Install Apache**
 
@@ -89,16 +90,16 @@ Your automation controller has been preconfigured with some standard EE images. 
 
 {{% notice tip %}}
 Linux containers are technologies that allow you to package and isolate applications with their entire runtime environment. This makes it easy to move the contained application between environments and nodes while retaining full functionality.
-In this lab you'll use the command `podman` later on. Podman is a daemon less container engine for developing, managing, and running Open Container Initiative (OCI) containers and container images on your Linux System. If you want to learn more, there is a wealth of information on the Internet, you could start [here](http://docs.podman.io/en/latest/Introduction.html) for Podman or [here](https://www.ansible.com/blog/introduction-to-ansible-builder) for execution environments.
+In this lab you'll use the command `podman` later on. Podman is a daemon-less container engine for developing, managing, and running Open Container Initiative (OCI) containers and container images on your Linux System. If you want to learn more, there is a wealth of information on the Internet, you could start [here](http://docs.podman.io/en/latest/Introduction.html) for Podman or [here](https://www.ansible.com/blog/introduction-to-ansible-builder) for execution environments.
 {{% /notice %}}
 
 ## Execution Environments: A deeper look
 
-As promised let's look a bit deeper into execution environments. In your automation controller web UI, go to **Administration → Execution Environments**. You'll see a list of the configured execution environments and original location of the image, in our case the images are provided in the **registry.redhat.io** container registry. Here you could add your own registry with custom EE images, too.
+As promised let's look a bit deeper into execution environments. In your automation controller web UI, go to **Administration ⇒ Execution Environments**. You'll see a list of the configured execution environments and original location of the image, in our case the images are provided in the **registry.redhat.io** container registry. Here you could add your own registry with custom EE images, too.
 
 So what happens, when automation controller runs an ad hoc command or Playbook? Let's see...
 
-You should already have your **VS Code** terminal open in another browser tab, if not open https://{{< param "external_code" >}} and do **Terminal -> New Terminal**. In this terminal:
+You should already have your **VS Code** terminal open in another browser tab, if not open https://{{< param "external_code" >}} and do **Terminal ⇒ New Terminal**. In this terminal:
 
 - SSH into your automation controller node (obviously replace \<GUID> by your value):
   - `ssh autoctl1.<GUID>.internal`
@@ -123,7 +124,7 @@ CONTAINER ID  IMAGE   COMMAND  CREATED  STATUS  PORTS   NAMES
 
 - Keep podman running, now it's time to execute some automation. Which should take some time so you can observe what's happening.
 
-- In the web UI run an ad hoc command. Go to **Resources → Inventories → AWX Inventory**
+- In the web UI run an ad hoc command. Go to **Resources ⇒ Inventories ⇒ AWX Inventory**
 
 - In the **Hosts** view select the three hosts.
 
@@ -158,6 +159,6 @@ The `sleep 60` command was only used to keep the container running for some time
 
 - Stop `podman` with `CTRL-C`.
 
-- Logout of automation controller (`exit`, `exit`)
+- Logout of automation controller (twice `exit` or `CTRL-D`)
 
 This is how automation controller uses Linux containers to run Ansible automation jobs in their own dedicated environments.

@@ -127,7 +127,7 @@ For this lab the inventory script was already created in the Git repo you have c
 
 You can directly proceed to adding the dynamic inventory and pointing it to the inventory script.
 
-- In the web UI, open **Resources→Inventories**.
+- In the web UI, open **Resources ⇒ Inventories**.
 
 - To create a new custom inventory, click the ![add](../../images/blue_add_dd.png?classes=inline) button and click on **Add inventory**.
 
@@ -143,7 +143,7 @@ You can directly proceed to adding the dynamic inventory and pointing it to the 
 
   - **Name:** Cloud Inventory Script
 
-  - **Source:** Sourced from a project
+  - **Source:** Sourced from a Project
 
   - **Project:** AWX Project
 
@@ -155,9 +155,9 @@ You can directly proceed to adding the dynamic inventory and pointing it to the 
 
 - Start the initial sync by clicking on **Sync**
 
-Navigate to **Views -> Jobs** to watch the initial sync, the **Type** is `Inventory Sync`.
+Navigate to **Views ⇒ Jobs** to watch the initial sync, the **Type** is `Inventory Sync`.
 
-After the inventory sync has finished investigate the new hosts which were added by it to your inventory, by navigating to **Resources -> Hosts**. You should find two new hosts: `cloud1.cloud.example.com` and `cloud2.cloud.example.com`.
+After the inventory sync has finished investigate the new hosts which were added by it to your inventory, by navigating to **Resources ⇒ Hosts**. You should find two new hosts: `cloud1.cloud.example.com` and `cloud2.cloud.example.com`.
 
 ### What is the take-away?
 
@@ -179,7 +179,7 @@ Automation controller 4.0 introduces a new UI to build these search filters with
 
 ### A Simple Smart Inventory
 
-Let’s start with a simple string example. In your controller web UI, open the **Resources -> Inventories** view. Then click the ![add](../../images/blue_add_dd.png?classes=inline) button and choose to create a new **Smart Inventory**. In the next view:
+Let’s start with a simple string example. In your controller web UI, open the **Resources ⇒ Inventories** view. Then click the ![add](../../images/blue_add_dd.png?classes=inline) button and choose to create a new **Smart Inventory**. In the next view:
 
 - **Name:** Simple Smart Inventory
 
@@ -205,7 +205,7 @@ There are many additional attributes you can create a filter for - including Ans
 
 Change the **Simple Smart Inventory** filter to include only enabled hosts in your smart inventory. Hosts can be temporarily disabled, for example due to some maintenance work. We want to exclude them from our inventory.
 
-To test the filter, go to **Resources->Hosts** and disable `cloud1.cloud.example.com` by switching the slider button to the right to *Off*. Then open **Resources->Inventories->Simple Smart Inventory**, go to the **Hosts** tab and check the hosts.
+To test the filter, go to **Resources ⇒ Hosts** and disable `cloud1.cloud.example.com` by switching the slider button to the right to *Off*. Then open **Resources ⇒ Inventories ⇒ Simple Smart Inventory**, go to the **Hosts** tab and check the hosts.
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>

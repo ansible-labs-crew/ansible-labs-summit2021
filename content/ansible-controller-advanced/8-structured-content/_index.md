@@ -44,7 +44,7 @@ Since we want to store all content in a repository, we have to create a simplist
 [{{< param "pre_mng_prompt" >}} ~]$ ansible-playbook simple_git.yml
 ```
 
-Next we will clone the repository on the control host. To enable you to work with git on the command line the SSH key for user *ec2-user* was already added to the Git user *git*. Next, clone the repository on the control machine:
+Next we will clone the repository on the control host. To enable you to work with git on the command line the SSH key for user *{{< param "user_name" >}}* was already added to the Git user *git*. Next, clone the repository on the control machine:
 
     [{{< param "pre_mng_prompt" >}} ~]$ git clone {{< param "git_user" >}}@{{< param "internal_control" >}}:{{< param "content_git_uri" >}}
     # Message "warning: You appear to have cloned an empty repository." is OK and can be ignored
@@ -82,7 +82,9 @@ Next we add some directories:
 
 - For demonstration purpose we also will add a **library** directory: it can contain Ansible code related to a project like custom modules, plugins, etc.
 
-    [{{< param "control_prompt" >}} structured-content]$ mkdir -p {group_vars,host_vars,library,roles}
+```bash
+[{{< param "pre_mng_prompt" >}} structured-content]$ mkdir -p {group_vars,host_vars,library,roles}
+```
 
 Now let's add two roles we’ll later use in this example. First we’ll create a structure where we’ll add content later. This can easily be achieved with the command `ansible-galaxy`: it creates **role skeletons** with all appropriate files and directories already in place.
 
@@ -278,7 +280,7 @@ Save the playbook as `scm.yml` and run it with `ansible-playbook`.
 
 Now you’ve created the Project in controller. Earlier on the command line you’ve setup a staged environment by creating and using two different inventory files. But how can we get the same setup in controller? We use another way to define Inventories\! It is possible to use inventory files provided in a SCM repository as an inventory source. This way we can use the inventory files we keep in Git.
 
-In your controller web UI, open the **Resources -> Inventories** view. Then click the ![add](../../images/blue_add_dd.png?classes=inline) button and choose to create a new **Inventory**. In the next view:
+In your controller web UI, open the **Resources ⇒ Inventories** view. Then click the ![add](../../images/blue_add_dd.png?classes=inline) button and choose to create a new **Inventory**. In the next view:
 
 - **Name:** Structured Content Inventory
 
@@ -314,7 +316,7 @@ And now for the staging inventory:
 
 - In the screen below, click on **Back to Sources** and then **Sync all**.
 
-To make sure that the project based inventory worked, click on the **Resources -> Hosts** button and make sure the two hosts are listed and tagged with the respective stages. To verify this, click on each host and check the **Groups** tab.
+To make sure that the project based inventory worked, click on the **Resources ⇒ Hosts** button and make sure the two hosts are listed and tagged with the respective stages. To verify this, click on each host and check the **Groups** tab.
 
 Now create a template to execute the `site.yml` against both stages at the same time and associate the credentials.
 
@@ -325,7 +327,7 @@ Please note that in a real world use case you might want to have different templ
 Expand your `scm.yml` playbook with the necessary tasks.
 
 ```yaml
-    - name: run site playbook
+    - name: create site playbook
       awx.awx.job_template:
         name: Structured Content Execution
         inventory: Structured Content Inventory
@@ -333,6 +335,7 @@ Expand your `scm.yml` playbook with the necessary tasks.
         playbook: site.yml
         become_enabled: true
         credential: AWX Credentials
+        execution_environment: Ansible Engine 2.9 execution environment
 ```
 
 <details><summary><b>Click here for Solution (entire Playbook)</b></summary>
@@ -377,7 +380,7 @@ Expand your `scm.yml` playbook with the necessary tasks.
 <hr/>
 </details>
 
-Now in the controller web UI go to **RESOURCES→Templates**, launch the job template **Structured Content Execution** and watch the results.
+Now in the controller web UI go to **Resources ⇒ Templates**, launch the job template **Structured Content Execution** and watch the results.
 
 ## Adding External Roles
 
@@ -443,7 +446,7 @@ changes:
 
 Just in case, make sure to update the Project in controller: in the menu at **Resources**, click **Projects**, and click on the sync button next to **Structured Content Repository**.
 
-Afterwards, go to **Resources -> Templates** and launch the **Structured Content Execution** job template. As you will see in the job output, the external role is called just the way the other roles are called:
+Afterwards, go to **Resources ⇒ Templates** and launch the **Structured Content Execution** job template. As you will see in the job output, the external role is called just the way the other roles are called:
 
     TASK [shared-apache-role : deploy content] *************************************
     changed: [{{< param "internal_host2" >}}]

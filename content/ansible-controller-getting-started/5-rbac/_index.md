@@ -45,13 +45,13 @@ A Team is a subdivision of an organization with associated users, projects, cred
 
 Create a Team:
 
-- Go to **Access → Teams**.
+- Go to **Access ⇒ Teams**.
 
 - Click the ![add](../../images/blue_add.png?classes=inline) button and create a team named `Web Content`.
 
 Now you can add a user to the Team:
 
-- Return to **Access -> Users** and click the wweb user.
+- Return to **Access ⇒ Users** and click the wweb user.
 
 - Jump to the **Teams** tab of user wweb.
 

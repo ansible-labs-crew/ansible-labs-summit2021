@@ -32,7 +32,7 @@ home = [ "HTML", "RSS", "JSON"]
   labid = "<SANDBOXID>"
   labid_label = "sandbox ID"
   student = "<GUID>"
-  student_label = "GUID (a four digits hexacode)"
+  student_label = "GUID (a four or more digits hexacode)"
   external_domain = "<GUID>.<SANDBOXID>.opentlc.com"
   internal_domain = "<GUID>.internal"
   internal_control = "bastion.<GUID>.internal"
@@ -52,6 +52,7 @@ home = [ "HTML", "RSS", "JSON"]
   control_prompt = "ec2-user@autoctl1"
   ansible_prompt = "root@bastion"
   awx_prompt = "root@autoctl1"
+  user_name = "lab-user"
   pre_mng_prompt = "lab-user@bastion"
   manage_prompt = "root@bastion"
 

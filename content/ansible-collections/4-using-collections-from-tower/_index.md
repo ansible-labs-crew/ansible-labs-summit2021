@@ -163,7 +163,7 @@ You have now setup credentials to access the Git repo on your control host.
 
 It's time to set up the Tower Project pointing to your Git repository holding your Playbook and collections requirements file.
 
-- Go to **RESOURCES → Projects** in the side menu view click the ![add](../../images/blue_add.png?classes=inline) button. Fill in the form:
+- Go to **RESOURCES ⇒ Projects** in the side menu view click the ![add](../../images/blue_add.png?classes=inline) button. Fill in the form:
 - **NAME:** Collections Repo
 - **ORGANIZATION:** Default
 - **SCM TYPE:** Git
