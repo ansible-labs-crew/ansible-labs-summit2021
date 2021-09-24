@@ -79,7 +79,7 @@ What it basically does is to return the data collected by curl when called with 
 But before we integrate the custom inventory script into our controller cluster, it’s a good idea to test it on the command line first:
 
 - Bring up your VSCode browser tab.
-- In either the visual editor or in the terminal using your favorite commandline editor, Create the file `dyninv.sh` with the content shown above.
+- In either the visual editor or in the terminal using your favorite command line editor, Create the file `dyninv.sh` with the content shown above.
 - Make the script executable:
 
 ```bash
