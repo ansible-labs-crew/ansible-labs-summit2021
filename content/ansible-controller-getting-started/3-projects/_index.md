@@ -59,7 +59,7 @@ To configure and use this repository as a **Source Code Management (SCM)** syste
 
 ## Create the Project
 
-- Go to **Resources → Projects** in the side menu view click the ![Add](../../images/blue_add.png?classes=inline) button. Fill in the form:
+- Go to **Resources ⇒ Projects** in the side menu view click the ![Add](../../images/blue_add.png?classes=inline) button. Fill in the form:
 
 - **Name:** Ansible Workshop Examples
 
@@ -149,7 +149,7 @@ What about `systemctl status httpd`?
 <hr/>
 <p>
 
-- Go to **Inventories** → **Workshop Inventory**
+- Go to **Inventories ⇒ Workshop Inventory**
 
 - On the **Hosts** tab view select all hosts and click **Run Command**
 

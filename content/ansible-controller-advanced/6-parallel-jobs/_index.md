@@ -180,7 +180,7 @@ One way to assign a job to an instance group is in the job template. As our comp
 
 - Click **Edit**
 
-- In the **Instance Group** field, choose the **dev** instance group and click **Select**.
+- In the **Instance Groups** field, choose the **dev** instance group and click **Select**.
 
 - Click **Save** for the job template!
 
@@ -204,7 +204,7 @@ You have done this a couple of times now, you should get along without detailed 
 
 But what’s going to happen if you disable this instance?
 
-- Disable the **{{< param "internal_controller2" >}}** instance on the **Instances** tab of **Instance Group** `dev` by setting the switch to **off**.
+- Disable the **{{< param "internal_controller2" >}}** instance on the **Instances** tab of **Instance Group** `dev` by setting the switch to **Off**.
 
 - Run the workflow again.
 

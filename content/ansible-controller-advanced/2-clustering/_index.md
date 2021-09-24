@@ -26,7 +26,7 @@ Replace **{{< param "labid" >}}** and **{{< param "student" >}}** with your valu
 
 **`https://{{< param "external_controller1" >}}`**
 
-Just from the web UI you wouldn’t know you’ve got a controller cluster at your hands here. To learn more about your cluster and its state, navigate to  **Administration** -> **Instance Groups**. Here you will get an overview of the cluster by instance groups. Explore the information provided, of course there is no capacity used yet and no Jobs have run.
+Just from the web UI you wouldn’t know you’ve got a controller cluster at your hands here. To learn more about your cluster and its state, navigate to  **Administration ⇒ Instance Groups**. Here you will get an overview of the cluster by instance groups. Explore the information provided, of course there is no capacity used yet and no Jobs have run.
 
 Right now we have only one instance group named **controlplane**. When you get more groups, from this view you will see how the instances are distributed over the groups. Click on **controlplane**.
 
@@ -38,7 +38,7 @@ You can also get information about your cluster on the command line. Log in to y
 
 **`https://{{< param "external_code" >}}`**
 
-Your VSCode session is running on your bastion host. Again if not still open, open a terminal by clicking **Terminal->New Terminal** in the menu bar.
+Your VSCode session is running on your bastion host. Again if not still open, open a terminal by clicking **Terminal ⇒ New Terminal** in the menu bar.
 
 A terminal window opens at the bottom, become root:
 
@@ -71,4 +71,5 @@ Please logout of the automation controller node so in the terminal you are user 
 {{% notice tip %}}
 The **awx-manage** (formerly tower-manage) utility can be used to manage a lot of the more internal aspects of the automation controller.
 You can e.g. use it to clean up old data, for token and session management and for cluster management.
+Just call **awx-manage** without parameters to see all possible subcommands.
 {{% /notice %}}

@@ -8,7 +8,7 @@ This is an advanced automation controller lab so we don’t really want you to u
 Since automation controller is exposing all of its functionality via REST API, we can automate everything. Instead of using the API directly, it is highly recommended to use the [AWX](https://github.com/ansible/awx/tree/devel/awx_collection) or [automation controller](https://cloud.redhat.com/ansible/automation-hub/repo/published/ansible/controller) Ansible Collection (the second link will only work for you, if you have an active Red Hat Ansible Automation Platform Subscription) to setup, configure and maintain your Red Hat Ansible Automation Platform Cluster.
 
 {{% notice info %}}
-For the purpose of this lab, we will use the community AWX collection. Red Hat Customers will prefer the supported Ansible automation controller collection. Since this requires an active subscription and we want to make the lab usable for everyone, we will stick with the AWX collection for the purpose of the lab.
+For the purpose of this lab, we will use the community AWX collection. Red Hat Customers will prefer the supported Ansible automation controller collection. Since this requires an active subscription and we want to make the lab usable for everyone, we will stick to the AWX collection for the purpose of the lab.
 {{% /notice %}}
 
 First, we need to install the AWX Collection on the `bastion` node. Installing Ansible Collections is straight forward:
@@ -18,20 +18,23 @@ First, we need to install the AWX Collection on the `bastion` node. Installing A
 ```
 
 {{% notice note %}}
-The AWX collection is updated very often. To make sure the following lab instructions will work for you, we install specifically version 19.2.2. We regularly update these instruction to keep up to date and don't fall behind too much. However, to make sure the lab works for you, we suggest you to use the specified version.
+The AWX collection is updated very often. To make sure the following lab instructions will work for you, we install specifically version 19.2.2. We regularly update these instruction to keep up to date and don't fall behind too much. However, to make sure the lab works for you, we recommend you use the specified version.
 {{% /notice %}}
 
 ## Authentication
 
-Before we can do any changes on our automation controller, we have to authenticate our user. There are several methods available to provide authentication details to the modules. In this lab, we'll use environment variables. In your VSCode UI use either your preferred editor from the command line or the visual editor (open a new file by going to **File->New File**) to open a new file and add the following:
+Before we can do any changes on our automation controller, we have to authenticate our user. There are several methods available to provide authentication details to the modules. In this lab, we'll use environment variables. In your VSCode UI use either your preferred editor from the command line or the visual editor (open a new file by going to **File⇒New File**) to open a new file and add the following:
 
 ```bash
 # the Base URI of our automation controller cluster node
 export CONTROLLER_HOST=https://{{< param "external_controller1" >}}
+
 # the user name
 export CONTROLLER_USERNAME=admin
+
 # and the password
 export CONTROLLER_PASSWORD='{{< param "secret_password" >}}'
+
 # do not verify the SSL certificate, in production, you will use proper SSL certificates and not need this option or set it to True
 export CONTROLLER_VERIFY_SSL=false
 ```
@@ -40,7 +43,7 @@ export CONTROLLER_VERIFY_SSL=false
 As always make sure to replace `<GUID>` and `<SANDBOXID>`!
 {{% /notice %}}
 
-Save the file in the home directory of `lab-user` as `set-connection.sh`, when using the visual editor in VSCode do **File->Save as**.
+Save the file in the home directory of `lab-user` as `set-connection.sh`, when using the visual editor in VSCode do **File⇒Save as**.
 
 Now set the environment variables by sourcing the file:
 
@@ -56,7 +59,7 @@ Make sure you define the environment variables in the same shell you want to lat
 
 Now we'll start to create a Playbook with the tasks needed to configure our automation controller. Let's start with creating an inventory and then extend the Playbook step by step.
 
-In your VSCode UI use either your preferred editor from the command line or the visual editor again to open a new file and add the following:
+In your VSCode UI use either your preferred editor from the command line or the visual editor again to open a new file named `configure-controller.yml` with the following content:
 
 ```yaml
 ---
@@ -141,7 +144,7 @@ SSH keys have already been created and distributed in your lab environment and `
 The next step is to configure credentials to access our managed hosts. The private key for `lab-user` is stored in `/home/lab-user/.ssh/<GUID>key.pem` and already configured on the managed nodes. Try to find the necessary attributes in the **awx.awx.credential** module documentation or use the solution provided and add this to the Playbook.
 
 {{% notice warning %}}
-And again do not forget to **replace \<GUID>**! We'll stop mentioning this at some point, though... :-)
+And again do not forget to *replace*  **\<GUID>**! We'll stop mentioning this at some point, though... :-)
 {{% /notice %}}
 
 <details><summary><b>Click here for Solution</b></summary>
@@ -170,7 +173,7 @@ And again do not forget to **replace \<GUID>**! We'll stop mentioning this at so
   - name: Machine Credentials
     awx.awx.credential:
       name: AWX Credentials
-      kind: ssh
+      credential_type: Machine
       organization: Default
       inputs:
         username: ec2-user
@@ -183,6 +186,7 @@ And again do not forget to **replace \<GUID>**! We'll stop mentioning this at so
 
 {{% notice info %}}
 If you run this Ansible Playbook multiple times, you will notice the **awx.awx.credential** module is not idempotent! Since we store the SSH key encrypted, the Ansible Module is unable to verify it has already been set and didn't change. This is what we want and expect from a secure system, but it also means Ansible has no means to verify it and hence overrides the SSH key or password every time the Ansible Playbook is executed.
+Also note that the `credential_type` value is simply the type's name.
 {{% /notice %}}
 
 Run and test your playbook and verify everything works as expected, by logging into the automation controller Web UI.
@@ -217,7 +221,7 @@ The Ansible content used in this lab is hosted on Github in the project [https:/
   - name: Machine Credentials
     awx.awx.credential:
       name: AWX Credentials
-      kind: ssh
+      credential_type: Machine
       organization: Default
       inputs:
         username: ec2-user
@@ -271,7 +275,7 @@ Before running an Ansible **Job** from your automation controller cluster you mu
   - name: Machine Credentials
     awx.awx.credential:
       name: AWX Credentials
-      kind: ssh
+      credential_type: Machine
       organization: Default
       inputs:
         username: ec2-user
