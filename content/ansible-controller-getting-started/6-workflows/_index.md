@@ -141,7 +141,7 @@ We want to install the **NodeJS app on node3 only**. The Inventory **Workshop In
 
   - **Credentials:** Workshop Credentials
 
-  - **Limit:** node3,\<GUID>.internal
+  - **Limit:** node3.\<GUID>.internal
 
   - **OPTIONS:** Privilege Escalation
 
