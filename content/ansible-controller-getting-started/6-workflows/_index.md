@@ -241,7 +241,7 @@ Let's see how this works by adding an approval step to the **Deploy Webapplicati
 
 Start with inserting the approval into the workflow:
 
-- As user **admin** open the Workflow by going to **Resources -> Templates -> Deploy Webapplication**.
+- As user **admin** open the Workflow by going to **Resources ⇒ Templates ⇒ Deploy Webapplication**.
 
 - Click  **Visualizer** to open the Workflow editor.
 
@@ -312,7 +312,7 @@ Now go back to the Workflow **Deploy Webapplication**
 
 - **Save**
 
-You're set. The Workflow run **wweb** started is still in pending state, you can check this by going to **Views -> Jobs**, it will still be shown as running. Okay, let's approve it!
+You're set. The Workflow run **wweb** started is still in pending state, you can check this by going to **Views ⇒ Jobs**, it will still be shown as running. Okay, let's approve it!
 
 - Log out and in as user **aapproval**
 
@@ -324,7 +324,7 @@ You're set. The Workflow run **wweb** started is still in pending state, you can
 
 - Click the **Approve** button.
 
-- Go to **Views -> Jobs** and click the **Deploy Webapplicattion** job.
+- Go to **Views ⇒ Jobs** and click the **Deploy Webapplicattion** job.
 
 You'll see how the job picks up after you approved it and goes to the **Web App Deploy** node to finish.
 

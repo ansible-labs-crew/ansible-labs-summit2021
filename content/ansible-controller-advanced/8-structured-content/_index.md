@@ -9,13 +9,13 @@ It’s a common part of the learning curve for Ansible and automation controller
 
 The main recommendations are:
 
-- Put your content in a version control system like Git or SVN. This comes naturally since Ansible code is usually in text form anyway, and thus can be managed easily.
+- Put your content in a version control system like Git or SVN. This comes naturally since Ansible code is in text form anyway, and thus can be managed easily.
 
-- Group your code by logical units, called "[roles](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html)" in Ansible.
+- Group your code by logical units, called [roles](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html) in Ansible.
 
   - Example: have all code, config templates and files for the apache web server in one role, and all code, configuration and sql statements for the database in another role. That way the code becomes much better to read and handle, and roles can be made re-usable and shared between projects, teams or with the global community.
 
-Of course, what structure works best in the end depends on the individual requirements, but we will highlight some common ground rules which apply to almost all use cases.
+Of course, which structure works best in the end depends on the individual requirements, but we will highlight some common ground rules which apply to almost all use cases.
 
 The first recommendation is to separate *specific code* from *reusable/generic code* from *data*:
 
@@ -40,39 +40,36 @@ So, let’s get started with an example. The content and repo-structure in this 
 Since we want to store all content in a repository, we have to create a simplistic Git server on our control host. In a more typical environment, you would work with GitLab, Gitea, or any other commercial Git server.
 
 ```
-[{{< param "control_prompt" >}} ~]$ wget https://raw.githubusercontent.com/ansible-labs-summit-crew/structured-content/master/simple_git.yml
-[{{< param "control_prompt" >}} ~]$ ansible-playbook simple_git.yml
+[{{< param "pre_mng_prompt" >}} ~]$ wget https://raw.githubusercontent.com/ansible-labs-crew/playbooks_adv_summit2021/master/simple_git.yml
+[{{< param "pre_mng_prompt" >}} ~]$ ansible-playbook simple_git.yml
 ```
 
-Next we will clone the repository on the control host. To enable you to work with git on the command line the SSH key for user *ec2-user* was already added to the Git user *git*. Next, clone the repository on the control machine:
+Next we will clone the repository on the control host. To enable you to work with git on the command line the SSH key for user *{{< param "user_name" >}}* was already added to the Git user *git*. Next, clone the repository on the control machine:
 
-    [{{< param "control_prompt" >}} ~]$ git clone {{< param "git_user" >}}@{{< param "internal_control" >}}:{{< param "content_git_uri" >}}
+    [{{< param "pre_mng_prompt" >}} ~]$ git clone {{< param "git_user" >}}@{{< param "internal_control" >}}:{{< param "content_git_uri" >}}
     # Message "warning: You appear to have cloned an empty repository." is OK and can be ignored
-    [{{< param "control_prompt" >}} ~]$ git config --global push.default simple
-    [{{< param "control_prompt" >}} ~]$ git config --global user.name "Your Name"
-    [{{< param "control_prompt" >}} ~]$ git config --global user.email you@example.com
-    [{{< param "control_prompt" >}} ~]$ cd structured-content/
+    [{{< param "pre_mng_prompt" >}} ~]$ git config --global push.default simple
+    [{{< param "pre_mng_prompt" >}} ~]$ git config --global user.name "Your Name"
+    [{{< param "pre_mng_prompt" >}} ~]$ git config --global user.email you@example.com
+    [{{< param "pre_mng_prompt" >}} ~]$ cd structured-content/
 
 {{% notice tip %}}
-The repository is currently empty. The three config commands are just there to avoid useless warnings from Git.
+The repository is currently empty. The three config commands are just there to avoid warnings from Git.
 {{% /notice %}}
 
 You are now going to add some default directories and files:
 
-    [{{< param "control_prompt" >}} structured-content]$ touch {staging,production}
+    [{{< param "pre_mng_prompt" >}} structured-content]$ touch {staging,production}
 
-This command creates two inventory files: in this case we have different stages with different hosts which we keep them in separate inventory files. Note that those files are right now still empty and need to be filled with content to work properly.
+This command creates two inventory files: in this case we have different stages with different hosts which we keep in separate inventory files. Note that those files are right now still empty and need to be filled with content to work properly.
 
-In the current setup we have two instances. Let’s assume that
-`{{< param "internal_host1" >}}` is part of the staging environment, and
-`{{< param "internal_host2" >}}` is part of the production environment. To reflect
-that in the inventory files, edit the two empty inventory files to look like this:
+In the current setup we have two instances. Let’s assume that `{{< param "internal_host1" >}}` is part of the staging environment, and `{{< param "internal_host2" >}}` is part of the production environment. To reflect that in the inventory files, edit the two empty inventory files to look like this:
 
-    [{{< param "control_prompt" >}} structured-content]$ cat staging
+    [{{< param "pre_mng_prompt" >}} structured-content]$ cat staging
     [staging]
     {{< param "internal_host1" >}}
 
-    [{{< param "control_prompt" >}} structured-content]$ cat production
+    [{{< param "pre_mng_prompt" >}} structured-content]$ cat production
     [production]
     {{< param "internal_host2" >}}
 
@@ -85,22 +82,24 @@ Next we add some directories:
 
 - For demonstration purpose we also will add a **library** directory: it can contain Ansible code related to a project like custom modules, plugins, etc.
 
-    [{{< param "control_prompt" >}} structured-content]$ mkdir -p {group_vars,host_vars,library,roles}
+```bash
+[{{< param "pre_mng_prompt" >}} structured-content]$ mkdir -p {group_vars,host_vars,library,roles}
+```
 
-Now to the two roles we’ll use in this example. First we’ll create a structure where we’ll add content later. This can easily be achieved with the command `ansible-galaxy`: it creates **role skeletons** with all appropriate files, directories and so on already in place.
+Now let's add two roles we’ll later use in this example. First we’ll create a structure where we’ll add content later. This can easily be achieved with the command `ansible-galaxy`: it creates **role skeletons** with all appropriate files and directories already in place.
 
 ```bash
-[{{< param "control_prompt" >}} structured-content]$ ansible-galaxy init --offline --init-path=roles security
-[{{< param "control_prompt" >}} structured-content]$ ansible-galaxy init --offline --init-path=roles apache
+[{{< param "pre_mng_prompt" >}} structured-content]$ ansible-galaxy init --offline --init-path=roles security
+[{{< param "pre_mng_prompt" >}} structured-content]$ ansible-galaxy init --offline --init-path=roles apache
 ```
 
 {{% notice tip %}}
-Even if a good role is generally self-explanatory, it still makes sense to have proper documentation. The right location to document roles is the file **meta/main.yml**.
+Even if a good role is generally self-explanatory, it still makes sense to have proper documentation. The right location to document roles are the files **meta/main.yml** and **README.md**.
 {{% /notice %}}
 
 The roles are empty, so we need to add a few tasks to each. In the last chapters we set up an Apache webserver and used some security tasks. Let’s add that code to our roles by editing the two task files:
 
-    [{{< param "control_prompt" >}} structured-content]$ cat roles/apache/tasks/main.yml
+    [{{< param "pre_mng_prompt" >}} structured-content]$ cat roles/apache/tasks/main.yml
     ---
     # tasks file for apache
     - name: latest Apache version installed
@@ -128,7 +127,7 @@ The roles are empty, so we need to add a few tasks to each. In the last chapters
         enabled: true
         state: started
 
-    [{{< param "control_prompt" >}} structured-content]$ cat roles/security/tasks/main.yml
+    [{{< param "pre_mng_prompt" >}} structured-content]$ cat roles/security/tasks/main.yml
     ---
     # tasks file for security
     - name: "HIGH | RHEL-07-010290 | PATCH | The Red Hat Enterprise Linux operating system must not have accounts configured with blank or null passwords."
@@ -153,7 +152,7 @@ The roles are empty, so we need to add a few tasks to each. In the last chapters
 
 We also need to create a playbook to call the roles from. This is often call `site.yml`, since it keeps the main code for the setup of our environment. Create the file:
 
-    [{{< param "control_prompt" >}} structured-content]$ cat site.yml
+    [{{< param "pre_mng_prompt" >}} structured-content]$ cat site.yml
     ---
     - name: Execute apache and security roles
       hosts: all
@@ -224,9 +223,9 @@ In real life, you should remove the unnecessary roles sub-directories to keep th
 Since we so far created the code only locally on the control host, we need to add it to the repository and push it:
 
 ```bash
-[{{< param "control_prompt" >}} structured-content]$ git add production roles site.yml staging
-[{{< param "control_prompt" >}} structured-content]$ git commit -m "Adding inventories and apache security roles"
-[{{< param "control_prompt" >}} structured-content]$ git push
+[{{< param "pre_mng_prompt" >}} structured-content]$ git add production roles site.yml staging
+[{{< param "pre_mng_prompt" >}} structured-content]$ git commit -m "Adding inventories and apache security roles"
+[{{< param "pre_mng_prompt" >}} structured-content]$ git push
 ```
 
 ## Launch it\!
@@ -235,97 +234,153 @@ Since we so far created the code only locally on the control host, we need to ad
 
 The code can now be launched. We start at the command line. Call the playbook `site.yml` with the appropriate inventory and privilege escalation:
 
-    [{{< param "ansible_prompt" >}} structured-content]$ ansible-playbook -i staging site.yml -b
+    [{{< param "pre_mng_prompt" >}} structured-content]$ ansible-playbook -i staging site.yml -b
 
 Watch how the changes are done to the target machines. Afterwards, we could similarly execute the playbook against the production stage, but we want to keep something for controller to do, so we just check it:
 
-    [{{< param "ansible_prompt" >}} structured-content]$ ansible-playbook -i production site.yml -b --list-hosts --list-tasks
+    [{{< param "pre_mng_prompt" >}} structured-content]$ ansible-playbook -i production site.yml -b --list-hosts --list-tasks
 
 Call e.g. `curl {{< param "internal_host1" >}}` to get the default page.
 
 ### From controller
 
-To configure and use this repository as a **Source Control Management (SCM)** system in controller you have to create credentials again, this time to access the Git repository over SSH. This credential is user/key based, and we need the following **awx** command (assuming the `TOWER_` environment variables are still defined):
+To configure and use this repository as a **Source Control Management (SCM)** system in controller you have to create credentials again, this time to access the Git repository over SSH. This credential is user/key based, and we need the following playbook (assuming the `CONTROLLER_` environment variables are still defined):
 
-```bash
-[{{< param "awx_prompt" >}} ~]# awx -f human credential create --name "Git Credentials" \
-          --organization "Default" \
-          --credential_type "Source Control" \
-          --inputs '{"username": "git", "ssh_key_data": "@~/.ssh/aws-private.pem"}'
+```yaml
+---
+- name: Create git SCM
+  hosts: localhost
+  tasks:
+    - name: create GitLab credentials
+      awx.awx.credential:
+        name: git
+        credential_type: Source Control
+        organization: Default
+        state: present
+        inputs:
+          ssh_key_data: '{{ lookup("file", "~/.ssh/<GUID>key.pem") }}'
+          username: git
+    - name: create git project
+      awx.awx.project:
+        name: Structured Content Repository
+        organization: Default
+        scm_credential: git
+        scm_type: git
+        scm_update_on_launch: true
+        scm_delete_on_update: true
+        scm_url: "{{< param "git_user" >}}@{{< param "internal_control" >}}:{{< param "content_git_uri" >}}"
+        state: present
 ```
 
-The new repository needs to be added as project. Feel free to use the
-web UI or use **awx** like shown below.
+{{% notice warning %}}
+Make sure to replace the GUID in the code before starting it!
+{{% /notice %}}
 
-```bash
-[{{< param "awx_prompt" >}} ~]# awx -f human project create --name "Structured Content Repository" \
-                    --organization Default \
-                    --scm_type git \
-                    --scm_url  {{< param "git_user" >}}@{{< param "internal_control" >}}:{{< param "content_git_uri" >}} \
-                    --scm_clean 1 \
-                    --scm_update_on_launch 1 \
-                    --credential "Git Credentials"
-```
+Save the playbook as `scm.yml` and run it with `ansible-playbook`.
 
 Now you’ve created the Project in controller. Earlier on the command line you’ve setup a staged environment by creating and using two different inventory files. But how can we get the same setup in controller? We use another way to define Inventories\! It is possible to use inventory files provided in a SCM repository as an inventory source. This way we can use the inventory files we keep in Git.
 
-In your controller web UI, open the **RESOURCES→Inventories** view. Then click the ![add](../../images/blue_add.png?classes=inline) button and choose to create a new **Inventory**. In the next view:
+In your controller web UI, open the **Resources ⇒ Inventories** view. Then click the ![add](../../images/blue_add_dd.png?classes=inline) button and choose to create a new **Inventory**. In the next view:
 
-- **NAME:** Structured Content Inventory
+- **Name:** Structured Content Inventory
 
-- Click **SAVE**
+- Click **Save**
 
-- Click the button **SOURCES** which is now active at the top
+- Click the button **Sources** which is now active at the top
 
 - Click the ![add](../../images/blue_add.png?classes=inline) button (the top right one)
 
-- **NAME:** Production
+- **Name:** Production
 
-- **SOURCE:** Pick **Sourced from a Project**
+- **Source:** Pick **Sourced from a Project**
 
-- **PROJECT:** Structured Content Repository
+- **Project:** Structured Content Repository
 
-- In the **INVENTORY FILE** drop down menu, pick **production**
+- In the **Inventory file** drop down menu, pick **production**
 
-- Click the green **SAVE** button
+- Click the green **Save** button and click on **Back to Sources**.
 
 And now for the staging inventory:
 
-- Down below in the view, click the ![add](../../images/blue_add.png?classes=inline) button again
+- Click the ![add](../../images/blue_add.png?classes=inline) button again
 
-- In the next view, add as **NAME:** Staging
+- In the next view, add as **Name:** Staging
 
-- **SOURCE:** Pick **Sourced from a Project**
+- **Source:** Pick **Sourced from a Project**
 
-- **PROJECT:** Structured Content Repository
+- **Project:** Structured Content Repository
 
-- In the **INVENTORY FILE** drop down menu, pick **staging**
+- In the **Inventory file** drop down menu, pick **staging**
 
-- Click the green **SAVE** button
+- Click the green **Save** button
 
-- In the screen below, click the sync button for both sources, or **SYNC ALL** once so that the cloud icon on the left site next to the name of each inventory turns green.
+- In the screen below, click on **Back to Sources** and then **Sync all**.
 
-To make sure that the project based inventory worked, click on the **HOSTS** button of the Inventory and make sure the two hosts are listed and tagged with the respective stages as **RELATED GROUPS**.
+To make sure that the project based inventory worked, click on the **Resources ⇒ Hosts** button and make sure the two hosts are listed and tagged with the respective stages. To verify this, click on each host and check the **Groups** tab.
 
 Now create a template to execute the `site.yml` against both stages at the same time and associate the credentials.
 
 {{% notice tip %}}
-Please note that in a real world use case you might want to have different templates to address the different stages separably.
-
-```bash
-[{{< param "control_prompt" >}} ~]# awx -f human job_template create --name "Structured Content Execution" \
-                    --job_type run --inventory "Structured Content Inventory" \
-                    --project "Structured Content Repository" \
-                    --playbook "site.yml" \
-                    --become_enabled 1
-[{{< param "control_prompt" >}} ~]# awx -f human job_template associate --name "Structured Content Execution" \
-                    --credential "Example Credentials"
-```
-
+Please note that in a real world use case you might want to have different templates to address the different stages separately.
 {{% /notice %}}
 
-Now in the controller web UI go to **RESOURCES→Templates**, launch the
-job template **Structured Content Execution** and watch the results.
+Expand your `scm.yml` playbook with the necessary tasks.
+
+```yaml
+    - name: create site playbook
+      awx.awx.job_template:
+        name: Structured Content Execution
+        inventory: Structured Content Inventory
+        project: Structured Content Repository
+        playbook: site.yml
+        become_enabled: true
+        credential: AWX Credentials
+        execution_environment: Ansible Engine 2.9 execution environment
+```
+
+<details><summary><b>Click here for Solution (entire Playbook)</b></summary>
+<hr/>
+<p>
+
+```yaml
+- name: Create git SCM
+  hosts: localhost
+  tasks:
+    - name: create GitLab credentials
+      awx.awx.credential:
+        name: git
+        credential_type: Source Control
+        organization: Default
+        state: present
+        inputs:
+          ssh_key_data: '{{ lookup("file", "~/.ssh/<GUID>key.pem") }}'
+          username: git
+    - name: create git project
+      awx.awx.project:
+        name: Structured Content Repository
+        organization: Default
+        scm_credential: git
+        scm_type: git
+        scm_update_on_launch: true
+        scm_delete_on_update: true
+        scm_url: "{{< param "git_user" >}}@{{< param "internal_control" >}}:{{< param "content_git_uri" >}}"
+        state: present
+    - name: create site playbook
+      awx.awx.job_template:
+        name: Structured Content Execution
+        inventory: Structured Content Inventory
+        project: Structured Content Repository
+        playbook: site.yml
+        become_enabled: true
+        credential: AWX Credentials
+        execution_environment: Ansible Engine 2.9 execution environment
+```
+
+</p>
+<hr/>
+</details>
+
+Now in the controller web UI go to **Resources ⇒ Templates**, launch the job template **Structured Content Execution** and watch the results.
 
 ## Adding External Roles
 
@@ -350,28 +405,24 @@ In this example, we will include a role which ships a simple `index.html` file a
 
 To include it with the existing structured content, first we have to create a file called `roles/requirements.yml` and reference the role there:
 
-{{% notice warning %}}
-Make sure you work as user **student{{< param "student" >}}**
-{{% /notice %}}
-
 Let's create a `roles/requirements.yml` file:
 
 ```bash
-[{{< param "control_prompt" >}} structured-content]$ cat roles/requirements.yml
+[{{< param "pre_mng_prompt" >}} structured-content]$ cat roles/requirements.yml
+---
 - src: https://github.com/ansible-labs-summit-crew/shared-apache-role.git
   scm: git
   version: master
 ```
 
 {{% notice tip %}}
-In a production environment you may want to change the version to a fixed version or tag, to make sure that only tested and verified code is checked out and used. But this strongly depends on how you develop your code and which branching model you use.
+In a production environment you may want to change the `version` to a fixed version or tag, to make sure that only tested and verified code is checked out and used. But this strongly depends on how you develop your code and which branching model you use.
 {{% /notice %}}
 
-Next, we reference the role itself in our playbook. Change the
-**site.yml** Playbook to look like this:
+Next, we reference the role itself in our playbook. Change the **site.yml** Playbook to look like this:
 
 ```bash
-[{{< param "control_prompt" >}} structured-content]$ cat site.yml
+[{{< param "pre_mng_prompt" >}} structured-content]$ cat site.yml
 ---
 - name: Execute apache and security roles
   hosts: all
@@ -386,16 +437,16 @@ Because controller uses your Git repo, you’ve to add, commit and push the
 changes:
 
 ```bash
-[{{< param "control_prompt" >}} structured-content]$ git add site.yml roles/
-[{{< param "control_prompt" >}} structured-content]$ git commit -m "Add roles/requirements.yml referencing shared role"
-[{{< param "control_prompt" >}} structured-content]$ git push
+[{{< param "pre_mng_prompt" >}} structured-content]$ git add site.yml roles/
+[{{< param "pre_mng_prompt" >}} structured-content]$ git commit -m "Add roles/requirements.yml referencing shared role"
+[{{< param "pre_mng_prompt" >}} structured-content]$ git push
 ```
 
 ## Launch in controller
 
-Just in case, make sure to update the Project in controller: in the menu at **RESOURCES**, pick **Projects**, and click on the sync button next to **Structured Content Repository**.
+Just in case, make sure to update the Project in controller: in the menu at **Resources**, click **Projects**, and click on the sync button next to **Structured Content Repository**.
 
-Afterwards, go to **RESOURCES→Templates** and launch the **Structured Content Execution** job template. As you will see in the job output, the external role is called just the way the other roles are called:
+Afterwards, go to **Resources ⇒ Templates** and launch the **Structured Content Execution** job template. As you will see in the job output, the external role is called just the way the other roles are called:
 
     TASK [shared-apache-role : deploy content] *************************************
     changed: [{{< param "internal_host2" >}}]

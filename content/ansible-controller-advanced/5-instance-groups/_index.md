@@ -23,13 +23,15 @@ Some things to keep in mind about Instance Groups:
 
 - Controller instances can’t have the same name as a group.
 
-Instance Groups allows some pretty cool setups, e.g. you could have some nodes shared over the whole cluster (by putting them into all groups) but then have other nodes that are dedicated to one group to reserve some capacity.
+Instance Groups allow some pretty cool setups, e.g. you could have some nodes shared over the whole cluster (by putting them into all groups) but then have other nodes that are dedicated to one group to reserve some capacity.
 
 {{% notice warning %}}
-The base `controlplane` group does house keeping like processing events from jobs for all groups so the node count of this group has to scale with your overall cluster load, even if these nodes are not used to run Jobs.
+The base `controlplane` group does housekeeping for all groups so the node count of this group has to scale with your overall cluster load, even if these nodes are not used to run Jobs.
+Housekeeping encompasses for example processing of events from all jobs.
 {{% /notice %}}
 
-Talking about the `controlplane` group: As you have learned this group is crucial for the operations of a controller cluster. Apart from the house keeping tasks, if a resource is not associated with an Instance Group, one of the nodes from the `controlplane` group will run the Job. So if there are no operational nodes in the base group, the cluster will not be able to run Jobs.
+Talking about the `controlplane` group: As you have learned this group is crucial for the operations of a controller cluster. Apart from the housekeeping tasks, if a resource is not associated with any Instance Group, one of the nodes from the `controlplane` group will run the Job.
+So if there are no operational nodes in the base group, the cluster will not be able to run such jobs.
 
 {{% notice warning %}}
 It is important to have enough nodes in the `controlplane` group
@@ -86,12 +88,13 @@ In the **INSTANCE GROUPS** overview all instance groups are listed with details 
 ### Via the API
 
 You can again query the API to get this information. Either use the browser to access the URL (you might have to login to the API again):
-
-  `https://{{< param "external_controller1" >}}/api/v2/instance_groups/`
+`https://{{< param "external_controller1" >}}/api/v2/instance_groups/`
 
 or use curl to access the API from the command line in your VSCode terminal:
 
-`[{{< param "pre_mng_prompt" >}} ~]$ curl -s -k -u admin:{{< param "secret_password" >}} https://{{< param "internal_controller1" >}}/api/v2/instance_groups/| python3 -m json.tool`
+```
+[{{< param "pre_mng_prompt" >}} ~]$ curl -s -k -u admin:{{< param "secret_password" >}} https://{{< param "internal_controller1" >}}/api/v2/instance_groups/ | jq
+```
 
 {{% notice tip %}}
 The curl command has to be on one line. Do _not_ forget or oversee the final slash at the end of the URL, it is relevant!

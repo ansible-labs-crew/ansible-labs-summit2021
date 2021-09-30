@@ -11,7 +11,7 @@ Let’s get started: The first thing we need is an inventory of your managed hos
 
 Create the inventory:
 
-- In the web UI menu on the left side, go to **Resources** → **Inventories**, click the ![Add](../../images/blue_add_dd.png?classes=inline) drop-down and choose **Add Inventory**.
+- In the web UI menu on the left side, go to **Resources ⇒ Inventories**, click the ![Add](../../images/blue_add_dd.png?classes=inline) drop-down and choose **Add Inventory**.
 
 - **Name:** Workshop Inventory
 
@@ -100,7 +100,7 @@ MIIEpAIBAAKCAQEA2nnL3m5sKvoSy37OZ8DQCTjTIPVmCJt/M02KgDt53+baYAFu1TIkC3Yk+HK1
 
 - Click **Save**
 
-Your new credentials have been created, go back to the **Resources -> Credentials -> Workshop Credentials**, click **Edit** and note that the SSH key is not visible but shown as "encrypted"! Click **Cancel** to leave edit mode again.
+Your new credentials have been created, go back to the **Resources ⇒ Credentials ⇒ Workshop Credentials**, click **Edit** and note that the SSH key is not visible but shown as "encrypted"! Click **Cancel** to leave edit mode again.
 
 You have now setup credentials for Ansible to access your managed hosts.
 
@@ -123,7 +123,7 @@ In this lab you'll use the command `podman` later on. Podman is a daemon less co
 
 As you’ve probably done with Ansible before you can run ad hoc commands from automation controller as well.
 
-- In the web UI go to **Resources → Inventories → Workshop Inventory**
+- In the web UI go to **Resources ⇒ Inventories ⇒ Workshop Inventory**
 
 - Click the **Hosts** button to change into the hosts view and select the three hosts by checking the boxes to the left of the host entries.
 
@@ -195,11 +195,11 @@ Try to click one of the output lines in the window showing the job output. A sma
 
 ## Execution Environments: A deeper look
 
-As promised let's look a bit deeper into execution environments. During the section covering ad hoc commands you have already seen you can choose an execution environment (or get the default), the same will hold true for running Playbooks later on. In your automation controller web UI, go to **Administration → Execution Environments**. You'll see a list of the configured execution environments and original location of the image, in our case the images are provided in the **quay.io** container registry. Here you could add your own registry with custom EE images, too.
+As promised let's look a bit deeper into execution environments. During the section covering ad hoc commands you have already seen you can choose an execution environment (or get the default), the same will hold true for running Playbooks later on. In your automation controller web UI, go to **Administration ⇒ Execution Environments**. You'll see a list of the configured execution environments and original location of the image, in our case the images are provided in the **registry.redhat.io** container registry. Here you could add your own registry with custom EE images, too.
 
 So what happens, when automation controller runs an ad hoc command or Playbook? Let's see...
 
-You should already have your **VS Code** terminal open in another browser tab, if not open https://{{< param "external_code" >}} and do **Terminal -> New Terminal**. In this terminal:
+You should already have your **VS Code** terminal open in another browser tab, if not open https://{{< param "external_code" >}} and do **Terminal ⇒ New Terminal**. In this terminal:
 
 - SSH into your automation controller node (obviously replace \<GUID> by your value):
   - `ssh autoctl1.<GUID>.internal`
@@ -224,7 +224,7 @@ CONTAINER ID  IMAGE   COMMAND  CREATED  STATUS  PORTS   NAMES
 
 - Keep podman running, now it's time to execute some automation.
 
-- In the web UI run an ad hoc command again. Go to **Resources → Inventories → Workshop Inventory**
+- In the web UI run an ad hoc command again. Go to **Resources ⇒ Inventories ⇒ Workshop Inventory**
 
 - In the **Hosts** view select the three hosts.
 
