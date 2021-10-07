@@ -134,11 +134,3 @@ As mentioned you can construct your internal hostnames with your **\<GUID>**. Bu
 ```bash
 [{{< param "pre_mng_prompt" >}} ~]$ cat /etc/ansible/hosts
 ```
-
-## Install Ansible
-
-Before we can get started writing Ansible Playbooks, we have to install Ansible first. We did all the preparation for you, so the installation is super easy:
-
-```bash
-[{{< param "pre_mng_prompt" >}} ~]$ sudo yum -y install ansible
-```
