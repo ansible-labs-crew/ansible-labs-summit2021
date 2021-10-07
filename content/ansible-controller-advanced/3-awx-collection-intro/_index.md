@@ -40,7 +40,7 @@ export CONTROLLER_VERIFY_SSL=false
 ```
 
 {{% notice warning %}}
-As always make sure to replace `<GUID>` and `<SANDBOXID>`!
+As always make sure to replace `<GUID>`, `<SANDBOXID>` and `<VERY_SECRET_PASSWORD>`!
 {{% /notice %}}
 
 Save the file in the home directory of `lab-user` as `set-connection.sh`, when using the visual editor in VSCode do **File⇒Save as**.
@@ -94,7 +94,7 @@ You might see a warning message "You are using the awx version of this collectio
 
 Now that we have the empty inventory created, extend the Playbook to add your three managed hosts using their internal hostnames **`{{< param "internal_host1" >}}`** and **`{{< param "internal_host2" >}}`** and **`{{< param "internal_host3" >}}`**, again using the AWX Ansible Collection. The module to add hosts to an inventory is called **awx.awx.host**.
 
-- Read the documentation and try to figure out how to add the necessary tasks to the Ansible Playbook or use the solution below.
+- Read the documentation and try to figure out how to add the necessary tasks to the Ansible Playbook or use the solution below. You can use the `ansible-doc` command or browse the [documentation web site](https://docs.ansible.com/ansible/latest/collections/awx/awx/index.html).
 - Add the task to the Playbook in your favorite editor.
 
 {{% notice info %}}
@@ -170,6 +170,7 @@ And again do not forget to *replace*  **\<GUID>**! We'll stop mentioning this at
     loop:
       - {{< param "internal_host1" >}}
       - {{< param "internal_host2" >}}
+      - {{< param "internal_host3" >}}
   - name: Machine Credentials
     awx.awx.credential:
       name: AWX Credentials
