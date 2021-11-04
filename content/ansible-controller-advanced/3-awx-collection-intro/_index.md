@@ -219,6 +219,7 @@ The Ansible content used in this lab is hosted on Github in the project [https:/
     loop:
       - {{< param "internal_host1" >}}
       - {{< param "internal_host2" >}}
+      - {{< param "internal_host3" >}}
   - name: Machine Credentials
     awx.awx.credential:
       name: AWX Credentials
@@ -226,7 +227,7 @@ The Ansible content used in this lab is hosted on Github in the project [https:/
       organization: Default
       inputs:
         username: ec2-user
-        ssh_key_data: "{{ lookup('file', '~/.ssh/aws-private.pem' ) }}"
+        ssh_key_data: "{{ lookup('file', '~/.ssh/<GUID>key.pem' ) }}"
   - name: AWX Project
     awx.awx.project:
       name: AWX Project
@@ -273,6 +274,7 @@ Before running an Ansible **Job** from your automation controller cluster you mu
     loop:
       - {{< param "internal_host1" >}}
       - {{< param "internal_host2" >}}
+      - {{< param "internal_host3" >}}
   - name: Machine Credentials
     awx.awx.credential:
       name: AWX Credentials
@@ -280,7 +282,7 @@ Before running an Ansible **Job** from your automation controller cluster you mu
       organization: Default
       inputs:
         username: ec2-user
-        ssh_key_data: "{{ lookup('file', '~/.ssh/aws-private.pem' ) }}"
+        ssh_key_data: "{{ lookup('file', '~/.ssh/<GUID>key.pem' ) }}"
   - name: AWX Project
     awx.awx.project:
       name: AWX Project
