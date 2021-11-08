@@ -63,7 +63,7 @@ Now you can add a user to the Team:
 
 ## Granting Permissions
 
-Permissions allow to read, modify, and administer projects, inventories, and other automation controller elements. Permissions can be set for different resources.
+Permissions allow to read, execute or fully administer projects, inventories, and other automation controller elements. Permissions can be set for different resources.
 
 To allow users or teams to actually do something, you have to set permissions. The members of the Team **Web Content** should only be allowed to modify content of the assigned webservers.
 
@@ -89,7 +89,7 @@ Add the permission to use the template:
 
 ## Test Permissions
 
-Now log out of automation controller’s web UI and in again as the **wweb** user.
+Now log out of automation controller’s web UI and in again as the **wweb** user with password **ansible**.
 
 - Go to the **Templates** view, you should notice for wweb only the `Create index.html` template is listed. He is allowed to view and launch, but not to edit the Template. Just open the template and try to change it, there is not even an **Edit** button.
 

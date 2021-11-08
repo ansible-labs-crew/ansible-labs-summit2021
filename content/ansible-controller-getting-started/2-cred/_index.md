@@ -169,7 +169,7 @@ As you see, this time it worked. For tasks that have to run as root you need to 
 
 ## Challenge Lab: Ad Hoc Commands
 
-Okay, a small challenge: Run an ad hoc to make sure the package "nano" is installed on all hosts. If unsure, consult the Ansible documentation either via the web or by running `ansible-doc yum` in the VS Code terminal on your automation controller control host.
+Okay, a small challenge: Run an ad hoc to make sure the package `nano` is installed on all hosts using the `yum` module. If unsure, consult the Ansible documentation either via the web or by running `ansible-doc yum` in the VS Code terminal on your automation controller control host.
 
 <details><summary><b>Click here for Solution</b></summary>
 <hr/>
@@ -199,7 +199,7 @@ As promised let's look a bit deeper into execution environments. During the sect
 
 So what happens, when automation controller runs an ad hoc command or Playbook? Let's see...
 
-You should already have your **VS Code** terminal open in another browser tab, if not open https://{{< param "external_code" >}} and do **Terminal ⇒ New Terminal**. In this terminal:
+You should already have your **VS Code** terminal open in another browser tab, if not open **VS Code** by going to `https://{{< param "external_code" >}}` and in **VS Code** do **Terminal ⇒ New Terminal**. Then from this terminal:
 
 - SSH into your automation controller node (obviously replace \<GUID> by your value):
   - `ssh autoctl1.<GUID>.internal`

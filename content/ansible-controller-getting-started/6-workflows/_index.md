@@ -3,7 +3,7 @@ title = "Workflows"
 weight = 6
 +++
 
-The basic idea of an automation controller workflow is to link multiple Job Templates together. They may or may not share inventory, Playbooks or even permissions. The links can be conditional:
+The basic idea of an automation controller workflow is to link multiple Job Templates together. They may or may not share inventory, Playbooks or even permissions. The links can be conditional, e.g.:
 
 - If job template A succeeds, job template B is automatically executed afterwards.
 
@@ -44,7 +44,7 @@ To make things somewhat easier for you, everything needed already exists in a Gi
 First you have to set up the Git repo as Projects like you normally would. You have done this before, try to do this on your own. Detailed instructions can be found below.
 
 {{% notice warning %}}
-If you are still logged in as user **wweb**, log out of and log in as user **admin** again.
+If you are still logged in as user **wweb**, log out and log in as user **admin** again.
 {{% /notice %}}
 
 - Create the project for web operations:
@@ -329,3 +329,7 @@ You're set. The Workflow run **wweb** started is still in pending state, you can
 You'll see how the job picks up after you approved it and goes to the **Web App Deploy** node to finish.
 
 This was a basic example to show how you could create a Job, allow one user to execute it and another user to approve it!
+
+{{% notice tip %}}
+Make sure you log out as user `aapproval` and in again as user `admin` before you proceed!
+{{% /notice %}}
